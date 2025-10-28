@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASPERA 2025 Conference Navigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <style>
+        .session-card { transition: all 0.2s; }
+        .session-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .venue-badge { display: inline-block; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.25rem; }
+        .paper-item { padding-left: 1rem; border-left: 3px solid #e5e7eb; margin-top: 0.75rem; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- JSON Loader -->
+    <div id="loader" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Load Conference Data</h2>
+            <p class="text-gray-600 mb-4">Select the conference-data.json file to begin:</p>
+            <input 
+                type="file" 
+                id="fileInput" 
+                accept=".json"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+            />
+            <div class="text-sm text-gray-500">
+                <p class="mb-2">Or if running from a web server, the JSON will load automatically.</p>
+                <p class="font-mono text-xs">Looking for: conference-data.json</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="hidden">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Header -->
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold text-gray-900 mb-2">ASPERA 2025 Conference</h1>
+                <p class="text-xl text-gray-600">Experiments in Screen | 25-27 November 2025</p>
+                
+                <!-- Legend -->
+                <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 rounded bg-blue-50 border border-blue-200"></div>
+                        <span>Panel Session</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 rounded bg-purple-50 border border-purple-200"></div>
+                        <span>ASPERA Panel</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 rounded bg-amber-50 border border-amber-200"></div>
+                        <span>Plenary</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-4 h-4 rounded bg-gray-50 border border-gray-200"></div>
+                        <span>Break/Meal</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search presentations, authors, topics..."
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Day</label>
+                        <select id="dayFilter" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Days</option>
+                            <option value="TUESDAY">Tuesday 25th</option>
+                            <option value="WEDNESDAY">Wednesday 26th</option>
+                            <option value="THURSDAY">Thursday 27th</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Venue</label>
+                        <select id="venueFilter" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Venues</option>
+                            <option value="29.G10">29.G10</option>
+                            <option value="29.G08">29.G08</option>
+                            <option value="29.G09">29.G09</option>
+                            <option value="29.G07">29.G07</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="space-y-6"></div>
+
+            <!-- No Results -->
+            <div id="noResults" class="hidden text-center py-12">
+                <p class="text-gray-500 text-lg">No sessions found matching your criteria</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="qrTitle"></h3>
+                <button onclick="closeQRModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex justify-center mb-4">
+                <canvas id="qrCanvas"></canvas>
+            </div>
+            <p class="text-center text-sm text-gray-600" id="qrInfo"></p>
+        </div>
+    </div>
+
+    <script>
+        let conferenceData = null;
+        let allEvents = [];
+        let allAbstracts = [];
+        let papersBySession = {};
+
+        // Try auto-load
+        async function tryAutoLoad() {
+            try {
+                const response = await fetch('conference-data.json');
+                const data = await response.json();
+                initializeApp(data);
+            } catch (error) {
+                console.log('Auto-load failed, showing file picker');
+            }
+        }
+
+        // Handle file selection
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        initializeApp(data);
+                    } catch (error) {
+                        alert('Error parsing JSON: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Initialize app
+        function initializeApp(data) {
+            conferenceData = data;
+            allEvents = data.events;
+            allAbstracts = data.abstracts;
+            papersBySession = data.papers_by_session || {};
+            
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            
+            renderEvents(allEvents);
+            setupEventListeners();
+            handleURLParams();
+        }
+
+        // Setup listeners
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterEvents);
+            document.getElementById('dayFilter').addEventListener('change', filterEvents);
+            document.getElementById('venueFilter').addEventListener('change', filterEvents);
+        }
+
+        // Filter events
+        function filterEvents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const dayFilter = document.getElementById('dayFilter').value;
+            const venueFilter = document.getElementById('venueFilter').value;
+
+            const filtered = allEvents.filter(event => {
+                if (dayFilter && !event.day.toUpperCase().includes(dayFilter)) return false;
+                if (venueFilter && event.venue !== venueFilter) return false;
+
+                if (searchTerm) {
+                    const searchable = `${event.content} ${event.day} ${event.time} ${event.venue}`.toLowerCase();
+                    
+                    // Search in papers for this session
+                    if (event.session_num && papersBySession[event.session_num]) {
+                        const papers = papersBySession[event.session_num];
+                        const paperText = papers.map(p => `${p.title} ${p.presenters || ''} ${p.abstract || ''}`).join(' ').toLowerCase();
+                        if (searchable.includes(searchTerm) || paperText.includes(searchTerm)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    
+                    if (!searchable.includes(searchTerm)) return false;
+                }
+                return true;
+            });
+
+            renderEvents(filtered);
+        }
+
+        // Get event styling
+        function getEventStyling(type) {
+            const styles = {
+                'break': { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-700', badge: 'Break' },
+                'welcome': { bg: 'bg-green-50', border: 'border-green-200', text: 'text-gray-900', badge: 'Welcome' },
+                'aspera-panel': { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-gray-900', badge: 'ASPERA Panel' },
+                'plenary': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-gray-900', badge: 'Plenary' },
+                'panel': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-gray-900', badge: 'Panel' },
+                'screening': { bg: 'bg-pink-50', border: 'border-pink-200', text: 'text-gray-900', badge: 'Screening' },
+                'townhall': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-gray-900', badge: 'Town Hall' },
+                'session': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-gray-900', badge: 'Session' }
+            };
+            return styles[type] || styles['session'];
+        }
+
+        // Format time
+        function formatTime(timeStr) {
+            if (timeStr.length === 3) return `${timeStr[0]}:${timeStr.substring(1)}`;
+            if (timeStr.length === 4) return `${timeStr.substring(0, 2)}:${timeStr.substring(2)}`;
+            return timeStr;
+        }
+
+        // Get venue color
+        function getVenueColor(venue) {
+            const colors = {
+                '29.G10': 'bg-blue-100 text-blue-800',
+                '29.G08': 'bg-green-100 text-green-800',
+                '29.G09': 'bg-purple-100 text-purple-800',
+                '29.G07': 'bg-orange-100 text-orange-800'
+            };
+            return colors[venue] || 'bg-gray-100 text-gray-800';
+        }
+
+        // Extract day name
+        function extractDayName(dayStr) {
+            if (dayStr.includes('TUESDAY')) return 'Tuesday, Nov 25';
+            if (dayStr.includes('WEDNESDAY')) return 'Wednesday, Nov 26';
+            if (dayStr.includes('THURSDAY')) return 'Thursday, Nov 27';
+            return dayStr;
+        }
+
+        // Extract panel title (first line)
+        function extractPanelTitle(content) {
+            return content.split('\n')[0];
+        }
+
+        // Render events
+        function renderEvents(events) {
+            const resultsDiv = document.getElementById('results');
+            const noResultsDiv = document.getElementById('noResults');
+
+            if (events.length === 0) {
+                resultsDiv.innerHTML = '';
+                noResultsDiv.classList.remove('hidden');
+                return;
+            }
+
+            noResultsDiv.classList.add('hidden');
+
+            // Group by day and time
+            const grouped = {};
+            events.forEach(event => {
+                const day = extractDayName(event.day);
+                if (!grouped[day]) grouped[day] = {};
+                if (!grouped[day][event.time]) grouped[day][event.time] = [];
+                grouped[day][event.time].push(event);
+            });
+
+            let html = '';
+            Object.keys(grouped).forEach(day => {
+                html += `
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                        <div class="bg-gray-900 text-white px-6 py-3">
+                            <h2 class="text-2xl font-bold">${day}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                `;
+
+                Object.keys(grouped[day]).sort().forEach(time => {
+                    const timeEvents = grouped[day][time];
+                    html += `
+                        <div class="p-6">
+                            <div class="flex items-start gap-6">
+                                <div class="flex-shrink-0 w-24">
+                                    <div class="text-2xl font-bold text-gray-900">${formatTime(time)}</div>
+                                    <button 
+                                        onclick="showQR('${day}', '${time}', ${JSON.stringify(timeEvents.map(e => e.venue)).replace(/"/g, '&quot;')})"
+                                        class="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                                    >
+                                        Show QR
+                                    </button>
+                                </div>
+                                <div class="flex-1 grid grid-cols-1 md:grid-cols-${timeEvents.length > 1 ? '2' : '1'} gap-4">
+                    `;
+
+                    timeEvents.forEach(event => {
+                        const styling = getEventStyling(event.type);
+                        const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
+                        const hasPapers = papers.length > 0;
+                        const uniqueId = `event-${day.replace(/\s/g,'-')}-${time}-${event.venue}`;
+                        const panelTitle = extractPanelTitle(event.content);
+                        
+                        html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-lg p-4">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="venue-badge ${getVenueColor(event.venue)}">${event.venue}</span>
+                                        <span class="text-xs px-2 py-1 ${styling.border} bg-white rounded">${styling.badge}</span>
+                                    </div>
+                                    ${hasPapers ? `
+                                        <button 
+                                            onclick="toggleDetails('${uniqueId}')"
+                                            class="text-xs text-blue-600 hover:text-blue-800"
+                                        >
+                                            View Papers (${papers.length})
+                                        </button>
+                                    ` : ''}
+                                </div>
+                                <div class="text-sm font-semibold ${styling.text} mb-1">${panelTitle}</div>
+                                ${event.content.split('\n').length > 1 ? `
+                                    <div class="text-xs text-gray-600 mt-1">${event.content.split('\n').slice(1).join('\n')}</div>
+                                ` : ''}
+                                
+                                ${hasPapers ? `
+                                    <div id="${uniqueId}" class="hidden mt-4 pt-4 border-t ${styling.border}">
+                                        <div class="space-y-3">
+                                            ${papers.map((paper, idx) => `
+                                                <div class="paper-item">
+                                                    <div class="text-sm font-medium text-gray-900">${paper.title}</div>
+                                                    ${paper.presenters ? `<div class="text-xs text-gray-600 mt-1">${paper.presenters}</div>` : ''}
+                                                    ${paper.abstract ? `
+                                                        <button 
+                                                            onclick="toggleAbstract('${uniqueId}-paper-${idx}')"
+                                                            class="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                                                        >
+                                                            Read Abstract
+                                                        </button>
+                                                        <div id="${uniqueId}-paper-${idx}" class="hidden mt-2 text-xs text-gray-600 whitespace-pre-line">${paper.abstract}</div>
+                                                    ` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Toggle details
+        function toggleDetails(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        // Toggle abstract
+        function toggleAbstract(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        // Show QR
+        function showQR(day, time, venues) {
+            document.getElementById('qrTitle').textContent = `${day} at ${formatTime(time)}`;
+            document.getElementById('qrInfo').textContent = `Venues: ${venues.join(', ')}`;
+
+            const url = `${window.location.origin}${window.location.pathname}?day=${encodeURIComponent(day)}&time=${time}`;
+            
+            new QRious({
+                element: document.getElementById('qrCanvas'),
+                value: url,
+                size: 256,
+                level: 'H'
+            });
+
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        // Close QR modal
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        // Handle URL params
+        function handleURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            const day = params.get('day');
+            const time = params.get('time');
+
+            if (day && time) {
+                setTimeout(() => {
+                    const elements = document.querySelectorAll('.text-2xl.font-bold.text-gray-900');
+                    elements.forEach(el => {
+                        if (el.textContent === formatTime(time)) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            el.parentElement.parentElement.parentElement.classList.add('ring-2', 'ring-blue-500');
+                        }
+                    });
+                }, 500);
+            }
+        }
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeQRModal();
+        });
+
+        // Auto-load
+        document.addEventListener('DOMContentLoaded', tryAutoLoad);
+    </script>
+</body>
+</html>
