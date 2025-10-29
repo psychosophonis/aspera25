@@ -5,18 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASPERA 2025 Conference Navigator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         .session-card { transition: all 0.2s; }
         .session-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .venue-badge { display: inline-block; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.25rem; }
-        .paper-item { padding-left: 1rem; border-left: 3px solid #e5e7eb; margin-top: 0.75rem; }
+        .venue-badge { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-weight: 600; }
+        .paper-item { 
+            padding: 1.5rem; 
+            background: white;
+            border-left: 3px solid #e5e7eb; 
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+        }
+        .reading-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            overflow-y: auto;
+            padding: 3rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .reading-content-wrapper {
+            background: white;
+            border: 2px solid #111827;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            max-width: 56rem;
+            width: 100%;
+            padding: 3rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.25rem;
+        }
+        @media (max-width: 768px) {
+            .reading-mode {
+                padding: 1rem;
+            }
+            .reading-content-wrapper {
+                padding: 1.5rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
     <!-- JSON Loader -->
     <div id="loader" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-lg p-8 max-w-md">
+        <div class="bg-white rounded-sm shadow-lg p-8 max-w-md">
             <h2 class="text-2xl font-bold mb-4">Load Conference Data</h2>
             <p class="text-gray-600 mb-4">Select the conference-data.json file to begin:</p>
             <input 
@@ -36,45 +76,49 @@
         <div class="max-w-7xl mx-auto px-4 py-8">
             <!-- Header -->
             <header class="mb-8">
-                <h1 class="text-4xl font-bold text-gray-900 mb-2">ASPERA 2025 Conference</h1>
-                <p class="text-xl text-gray-600">Experiments in Screen | 25-27 November 2025</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">ASPERA 2025</h1>
+                <p class="text-xl md:text-2xl text-gray-600">Experiments in Screen | 25-27 November 2025</p>
                 
                 <!-- Legend -->
-                <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                <div class="mt-6 flex flex-wrap gap-4 text-base">
                     <div class="flex items-center gap-2">
-                        <div class="w-4 h-4 rounded bg-blue-50 border border-blue-200"></div>
+                        <div class="w-5 h-5 rounded bg-blue-50 border border-blue-300"></div>
                         <span>Panel Session</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <div class="w-4 h-4 rounded bg-purple-50 border border-purple-200"></div>
+                        <div class="w-5 h-5 rounded bg-cyan-50 border border-cyan-300"></div>
+                        <span>Presentation</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-purple-50 border border-purple-300"></div>
                         <span>ASPERA Panel</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <div class="w-4 h-4 rounded bg-amber-50 border border-amber-200"></div>
+                        <div class="w-5 h-5 rounded bg-amber-50 border border-amber-300"></div>
                         <span>Plenary</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <div class="w-4 h-4 rounded bg-gray-50 border border-gray-200"></div>
+                        <div class="w-5 h-5 rounded bg-gray-100 border border-gray-300"></div>
                         <span>Break/Meal</span>
                     </div>
                 </div>
             </header>
 
             <!-- Filters -->
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="bg-white rounded-sm shadow-sm p-6 mb-6">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                        <label class="block text-base font-medium text-gray-700 mb-2">Search</label>
                         <input 
                             type="text" 
                             id="searchInput" 
                             placeholder="Search presentations, authors, topics..."
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Day</label>
-                        <select id="dayFilter" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Day</label>
+                        <select id="dayFilter" class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">All Days</option>
                             <option value="TUESDAY">Tuesday 25th</option>
                             <option value="WEDNESDAY">Wednesday 26th</option>
@@ -82,8 +126,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Venue</label>
-                        <select id="venueFilter" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Venue</label>
+                        <select id="venueFilter" class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">All Venues</option>
                             <option value="29.G10">29.G10</option>
                             <option value="29.G08">29.G08</option>
@@ -99,26 +143,18 @@
 
             <!-- No Results -->
             <div id="noResults" class="hidden text-center py-12">
-                <p class="text-gray-500 text-lg">No sessions found matching your criteria</p>
+                <p class="text-gray-500 text-xl">No sessions found matching your criteria</p>
             </div>
         </div>
     </div>
 
-    <!-- QR Code Modal -->
-    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold" id="qrTitle"></h3>
-                <button onclick="closeQRModal()" class="text-gray-500 hover:text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="flex justify-center mb-4">
-                <canvas id="qrCanvas"></canvas>
-            </div>
-            <p class="text-center text-sm text-gray-600" id="qrInfo"></p>
+    <!-- Reading Mode -->
+    <div id="readingMode" class="hidden reading-mode">
+        <div class="reading-content-wrapper">
+            <button onclick="closeReadingMode()" class="float-right bg-gray-900 text-white px-6 py-3 rounded-sm hover:bg-gray-700 text-base font-medium">
+                Close
+            </button>
+            <div id="readingContent" class="clear-both"></div>
         </div>
     </div>
 
@@ -127,6 +163,7 @@
         let allEvents = [];
         let allAbstracts = [];
         let papersBySession = {};
+        let panelDescriptions = {};
 
         // Try auto-load
         async function tryAutoLoad() {
@@ -162,20 +199,98 @@
             allEvents = data.events;
             allAbstracts = data.abstracts;
             papersBySession = data.papers_by_session || {};
+            panelDescriptions = data.panel_descriptions || {};
             
             document.getElementById('loader').classList.add('hidden');
             document.getElementById('app').classList.remove('hidden');
             
-            renderEvents(allEvents);
-            setupEventListeners();
-            handleURLParams();
-        }
-
-        // Setup listeners
-        function setupEventListeners() {
+            // Setup filters
             document.getElementById('searchInput').addEventListener('input', filterEvents);
             document.getElementById('dayFilter').addEventListener('change', filterEvents);
             document.getElementById('venueFilter').addEventListener('change', filterEvents);
+            
+            // Initial render
+            filterEvents();
+            handleURLParams();
+        }
+
+        // Extract day name
+        function extractDayName(dayString) {
+            if (dayString.includes('TUESDAY')) return 'TUESDAY';
+            if (dayString.includes('WEDNESDAY')) return 'WEDNESDAY';
+            if (dayString.includes('THURSDAY')) return 'THURSDAY';
+            return dayString;
+        }
+
+        // Format time
+        function formatTime(time) {
+            if (time.length === 3) time = '0' + time;
+            return time.slice(0, 2) + ':' + time.slice(2);
+        }
+
+        // Get venue color
+        function getVenueColor(venue) {
+            const colors = {
+                '29.G10': 'bg-blue-100 text-blue-800 border-blue-200',
+                '29.G08': 'bg-green-100 text-green-800 border-green-200',
+                '29.G09': 'bg-purple-100 text-purple-800 border-purple-200',
+                '29.G07': 'bg-pink-100 text-pink-800 border-pink-200'
+            };
+            return colors[venue] || 'bg-gray-100 text-gray-800 border-gray-200';
+        }
+
+        // Get event styling
+        function getEventStyling(type) {
+            const styles = {
+                'panel': {
+                    bg: 'bg-blue-50',
+                    border: 'border-blue-200',
+                    text: 'text-blue-900',
+                    badge: 'Panel'
+                },
+                'presentation': {
+                    bg: 'bg-cyan-50',
+                    border: 'border-cyan-200',
+                    text: 'text-cyan-900',
+                    badge: 'Presentation'
+                },
+                'aspera-panel': {
+                    bg: 'bg-purple-50',
+                    border: 'border-purple-200',
+                    text: 'text-purple-900',
+                    badge: 'ASPERA Panel'
+                },
+                'plenary': {
+                    bg: 'bg-amber-50',
+                    border: 'border-amber-200',
+                    text: 'text-amber-900',
+                    badge: 'Plenary'
+                },
+                'break': {
+                    bg: 'bg-gray-50',
+                    border: 'border-gray-200',
+                    text: 'text-gray-900',
+                    badge: 'Break'
+                },
+                'screening': {
+                    bg: 'bg-pink-50',
+                    border: 'border-pink-200',
+                    text: 'text-pink-900',
+                    badge: 'Screening'
+                },
+                'townhall': {
+                    bg: 'bg-indigo-50',
+                    border: 'border-indigo-200',
+                    text: 'text-indigo-900',
+                    badge: 'Town Hall'
+                }
+            };
+            return styles[type] || styles['break'];
+        }
+
+        // Extract panel title
+        function extractPanelTitle(content) {
+            return content.split('\n')[0];
         }
 
         // Filter events
@@ -184,90 +299,41 @@
             const dayFilter = document.getElementById('dayFilter').value;
             const venueFilter = document.getElementById('venueFilter').value;
 
-            const filtered = allEvents.filter(event => {
-                if (dayFilter && !event.day.toUpperCase().includes(dayFilter)) return false;
+            let filtered = allEvents.filter(event => {
+                // Day filter
+                if (dayFilter && !event.day.includes(dayFilter)) return false;
+                
+                // Venue filter
                 if (venueFilter && event.venue !== venueFilter) return false;
-
+                
+                // Search filter
                 if (searchTerm) {
-                    const searchable = `${event.content} ${event.day} ${event.time} ${event.venue}`.toLowerCase();
-                    
-                    // Search in papers for this session
-                    if (event.session_num && papersBySession[event.session_num]) {
-                        const papers = papersBySession[event.session_num];
-                        const paperText = papers.map(p => `${p.title} ${p.presenters || ''} ${p.abstract || ''}`).join(' ').toLowerCase();
-                        if (searchable.includes(searchTerm) || paperText.includes(searchTerm)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                    
-                    if (!searchable.includes(searchTerm)) return false;
+                    const contentMatch = event.content.toLowerCase().includes(searchTerm);
+                    const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
+                    const paperMatch = papers.some(paper => 
+                        (paper.title && paper.title.toLowerCase().includes(searchTerm)) ||
+                        (paper.presenters && paper.presenters.toLowerCase().includes(searchTerm)) ||
+                        (paper.abstract && paper.abstract.toLowerCase().includes(searchTerm))
+                    );
+                    if (!contentMatch && !paperMatch) return false;
                 }
+                
                 return true;
             });
 
-            renderEvents(filtered);
-        }
-
-        // Get event styling
-        function getEventStyling(type) {
-            const styles = {
-                'break': { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-700', badge: 'Break' },
-                'welcome': { bg: 'bg-green-50', border: 'border-green-200', text: 'text-gray-900', badge: 'Welcome' },
-                'aspera-panel': { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-gray-900', badge: 'ASPERA Panel' },
-                'plenary': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-gray-900', badge: 'Plenary' },
-                'panel': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-gray-900', badge: 'Panel' },
-                'screening': { bg: 'bg-pink-50', border: 'border-pink-200', text: 'text-gray-900', badge: 'Screening' },
-                'townhall': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-gray-900', badge: 'Town Hall' },
-                'session': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-gray-900', badge: 'Session' }
-            };
-            return styles[type] || styles['session'];
-        }
-
-        // Format time
-        function formatTime(timeStr) {
-            if (timeStr.length === 3) return `${timeStr[0]}:${timeStr.substring(1)}`;
-            if (timeStr.length === 4) return `${timeStr.substring(0, 2)}:${timeStr.substring(2)}`;
-            return timeStr;
-        }
-
-        // Get venue color
-        function getVenueColor(venue) {
-            const colors = {
-                '29.G10': 'bg-blue-100 text-blue-800',
-                '29.G08': 'bg-green-100 text-green-800',
-                '29.G09': 'bg-purple-100 text-purple-800',
-                '29.G07': 'bg-orange-100 text-orange-800'
-            };
-            return colors[venue] || 'bg-gray-100 text-gray-800';
-        }
-
-        // Extract day name
-        function extractDayName(dayStr) {
-            if (dayStr.includes('TUESDAY')) return 'Tuesday, Nov 25';
-            if (dayStr.includes('WEDNESDAY')) return 'Wednesday, Nov 26';
-            if (dayStr.includes('THURSDAY')) return 'Thursday, Nov 27';
-            return dayStr;
-        }
-
-        // Extract panel title (first line)
-        function extractPanelTitle(content) {
-            return content.split('\n')[0];
+            if (filtered.length === 0) {
+                document.getElementById('results').innerHTML = '';
+                document.getElementById('noResults').classList.remove('hidden');
+            } else {
+                document.getElementById('noResults').classList.add('hidden');
+                renderEvents(filtered);
+            }
         }
 
         // Render events
         function renderEvents(events) {
             const resultsDiv = document.getElementById('results');
-            const noResultsDiv = document.getElementById('noResults');
-
-            if (events.length === 0) {
-                resultsDiv.innerHTML = '';
-                noResultsDiv.classList.remove('hidden');
-                return;
-            }
-
-            noResultsDiv.classList.add('hidden');
-
+            
             // Group by day and time
             const grouped = {};
             events.forEach(event => {
@@ -280,81 +346,108 @@
             let html = '';
             Object.keys(grouped).forEach(day => {
                 html += `
-                    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                        <div class="bg-gray-900 text-white px-6 py-3">
-                            <h2 class="text-2xl font-bold">${day}</h2>
+                    <div class="bg-white rounded-sm shadow-md overflow-hidden">
+                        <div class="bg-gray-900 text-white px-6 py-4">
+                            <h2 class="text-2xl md:text-3xl font-bold">${day}</h2>
                         </div>
                         <div class="divide-y divide-gray-200">
                 `;
 
-                Object.keys(grouped[day]).sort().forEach(time => {
+                Object.keys(grouped[day]).sort((a, b) => parseInt(a) - parseInt(b)).forEach(time => {
                     const timeEvents = grouped[day][time];
                     html += `
                         <div class="p-6">
-                            <div class="flex items-start gap-6">
-                                <div class="flex-shrink-0 w-24">
-                                    <div class="text-2xl font-bold text-gray-900">${formatTime(time)}</div>
-                                    <button 
-                                        onclick="showQR('${day}', '${time}', ${JSON.stringify(timeEvents.map(e => e.venue)).replace(/"/g, '&quot;')})"
-                                        class="text-xs text-blue-600 hover:text-blue-800 mt-1"
-                                    >
-                                        Show QR
-                                    </button>
+                            <div class="flex items-start gap-4 md:gap-6">
+                                <div class="flex-shrink-0 w-16">
+                                    <div class="text-xl md:text-2xl font-bold text-gray-900">${formatTime(time)}</div>
                                 </div>
                                 <div class="flex-1 grid grid-cols-1 md:grid-cols-${timeEvents.length > 1 ? '2' : '1'} gap-4">
                     `;
 
                     timeEvents.forEach(event => {
-                        const styling = getEventStyling(event.type);
                         const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
                         const hasPapers = papers.length > 0;
-                        const uniqueId = `event-${day.replace(/\s/g,'-')}-${time}-${event.venue}`;
-                        const panelTitle = extractPanelTitle(event.content);
+                        const isSinglePresentation = papers.length === 1;
                         
-                        html += `
-                            <div class="session-card border ${styling.border} ${styling.bg} rounded-lg p-4">
-                                <div class="flex items-start justify-between mb-2">
-                                    <div class="flex items-center gap-2">
-                                        <span class="venue-badge ${getVenueColor(event.venue)}">${event.venue}</span>
-                                        <span class="text-xs px-2 py-1 ${styling.border} bg-white rounded">${styling.badge}</span>
+                        // Use 'presentation' type for single-paper sessions
+                        const eventType = isSinglePresentation ? 'presentation' : event.type;
+                        const styling = getEventStyling(eventType);
+                        
+                        const uniqueId = `event-${day.replace(/\s/g,'-')}-${time}-${event.venue.replace(/\./g,'-')}`;
+                        const panelTitle = extractPanelTitle(event.content);
+                        const description = panelDescriptions[event.session_num] || "";
+                        
+                        // Single presentation - flat structure with Read Description at top-right
+                        if (isSinglePresentation && papers[0].abstract) {
+                            const paper = papers[0];
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
-                                    ${hasPapers ? `
+                                    <button 
+                                        onclick="openReadingMode('${event.session_num}', 0)"
+                                        class="text-sm font-medium text-cyan-600 hover:text-cyan-800 bg-white px-3 py-1 rounded-full border border-cyan-200"
+                                    >
+                                        Read Description
+                                    </button>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                ${description ? `
+                                    <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                ` : ''}
+                                ${paper.presenters ? `<div class="text-sm md:text-base text-gray-700 mt-2">${paper.presenters}</div>` : ''}
+                            </div>
+                            `;
+                        } else {
+                            // Multi-paper panel or no papers - original nested structure
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    ${hasPapers && !isSinglePresentation ? `
                                         <button 
                                             onclick="toggleDetails('${uniqueId}')"
-                                            class="text-xs text-blue-600 hover:text-blue-800"
+                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
                                         >
                                             View Papers (${papers.length})
                                         </button>
                                     ` : ''}
                                 </div>
-                                <div class="text-sm font-semibold ${styling.text} mb-1">${panelTitle}</div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                ${description ? `
+                                    <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                ` : ''}
                                 ${event.content.split('\n').length > 1 ? `
-                                    <div class="text-xs text-gray-600 mt-1">${event.content.split('\n').slice(1).join('\n')}</div>
+                                    <div class="text-sm md:text-base text-gray-700 mt-2">${event.content.split('\n').slice(1).join('\n')}</div>
                                 ` : ''}
                                 
-                                ${hasPapers ? `
-                                    <div id="${uniqueId}" class="hidden mt-4 pt-4 border-t ${styling.border}">
-                                        <div class="space-y-3">
-                                            ${papers.map((paper, idx) => `
-                                                <div class="paper-item">
-                                                    <div class="text-sm font-medium text-gray-900">${paper.title}</div>
-                                                    ${paper.presenters ? `<div class="text-xs text-gray-600 mt-1">${paper.presenters}</div>` : ''}
-                                                    ${paper.abstract ? `
-                                                        <button 
-                                                            onclick="toggleAbstract('${uniqueId}-paper-${idx}')"
-                                                            class="text-xs text-blue-600 hover:text-blue-800 mt-1"
-                                                        >
-                                                            Read Abstract
-                                                        </button>
-                                                        <div id="${uniqueId}-paper-${idx}" class="hidden mt-2 text-xs text-gray-600 whitespace-pre-line">${paper.abstract}</div>
-                                                    ` : ''}
-                                                </div>
-                                            `).join('')}
-                                        </div>
+                                ${hasPapers && !isSinglePresentation ? `
+                                    <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                        ${papers.map((paper, idx) => `
+                                            <div class="paper-item bg-white border border-gray-200">
+                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
+                                                ${paper.presenters ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.presenters}</div>` : ''}
+                                                ${paper.abstract ? `
+                                                    <button 
+                                                        onclick="openReadingMode('${event.session_num}', ${idx})"
+                                                        class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200"
+                                                    >
+                                                        Read Paper
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
                                     </div>
                                 ` : ''}
                             </div>
-                        `;
+                            `;
+                        }
                     });
 
                     html += `
@@ -378,58 +471,77 @@
             document.getElementById(id).classList.toggle('hidden');
         }
 
-        // Toggle abstract
-        function toggleAbstract(id) {
-            document.getElementById(id).classList.toggle('hidden');
-        }
-
-        // Show QR
-        function showQR(day, time, venues) {
-            document.getElementById('qrTitle').textContent = `${day} at ${formatTime(time)}`;
-            document.getElementById('qrInfo').textContent = `Venues: ${venues.join(', ')}`;
-
-            const url = `${window.location.origin}${window.location.pathname}?day=${encodeURIComponent(day)}&time=${time}`;
+        // Open reading mode for individual paper
+        function openReadingMode(sessionNum, paperIndex) {
+            const paper = papersBySession[sessionNum][paperIndex];
+            const readingContent = document.getElementById('readingContent');
             
-            new QRious({
-                element: document.getElementById('qrCanvas'),
-                value: url,
-                size: 256,
-                level: 'H'
-            });
-
-            document.getElementById('qrModal').classList.remove('hidden');
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${paper.title}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">${paper.presenters}</p>
+                    ${paper.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${paper.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Close QR modal
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.add('hidden');
+        // Close reading mode
+        function closeReadingMode() {
+            document.getElementById('readingMode').classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
 
-        // Handle URL params
+        // Handle URL params - venue, day, and time
         function handleURLParams() {
             const params = new URLSearchParams(window.location.search);
+            const venue = params.get('venue');
             const day = params.get('day');
             const time = params.get('time');
 
-            if (day && time) {
+            if (venue) {
+                document.getElementById('venueFilter').value = venue;
+            }
+            if (day) {
+                const dayMap = {
+                    'TUESDAY': 'TUESDAY',
+                    'WEDNESDAY': 'WEDNESDAY',
+                    'THURSDAY': 'THURSDAY'
+                };
+                if (dayMap[day]) {
+                    document.getElementById('dayFilter').value = dayMap[day];
+                }
+            }
+            
+            filterEvents();
+            
+            if (time) {
                 setTimeout(() => {
-                    const elements = document.querySelectorAll('.text-2xl.font-bold.text-gray-900');
-                    elements.forEach(el => {
+                    const timeElements = document.querySelectorAll('.text-xl.md\\:text-2xl.font-bold.text-gray-900');
+                    timeElements.forEach(el => {
                         if (el.textContent === formatTime(time)) {
                             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            el.parentElement.parentElement.parentElement.classList.add('ring-2', 'ring-blue-500');
+                            el.parentElement.parentElement.parentElement.classList.add('ring-4', 'ring-blue-500', 'ring-offset-2');
                         }
                     });
                 }, 500);
             }
         }
 
-        // Keyboard
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeQRModal();
+            if (e.key === 'Escape') {
+                closeReadingMode();
+            }
         });
 
-        // Auto-load
+        // Auto-load on page load
         document.addEventListener('DOMContentLoaded', tryAutoLoad);
     </script>
 </body>
