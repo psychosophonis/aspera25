@@ -76,11 +76,11 @@
         <div class="max-w-7xl mx-auto px-4 py-8">
             <!-- Header -->
             <header class="mb-8">
-                <div class="flex items-center gap-6 mb-4">
-                    <img src="aspera-logo.png" alt="ASPERA" class="h-24 md:h-28 w-auto" />
+                <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-4">
+                    <img src="aspera-logo.png" alt="ASPERA" class="h-16 md:h-28 w-auto" />
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900">ASPERA 2025: Experiments in Screen</h1>
-                        <p class="text-lg md:text-xl text-gray-600">25-27 November 2025 | University of Wollongong</p>
+                        <h1 class="text-2xl md:text-4xl font-bold text-gray-900">ASPERA 2025: Experiments in Screen</h1>
+                        <p class="text-base md:text-xl text-gray-600 mt-1">25-27 November 2025 | University of Wollongong</p>
                     </div>
                 </div>
                 
@@ -398,14 +398,14 @@
                             if (session.papers && session.papers.length > 0) {
                                 html += `
                                 <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <div class="flex items-center gap-3">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                        <div class="flex items-center gap-3 flex-wrap">
                                             <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                             <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                         </div>
                                         <button 
                                             onclick="toggleDetails('${uniqueId}')"
-                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200 whitespace-nowrap self-start"
                                         >
                                             View Papers (${session.papers.length})
                                         </button>
@@ -443,14 +443,14 @@
                             else {
                                 html += `
                                 <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <div class="flex items-center gap-3">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                        <div class="flex items-center gap-3 flex-wrap">
                                             <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                             <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                         </div>
                                         <button 
                                             onclick="openReadingModeSession('${event.session_num}')"
-                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200 whitespace-nowrap self-start"
                                         >
                                             Read Presentation
                                         </button>
@@ -474,14 +474,14 @@
                             const paper = session.papers[0];
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
                                         <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
                                     <button 
                                         onclick="openReadingModePaper('${event.session_num}', 0)"
-                                        class="text-sm font-medium text-cyan-600 hover:text-cyan-800 bg-white px-3 py-1 rounded-full border border-cyan-200"
+                                        class="text-sm font-medium text-cyan-600 hover:text-cyan-800 bg-white px-3 py-1 rounded-full border border-cyan-200 whitespace-nowrap self-start"
                                     >
                                         Read Paper
                                     </button>
@@ -503,14 +503,14 @@
                             const styling = getEventStyling(sessionType);
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
                                         <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
                                     <button 
                                         onclick="toggleDetails('${uniqueId}')"
-                                        class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
+                                        class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200 whitespace-nowrap self-start"
                                     >
                                         View Papers (${session.papers.length})
                                     </button>
@@ -549,14 +549,14 @@
                             const styling = getEventStyling('screening');
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
                                         <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
                                     <button 
                                         onclick="toggleDetails('${uniqueId}')"
-                                        class="text-sm font-medium text-pink-600 hover:text-pink-800 bg-white px-3 py-1 rounded-full border border-pink-200"
+                                        class="text-sm font-medium text-pink-600 hover:text-pink-800 bg-white px-3 py-1 rounded-full border border-pink-200 whitespace-nowrap self-start"
                                     >
                                         View Films (${event.films.length})
                                     </button>
@@ -607,15 +607,15 @@
                             
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
                                         <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
                                     ${isPlenaryWithAbstract ? `
                                         <button 
                                             onclick="openReadingModePlenary(${JSON.stringify(event).replace(/"/g, '&quot;')})"
-                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
+                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200 whitespace-nowrap self-start"
                                         >
                                             Read Abstract
                                         </button>
