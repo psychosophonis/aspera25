@@ -90,6 +90,10 @@
                         <span>Presentation</span>
                     </div>
                     <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-teal-50 border border-teal-300"></div>
+                        <span>Group Presentation</span>
+                    </div>
+                    <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-purple-50 border border-purple-300"></div>
                         <span>ASPERA Panel</span>
                     </div>
@@ -151,18 +155,17 @@
     <!-- Reading Mode -->
     <div id="readingMode" class="hidden reading-mode">
         <div class="reading-content-wrapper">
-            <button onclick="closeReadingMode()" class="float-right bg-gray-900 text-white px-6 py-3 rounded-sm hover:bg-gray-700 text-base font-medium">
+            <button onclick="closeReadingMode()" class="float-right bg-gray-900 text-white px-6 py-3 rounded-sm hover:bg-gray-700 text-base font-medium mb-8">
                 Close
             </button>
-            <div id="readingContent" class="clear-both"></div>
+            <div id="readingContent" class="clear-both pt-4"></div>
         </div>
     </div>
 
     <script>
         let conferenceData = null;
         let allEvents = [];
-        let allAbstracts = [];
-        let papersBySession = {};
+        let sessions = {};
         let panelDescriptions = {};
 
         // Try auto-load
@@ -197,8 +200,7 @@
         function initializeApp(data) {
             conferenceData = data;
             allEvents = data.events;
-            allAbstracts = data.abstracts;
-            papersBySession = data.papers_by_session || {};
+            sessions = data.sessions || {};
             panelDescriptions = data.panel_descriptions || {};
             
             document.getElementById('loader').classList.add('hidden');
@@ -253,6 +255,12 @@
                     border: 'border-cyan-200',
                     text: 'text-cyan-900',
                     badge: 'Presentation'
+                },
+                'group-presentation': {
+                    bg: 'bg-teal-50',
+                    border: 'border-teal-200',
+                    text: 'text-teal-900',
+                    badge: 'Group Presentation'
                 },
                 'aspera-panel': {
                     bg: 'bg-purple-50',
@@ -312,7 +320,10 @@
                     const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
                     const paperMatch = papers.some(paper => 
                         (paper.title && paper.title.toLowerCase().includes(searchTerm)) ||
-                        (paper.presenters && paper.presenters.toLowerCase().includes(searchTerm)) ||
+                        (paper.authors && paper.authors.some(a => 
+                            (a.name && a.name.toLowerCase().includes(searchTerm)) ||
+                            (a.institution && a.institution.toLowerCase().includes(searchTerm))
+                        )) ||
                         (paper.abstract && paper.abstract.toLowerCase().includes(searchTerm))
                     );
                     if (!contentMatch && !paperMatch) return false;
@@ -365,21 +376,97 @@
                     `;
 
                     timeEvents.forEach(event => {
-                        const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
-                        const hasPapers = papers.length > 0;
-                        const isSinglePresentation = papers.length === 1;
-                        
-                        // Use 'presentation' type for single-paper sessions
-                        const eventType = isSinglePresentation ? 'presentation' : event.type;
-                        const styling = getEventStyling(eventType);
+                        // Get session data if this event has a session_num
+                        const session = event.session_num && sessions[event.session_num] ? sessions[event.session_num] : null;
+                        const sessionType = session ? session.type : event.type;
                         
                         const uniqueId = `event-${day.replace(/\s/g,'-')}-${time}-${event.venue.replace(/\./g,'-')}`;
                         const panelTitle = extractPanelTitle(event.content);
                         const description = panelDescriptions[event.session_num] || "";
                         
-                        // Single presentation - flat structure with Read Description at top-right
-                        if (isSinglePresentation && papers[0].abstract) {
-                            const paper = papers[0];
+                        // CASE 1: Group Presentation (multiple presenters)
+                        // Can have papers (like themed panels) or just presenters
+                        if (session && session.type === 'group-presentation') {
+                            const styling = getEventStyling('group-presentation');
+                            
+                            // CASE 1a: Group Presentation WITH papers (render like a panel with papers)
+                            if (session.papers && session.papers.length > 0) {
+                                html += `
+                                <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center gap-3">
+                                            <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                            <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                        </div>
+                                        <button 
+                                            onclick="toggleDetails('${uniqueId}')"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200"
+                                        >
+                                            View Papers (${session.papers.length})
+                                        </button>
+                                    </div>
+                                    <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                    ${description ? `
+                                        <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                    ` : ''}
+                                    ${session.presenters && session.presenters.length > 0 ? `
+                                        <div class="text-sm text-gray-600 mt-2 mb-1">
+                                            ${session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ')}
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                        ${session.papers.map((paper, idx) => `
+                                            <div class="paper-item bg-white border border-gray-200">
+                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
+                                                ${paper.authors && paper.authors.length > 0 ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}</div>` : ''}
+                                                ${paper.abstract ? `
+                                                    <button 
+                                                        onclick="openReadingModePaper('${event.session_num}', ${idx})"
+                                                        class="text-sm md:text-base font-medium text-teal-600 hover:text-teal-800 bg-teal-50 px-4 py-2 rounded-sm border border-teal-200"
+                                                    >
+                                                        Read Paper
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            // CASE 1b: Group Presentation WITHOUT papers (just presenters and abstract)
+                            else {
+                                html += `
+                                <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex items-center gap-3">
+                                            <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                            <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                        </div>
+                                        <button 
+                                            onclick="openReadingModeSession('${event.session_num}')"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200"
+                                        >
+                                            Read Presentation
+                                        </button>
+                                    </div>
+                                    <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                    ${description ? `
+                                        <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                    ` : ''}
+                                    ${session.presenters && session.presenters.length > 0 ? `
+                                        <div class="text-sm md:text-base text-gray-700 mt-2">
+                                            ${session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                `;
+                            }
+                        }
+                        // CASE 2: Single-paper session (treat as presentation)
+                        else if (session && session.papers && session.papers.length === 1) {
+                            const styling = getEventStyling('presentation');
+                            const paper = session.papers[0];
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
                                 <div class="flex items-start justify-between mb-3">
@@ -388,21 +475,27 @@
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
                                     <button 
-                                        onclick="openReadingMode('${event.session_num}', 0)"
+                                        onclick="openReadingModePaper('${event.session_num}', 0)"
                                         class="text-sm font-medium text-cyan-600 hover:text-cyan-800 bg-white px-3 py-1 rounded-full border border-cyan-200"
                                     >
-                                        Read Description
+                                        Read Paper
                                     </button>
                                 </div>
                                 <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
                                 ${description ? `
                                     <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
                                 ` : ''}
-                                ${paper.presenters ? `<div class="text-sm md:text-base text-gray-700 mt-2">${paper.presenters}</div>` : ''}
+                                ${paper.authors && paper.authors.length > 0 ? `
+                                    <div class="text-sm md:text-base text-gray-700 mt-2">
+                                        ${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}
+                                    </div>
+                                ` : ''}
                             </div>
                             `;
-                        } else {
-                            // Multi-paper panel or no papers - original nested structure
+                        }
+                        // CASE 3: Multi-paper panel (show expandable list of papers)
+                        else if (session && session.papers && session.papers.length > 1) {
+                            const styling = getEventStyling(sessionType);
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
                                 <div class="flex items-start justify-between mb-3">
@@ -410,40 +503,66 @@
                                         <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
                                         <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
                                     </div>
-                                    ${hasPapers && !isSinglePresentation ? `
-                                        <button 
-                                            onclick="toggleDetails('${uniqueId}')"
-                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
-                                        >
-                                            View Papers (${papers.length})
-                                        </button>
-                                    ` : ''}
+                                    <button 
+                                        onclick="toggleDetails('${uniqueId}')"
+                                        class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
+                                    >
+                                        View Papers (${session.papers.length})
+                                    </button>
                                 </div>
                                 <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
                                 ${description ? `
                                     <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
                                 ` : ''}
-                                ${event.content.split('\n').length > 1 ? `
-                                    <div class="text-sm md:text-base text-gray-700 mt-2">${event.content.split('\n').slice(1).join('\n')}</div>
+                                ${session.papers && session.papers.length > 0 ? `
+                                    <div class="text-sm text-gray-600 mt-2 mb-1">
+                                        ${session.papers.map(p => p.authors && p.authors.length > 0 ? p.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ') : '').filter(a => a).join('; ')}
+                                    </div>
                                 ` : ''}
                                 
-                                ${hasPapers && !isSinglePresentation ? `
-                                    <div id="${uniqueId}" class="hidden mt-4 space-y-2">
-                                        ${papers.map((paper, idx) => `
-                                            <div class="paper-item bg-white border border-gray-200">
-                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
-                                                ${paper.presenters ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.presenters}</div>` : ''}
-                                                ${paper.abstract ? `
-                                                    <button 
-                                                        onclick="openReadingMode('${event.session_num}', ${idx})"
-                                                        class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200"
-                                                    >
-                                                        Read Paper
-                                                    </button>
-                                                ` : ''}
-                                            </div>
-                                        `).join('')}
+                                <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                    ${session.papers.map((paper, idx) => `
+                                        <div class="paper-item bg-white border border-gray-200">
+                                            <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
+                                            ${paper.authors && paper.authors.length > 0 ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}</div>` : ''}
+                                            ${paper.abstract ? `
+                                                <button 
+                                                    onclick="openReadingModePaper('${event.session_num}', ${idx})"
+                                                    class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200"
+                                                >
+                                                    Read Paper
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            `;
+                        }
+                        // CASE 4: Events without sessions (breaks, plenaries, etc.)
+                        else {
+                            const styling = getEventStyling(event.type);
+                            const isPlenaryWithAbstract = event.type === 'plenary' && event.abstract;
+                            
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                    <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${event.content}</div>
+                                ${event.presenters ? `
+                                    <div class="text-sm md:text-base text-gray-700 mb-2">
+                                        ${event.presenters}${event.affiliation ? ' / ' + event.affiliation : ''}
                                     </div>
+                                ` : ''}
+                                ${isPlenaryWithAbstract ? `
+                                    <button 
+                                        onclick="openReadingModePlenary(${JSON.stringify(event).replace(/"/g, '&quot;')})"
+                                        class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200 mt-2"
+                                    >
+                                        Read Abstract
+                                    </button>
                                 ` : ''}
                             </div>
                             `;
@@ -472,17 +591,69 @@
         }
 
         // Open reading mode for individual paper
-        function openReadingMode(sessionNum, paperIndex) {
-            const paper = papersBySession[sessionNum][paperIndex];
+        function openReadingModePaper(sessionNum, paperIndex) {
+            const session = sessions[sessionNum];
+            if (!session || !session.papers || !session.papers[paperIndex]) return;
+            
+            const paper = session.papers[paperIndex];
             const readingContent = document.getElementById('readingContent');
             
             readingContent.innerHTML = `
                 <div class="prose prose-lg max-w-none">
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${paper.title}</h1>
-                    <p class="text-xl md:text-2xl text-gray-700 mb-8">${paper.presenters}</p>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${paper.authors ? paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ') : ''}
+                    </p>
                     ${paper.abstract ? `
                         <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
                             ${paper.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open reading mode for group presentation
+        function openReadingModeSession(sessionNum) {
+            const session = sessions[sessionNum];
+            if (!session) return;
+            
+            const readingContent = document.getElementById('readingContent');
+            
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${session.title}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${session.presenters ? session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ') : ''}
+                    </p>
+                    ${session.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${session.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open reading mode for plenary
+        function openReadingModePlenary(event) {
+            const readingContent = document.getElementById('readingContent');
+            
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${event.content}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${event.presenters}${event.affiliation ? ' / ' + event.affiliation : ''}
+                    </p>
+                    ${event.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${event.abstract}
                         </div>
                     ` : ''}
                 </div>
