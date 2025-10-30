@@ -539,30 +539,88 @@
                             </div>
                             `;
                         }
-                        // CASE 4: Events without sessions (breaks, plenaries, etc.)
+                        // CASE 4A: Screenings with films
+                        else if (event.type === 'screening' && event.films && event.films.length > 0) {
+                            const styling = getEventStyling('screening');
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    <button 
+                                        onclick="toggleDetails('${uniqueId}')"
+                                        class="text-sm font-medium text-pink-600 hover:text-pink-800 bg-white px-3 py-1 rounded-full border border-pink-200"
+                                    >
+                                        View Films (${event.films.length})
+                                    </button>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${event.content}</div>
+                                
+                                <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                    ${event.films.map((film, idx) => {
+                                        const creatives = film.creatives && film.creatives.length > 0 
+                                            ? film.creatives.map(c => `${c.name}${c.institution ? ' / ' + c.institution : ''}`).join(', ')
+                                            : '';
+                                        return `
+                                            <div class="paper-item bg-white border border-gray-200">
+                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">
+                                                    ${film.title}${film.year ? ` (${film.year})` : ''}
+                                                </div>
+                                                ${film.duration ? `<div class="text-sm text-gray-600 mb-2">${film.duration} minutes</div>` : ''}
+                                                ${creatives ? `<div class="text-sm md:text-base text-gray-600 mb-2">${creatives}</div>` : ''}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                            `;
+                        }
+                        // CASE 4B: Events without sessions (breaks, plenaries, empty screenings, etc.)
                         else {
                             const styling = getEventStyling(event.type);
                             const isPlenaryWithAbstract = event.type === 'plenary' && event.abstract;
                             
+                            // Format presenters properly (handle both string and object array)
+                            let presentersText = '';
+                            if (event.presenters) {
+                                if (Array.isArray(event.presenters)) {
+                                    presentersText = event.presenters.map(p => 
+                                        `${p.name}${p.institution ? ' / ' + p.institution : ''}`
+                                    ).join(', ');
+                                } else {
+                                    presentersText = event.presenters;
+                                }
+                                // Add affiliation only if it's NOT an ASPERA committee
+                                if (event.affiliation && 
+                                    !event.affiliation.includes('ASPERA') && 
+                                    !event.affiliation.includes('Sub-Committee')) {
+                                    presentersText += ' / ' + event.affiliation;
+                                }
+                            }
+                            
                             html += `
                             <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
-                                    <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    ${isPlenaryWithAbstract ? `
+                                        <button 
+                                            onclick="openReadingModePlenary(${JSON.stringify(event).replace(/"/g, '&quot;')})"
+                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200"
+                                        >
+                                            Read Abstract
+                                        </button>
+                                    ` : ''}
                                 </div>
                                 <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${event.content}</div>
-                                ${event.presenters ? `
-                                    <div class="text-sm md:text-base text-gray-700 mb-2">
-                                        ${event.presenters}${event.affiliation ? ' / ' + event.affiliation : ''}
+                                ${presentersText ? `
+                                    <div class="text-sm md:text-base text-gray-700 mt-2">
+                                        ${presentersText}
                                     </div>
-                                ` : ''}
-                                ${isPlenaryWithAbstract ? `
-                                    <button 
-                                        onclick="openReadingModePlenary(${JSON.stringify(event).replace(/"/g, '&quot;')})"
-                                        class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200 mt-2"
-                                    >
-                                        Read Abstract
-                                    </button>
                                 ` : ''}
                             </div>
                             `;

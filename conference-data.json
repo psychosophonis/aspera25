@@ -52,8 +52,25 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "aspera-panel",
-      "presenters": "Bettina Frankham, Phoebe Hart, Christine Rogers, Arezou Zalipour",
-      "affiliation": "ASPERA Research Sub-Committee"
+      "presenters": [
+        {
+          "name": "Bettina Frankham",
+          "institution": null
+        },
+        {
+          "name": "Phoebe Hart",
+          "institution": null
+        },
+        {
+          "name": "Christine Rogers",
+          "institution": null
+        },
+        {
+          "name": "Arezou Zalipour",
+          "institution": null
+        }
+      ],
+      "affiliation": null
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
@@ -124,7 +141,32 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Jo Law, Aaron Burton, Eleanor Suess, Lucas Ihlein, Louise Curham, Rowena Crowe"
+      "presenters": [
+        {
+          "name": "Jo Law",
+          "institution": null
+        },
+        {
+          "name": "Aaron Burton",
+          "institution": null
+        },
+        {
+          "name": "Eleanor Suess",
+          "institution": null
+        },
+        {
+          "name": "Lucas Ihlein",
+          "institution": null
+        },
+        {
+          "name": "Louise Curham",
+          "institution": null
+        },
+        {
+          "name": "Rowena Crowe",
+          "institution": null
+        }
+      ]
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
@@ -165,7 +207,24 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Mark Overett - JMC Academy Brisbane; Darren Paul Fisher - Bond University; Emma Hudson - JMC Academy Brisbane; Angela Blake - Bus Stop Films"
+      "presenters": [
+        {
+          "name": "Mark Overett",
+          "institution": "JMC Academy Brisbane"
+        },
+        {
+          "name": "Darren Paul Fisher",
+          "institution": "Bond University"
+        },
+        {
+          "name": "Emma Hudson",
+          "institution": "JMC Academy Brisbane"
+        },
+        {
+          "name": "Angela Blake",
+          "institution": "Bus Stop Films"
+        }
+      ]
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
@@ -216,7 +275,12 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "plenary",
-      "presenters": "Professor Roger Dean",
+      "presenters": [
+        {
+          "name": "Professor Roger Dean",
+          "institution": null
+        }
+      ],
       "affiliation": "Western Sydney University",
       "abstract": "As a musical composer/improviser, I have had terrific opportunities to collaborate with film and video makers,  theatre and dance creators,  and people who make imagery for online multimedia, including electronic literature, in which we have a particular involvement. So while I have an individual commitment to the iterative cycle of research and creative work that Hazel Smith and I promoted in a our book on practice-led research and research-led practice, this is not by any means solely applied to sound production. For example, the MAXMSPJitter platform allows integrated sound and image creation, and the concept of algorithmic synaesthesia that appeals particularly to me. I will focus on these interactions, as well as the need for all creative practitioners to bring political and intellectual pressure to bear on our current constrictions. "
     },
@@ -259,7 +323,16 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "plenary",
-      "presenters": "John Maynard, Dr Bridget Ikin",
+      "presenters": [
+        {
+          "name": "John Maynard",
+          "institution": null
+        },
+        {
+          "name": "Dr Bridget Ikin",
+          "institution": null
+        }
+      ],
       "affiliation": "Felix Media",
       "abstract": "John Maynard and Bridget Ikin have charted meandering paths through curious experimentation over the course of their screen careers, guided by the spirit of Len Lye’s beacon."
     },
@@ -282,7 +355,32 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Hannah Brasier, Stayci Taylor, Ruth Richards, Hamid Taheri, Lucy Coleman, Sebastian Bertoli"
+      "presenters": [
+        {
+          "name": "Hannah Brasier",
+          "institution": null
+        },
+        {
+          "name": "Stayci Taylor",
+          "institution": null
+        },
+        {
+          "name": "Ruth Richards",
+          "institution": null
+        },
+        {
+          "name": "Hamid Taheri",
+          "institution": null
+        },
+        {
+          "name": "Lucy Coleman",
+          "institution": null
+        },
+        {
+          "name": "Sebastian Bertoli",
+          "institution": null
+        }
+      ]
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
@@ -363,7 +461,20 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Tom Murray, Kelly Cameron, Alex Ryan - Macquarie University"
+      "presenters": [
+        {
+          "name": "Tom Murray",
+          "institution": null
+        },
+        {
+          "name": "Kelly Cameron",
+          "institution": null
+        },
+        {
+          "name": "Alex Ryan",
+          "institution": "Macquarie University"
+        }
+      ]
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
@@ -414,8 +525,41 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "aspera-panel",
-      "affiliation": "ASPERA  Sub-Committee Learning & Teaching",
-      "presenters": "Nico Meissner, Andrew O’Keefe, Tom Young, Teresa Rizzo, Kerreen Ely-Harper, Rachel Wilson, Jill Holt, David Balfour"
+      "affiliation": null,
+      "presenters": [
+        {
+          "name": "Nico Meissner",
+          "institution": null
+        },
+        {
+          "name": "Andrew O’Keefe",
+          "institution": null
+        },
+        {
+          "name": "Tom Young",
+          "institution": null
+        },
+        {
+          "name": "Teresa Rizzo",
+          "institution": null
+        },
+        {
+          "name": "Kerreen Ely-Harper",
+          "institution": null
+        },
+        {
+          "name": "Rachel Wilson",
+          "institution": null
+        },
+        {
+          "name": "Jill Holt",
+          "institution": null
+        },
+        {
+          "name": "David Balfour",
+          "institution": null
+        }
+      ]
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
@@ -466,7 +610,16 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "plenary",
-      "presenters": "Dr Louise Curham, Associate Professor Lucas Ihlein",
+      "presenters": [
+        {
+          "name": "Dr Louise Curham",
+          "institution": null
+        },
+        {
+          "name": "Associate Professor Lucas Ihlein",
+          "institution": null
+        }
+      ],
       "affiliation": "University of Wollongong",
       "abstract": "Dr Louise Curham and A/Prof Lucas Ihlein introduce their collaborative artworks produced under the banner \"Teaching and Learning Cinema\" (TLC). Since 2004, Louise and Lucas have been re-enacting some key 1970s expanded cinema performances from the London Film Makers Co-op. This talk explores the underlying desires, philosophies, and practical challenges associated with TLC's practice-based research - and points to speculative future directions including synthetic DNA as an intergenerational transfer medium."
     },
@@ -489,7 +642,20 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Christine Rogers, Liz Burke, Catherine Gough-Brady"
+      "presenters": [
+        {
+          "name": "Christine Rogers",
+          "institution": null
+        },
+        {
+          "name": "Liz Burke",
+          "institution": null
+        },
+        {
+          "name": "Catherine Gough-Brady",
+          "institution": null
+        }
+      ]
     },
     {
       "day": "DAY 27/11/25\nTHURSDAY",
@@ -560,7 +726,24 @@
       "headshot_url": null,
       "logo_url": null,
       "type": "group-presentation",
-      "presenters": "Martin Potter, Stuart Creel, Lizze Muller, Anthony McKnight"
+      "presenters": [
+        {
+          "name": "Martin Potter",
+          "institution": null
+        },
+        {
+          "name": "Stuart Creel",
+          "institution": null
+        },
+        {
+          "name": "Lizze Muller",
+          "institution": null
+        },
+        {
+          "name": "Anthony McKnight",
+          "institution": null
+        }
+      ]
     },
     {
       "day": "DAY 27/11/25\nTHURSDAY",
@@ -626,19 +809,19 @@
           "authors": [
             {
               "name": "Bettina Frankham",
-              "institution": "ASPERA Research Sub-Committee"
+              "institution": null
             },
             {
               "name": "Phoebe Hart",
-              "institution": "ASPERA Research Sub-Committee"
+              "institution": null
             },
             {
               "name": "Christine Rogers",
-              "institution": "ASPERA Research Sub-Committee"
+              "institution": null
             },
             {
               "name": "Arezou Zalipour",
-              "institution": "ASPERA Research Sub-Committee"
+              "institution": null
             }
           ]
         }
@@ -1491,35 +1674,35 @@
       "presenters": [
         {
           "name": "Nico Meissner",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Andrew O’Keefe",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Tom Young",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Teresa Rizzo",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Kerreen Ely-Harper",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Rachel Wilson",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "Jill Holt",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         },
         {
           "name": "David Balfour",
-          "institution": "ASPERA  Sub-Committee Learning & Teaching"
+          "institution": null
         }
       ],
       "papers": [
@@ -1529,35 +1712,35 @@
           "authors": [
             {
               "name": "Nico Meissner",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Andrew O’Keefe",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Tom Young",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Teresa Rizzo",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Kerreen Ely-Harper",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Rachel Wilson",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "Jill Holt",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             },
             {
               "name": "David Balfour",
-              "institution": "ASPERA  Sub-Committee Learning & Teaching"
+              "institution": null
             }
           ]
         }
