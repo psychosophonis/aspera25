@@ -844,143 +844,197 @@
     </script>
 
     <script>
-        // Robot Drawing Sketch
-        const robotSketch = (p) => {
-            class Robot {
-                constructor(x, y, heading, color, wheelBase = 40) {
-                    this.x = x;
-                    this.y = y;
-                    this.heading = heading;
-                    this.color = color;
-                    this.wheelBase = wheelBase;
-                    this.birthTime = p.millis();
-                    
-                    let leftSpeedRandom = p.random(1);
-                    this.leftBaseSpeed = 0.2 + leftSpeedRandom * leftSpeedRandom * 2.0;
-                    let leftAmpRandom = p.random(1);
-                    this.leftOscillationAmplitude = 0.1 + leftAmpRandom * leftAmpRandom * 2.5;
-                    let leftFreqRandom = p.random(1);
-                    this.leftOscillationFrequency = 0.01 + leftFreqRandom * leftFreqRandom * 0.15;
-                    
-                    let rightSpeedRandom = p.random(1);
-                    this.rightBaseSpeed = 0.2 + rightSpeedRandom * rightSpeedRandom * 2.0;
-                    let rightAmpRandom = p.random(1);
-                    this.rightOscillationAmplitude = 0.1 + rightAmpRandom * rightAmpRandom * 2.5;
-                    let rightFreqRandom = p.random(1);
-                    this.rightOscillationFrequency = 0.01 + rightFreqRandom * rightFreqRandom * 0.15;
-                    
-                    this.time = p.random(1000);
-                    this.path = [];
-                }
-                
-                getLeftWheelSpeed() {
-                    return this.leftBaseSpeed + 
-                           this.leftOscillationAmplitude * p.sin(this.time * this.leftOscillationFrequency);
-                }
-                
-                getRightWheelSpeed() {
-                    return this.rightBaseSpeed + 
-                           this.rightOscillationAmplitude * p.sin(this.time * this.rightOscillationFrequency);
-                }
-                
-                update() {
-                    let vL = this.getLeftWheelSpeed();
-                    let vR = this.getRightWheelSpeed();
-                    
-                    let v = (vL + vR) / 2;
-                    let omega = (vR - vL) / this.wheelBase;
-                    
-                    this.path.push({x: this.x, y: this.y});
-                    
-                    this.x += v * p.cos(this.heading);
-                    this.y += v * p.sin(this.heading);
-                    this.heading += omega;
-                    
-                    this.time++;
-                }
-                
-                drawPath() {
-                    if (this.path.length < 2) return;
-                    
-                    p.stroke(this.color);
-                    p.strokeWeight(0.8);
-                    
-                    let prev = this.path[this.path.length - 2];
-                    let curr = this.path[this.path.length - 1];
-                    p.line(prev.x, prev.y, curr.x, curr.y);
-                }
+    // --------------------------------------------------------------
+    //  Generative robots – distance‑driven sinusoidal speed
+    //  ONE flag lets you turn the optional Perlin‑noise on/off (only ~10 % of robots)
+    // --------------------------------------------------------------
+    const robotSketch = (p) => {
+
+        const USE_NOISE = true;   // keep true if you still like the occasional tiny jitter
+
+        // ==================== Robot class ==========================
+        class Robot {
+            constructor(x, y, heading, colour) {
+                this.x = x;
+                this.y = y;
+                this.heading = heading;
+                this.colour = colour;                       // pastel colour
+                this.wheelBase = p.random(20, 80);          // varied turning radius
+
+                // ----------- base speeds (forward / backward) -------------
+                this.leftBaseSpeed  = p.random(-2, -0.6);    // start backward
+                this.rightBaseSpeed = p.random( 0.6,  2);    // start forward
+
+                // ----------- travel distance before a reversal -------------
+                this.leftTravelDist  = p.random(120, 260);
+                this.rightTravelDist = p.random(120, 260);
+                this.leftTravelSoFar  = 0;
+                this.rightTravelSoFar = 0;
+
+                // ----------- sinusoidal parameters -----------------------
+                // How many full sine cycles occur *during one leg*.
+                // Small numbers → long gentle waves (spiro‑graph style)
+                // Large numbers → many quick wiggles (hand‑drawn style)
+                this.leftOscCycles  = p.random(0.2, 4.0);
+                this.rightOscCycles = p.random(0.2, 4.0);
+
+                // Amplitude of the speed modulation (max extra px/frame)
+                this.leftOscAmp  = p.random(0, 0.7);
+                this.rightOscAmp = p.random(0, 0.7);
+
+                // ----------- optional noise (≈10 % of robots) -------------
+                this.useNoise = USE_NOISE && (p.random() < 0.1);
+
+                // ----------- internal time (only for noise) -------------
+                this.time = p.random(1000);
+                this.path = [];      // pen trail points
             }
-            
-            let robots = [];
-            let colors;
-            let spawnInterval = 60000; // 1 minute
-            let robotLifetime = 300000;
-            let nextSpawnTime = 0;
-            let nextRobotIndex = 0;
-            
-            p.setup = function() {
-                let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-                canvas.parent('generativeBackground');
-                canvas.style('display', 'block');
-                canvas.style('position', 'absolute');
-                canvas.style('top', '0');
-                canvas.style('left', '0');
-                p.background(255);
-                console.log('Robot canvas created:', p.width, 'x', p.height);
-                
-                colors = [
-                    p.color(200, 200, 40, 127),
-                    p.color(150, 40, 200, 127),
-                    p.color(200, 40, 40, 127),
-                    p.color(40, 160, 40, 127),
-                    p.color(40, 80, 200, 127)
-                ];
-                
-                createRobot(0);
-                console.log('First robot created');
-                nextSpawnTime = p.millis() + spawnInterval;
-                nextRobotIndex = 1;
-            };
-            
-            function createRobot(colorIndex) {
-                let robot = new Robot(
-                    p.random(200, p.width - 200),
-                    p.random(150, p.height - 150),
-                    p.random(p.TWO_PI),
-                    colors[colorIndex],
-                    30
-                );
-                
-                robot.colorIndex = colorIndex;
-                robots.push(robot);
+
+            // ---- current left wheel speed ---------------------------------
+            getLeftWheelSpeed() {
+                // Phase is based on how far we have travelled in the current leg
+                const phase = (this.leftTravelSoFar / this.leftTravelDist) *
+                              this.leftOscCycles * p.TWO_PI;
+                let s = this.leftBaseSpeed + this.leftOscAmp * p.sin(phase);
+                if (this.useNoise) {
+                    s += (p.noise(this.time * 0.02) - 0.5) * 0.2;   // ±0.1 px/frame
+                }
+                return s;
             }
-            
-            p.draw = function() {
-                if (nextRobotIndex < 5 && p.millis() >= nextSpawnTime) {
-                    createRobot(nextRobotIndex);
-                    nextRobotIndex++;
-                    nextSpawnTime = p.millis() + spawnInterval;
+
+            // ---- current right wheel speed --------------------------------
+            getRightWheelSpeed() {
+                const phase = (this.rightTravelSoFar / this.rightTravelDist) *
+                              this.rightOscCycles * p.TWO_PI;
+                let s = this.rightBaseSpeed + this.rightOscAmp * p.sin(phase);
+                if (this.useNoise) {
+                    s += (p.noise(this.time * 0.022 + 1000) - 0.5) * 0.2;
                 }
-                
-                for (let i = robots.length - 1; i >= 0; i--) {
-                    let robot = robots[i];
-                    robot.update();
-                    
-                    if (p.millis() - robot.birthTime > robotLifetime) {
-                        robots.splice(i, 1);
-                    } else {
-                        robot.drawPath();
-                    }
+                return s;
+            }
+
+            // ---------------------------------------------------------
+            //  Update pose, flip base speed when the travelled distance
+            //  limit for a wheel is reached.
+            // ---------------------------------------------------------
+            update() {
+                const vL = this.getLeftWheelSpeed();
+                const vR = this.getRightWheelSpeed();
+
+                // differential‑drive kinematics
+                const v = (vL + vR) / 2;                 // forward speed (centre)
+                const omega = (vR - vL) / this.wheelBase; // angular speed
+
+                // store the centre point (pen tip)
+                this.path.push({ x: this.x, y: this.y });
+
+                // move & rotate
+                this.x += v * p.cos(this.heading);
+                this.y += v * p.sin(this.heading);
+                this.heading += omega;
+
+                // ----------- distance bookkeeping & reversal -------------
+                this.leftTravelSoFar  += vL;
+                this.rightTravelSoFar += vR;
+
+                if (Math.abs(this.leftTravelSoFar) >= this.leftTravelDist) {
+                    this.leftBaseSpeed = -this.leftBaseSpeed;   // reverse direction
+                    this.leftTravelSoFar = 0;                  // reset counter
                 }
-            };
-            
-            p.windowResized = function() {
-                p.resizeCanvas(p.windowWidth, p.windowHeight);
-            };
+                if (Math.abs(this.rightTravelSoFar) >= this.rightTravelDist) {
+                    this.rightBaseSpeed = -this.rightBaseSpeed;
+                    this.rightTravelSoFar = 0;
+                }
+
+                // advance internal timer (used only for noise)
+                this.time++;
+            }
+
+            // ---------------------------------------------------------
+            //  Draw the newest segment of the pen trail
+            // ---------------------------------------------------------
+            drawPath() {
+                if (this.path.length < 2) return;
+                p.stroke(this.colour);
+                p.strokeWeight(0.8);
+                const a = this.path[this.path.length - 2];
+                const b = this.path[this.path.length - 1];
+                p.line(a.x, a.y, b.x, b.y);
+            }
+        }
+        // ==================== end Robot class ======================
+
+        // ---------- Global sketch state ----------
+        const robots = [];
+        const spawnInterval = 60000;   // one new robot each minute
+        const robotLifetime = 300000;  // each robot lives 5 minutes
+        let nextSpawnTime = 0;
+
+        // --------------------------------------------------------------
+        p.setup = () => {
+            const cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+            cnv.parent('generativeBackground');
+            cnv.style('display', 'block');
+            cnv.style('position', 'absolute');
+            cnv.style('top', '0');
+            cnv.style('left', '0');
+
+            // first robot right away
+            createRobot();
+            nextSpawnTime = p.millis() + spawnInterval;
         };
-        
-        // Initialize p5 sketch
-        new p5(robotSketch);
-    </script>
+
+        // --------------------------------------------------------------
+        function createRobot() {
+            const col = p.color(
+                p.random(50, 255),   // R
+                p.random(50, 255),   // G
+                p.random(50, 255),   // B
+                80                    // α ≈ 0.3
+            );
+
+            const robot = new Robot(
+                p.random(200, p.width - 200),
+                p.random(150, p.height - 150),
+                p.random(p.TWO_PI),
+                col
+            );
+            robots.push(robot);
+        }
+
+        // --------------------------------------------------------------
+        p.draw = () => {
+            // spawn a new robot every minute (forever)
+            if (p.millis() >= nextSpawnTime) {
+                createRobot();
+                nextSpawnTime = p.millis() + spawnInterval;
+            }
+
+            // update / draw / cull
+            for (let i = robots.length - 1; i >= 0; i--) {
+                const r = robots[i];
+                r.update();
+
+                if (p.millis() - r.birthTime > robotLifetime) {
+                    robots.splice(i, 1);           // robot dies after 5 min
+                } else {
+                    r.drawPath();
+                }
+            }
+        };
+
+        // --------------------------------------------------------------
+        p.windowResized = () => {
+            p.resizeCanvas(p.windowWidth, p.windowHeight);
+        };
+    };
+
+    // Initialise the p5 sketch
+    new p5(robotSketch);
+</script>
+
+
+
+
 </body>
 </html>
