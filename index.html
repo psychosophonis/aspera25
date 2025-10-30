@@ -5,16 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASPERA 2025 - Experiments in Screen | Conference Navigator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <style>
+        #generativeBackground {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        body {
+            background: transparent !important;
+        }
+        #app, #loader {
+            position: relative;
+            z-index: 1;
+        }
+        #loader > div {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
         .session-card { transition: all 0.2s; }
         .session-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
         .venue-badge { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-weight: 600; }
         .paper-item { 
             padding: 1.5rem; 
-            background: white;
+            background: rgba(255, 255, 255, 0.6);
             border-left: 3px solid #e5e7eb; 
             margin-top: 1rem;
             border-radius: 0.25rem;
+        }
+        .bg-white {
+            background: rgba(255, 255, 255, 0.6) !important;
+        }
+        .bg-gray-50 {
+            background: rgba(249, 250, 251, 0.6) !important;
+        }
+        .bg-blue-50 {
+            background: rgba(239, 246, 255, 0.6) !important;
+        }
+        .bg-cyan-50 {
+            background: rgba(236, 254, 255, 0.6) !important;
+        }
+        .bg-teal-50 {
+            background: rgba(240, 253, 250, 0.6) !important;
+        }
+        .bg-purple-50 {
+            background: rgba(250, 245, 255, 0.6) !important;
+        }
+        .bg-amber-50 {
+            background: rgba(255, 251, 235, 0.6) !important;
+        }
+        .bg-pink-50 {
+            background: rgba(253, 242, 248, 0.6) !important;
+        }
+        .bg-indigo-50 {
+            background: rgba(238, 242, 255, 0.6) !important;
+        }
+        .bg-gray-100 {
+            background: rgba(243, 244, 246, 0.6) !important;
+        }
+        .reading-content-wrapper {
+            background: rgba(255, 255, 255, 0.98) !important;
         }
         .reading-mode {
             position: fixed;
@@ -54,6 +107,9 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
+    <!-- Generative Background -->
+    <div id="generativeBackground"></div>
+
     <!-- JSON Loader -->
     <div id="loader" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-sm shadow-lg p-8 max-w-md">
@@ -322,15 +378,23 @@
                 // Search filter
                 if (searchTerm) {
                     const contentMatch = event.content.toLowerCase().includes(searchTerm);
-                    const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
-                    const paperMatch = papers.some(paper => 
-                        (paper.title && paper.title.toLowerCase().includes(searchTerm)) ||
-                        (paper.authors && paper.authors.some(a => 
-                            (a.name && a.name.toLowerCase().includes(searchTerm)) ||
-                            (a.institution && a.institution.toLowerCase().includes(searchTerm))
-                        )) ||
-                        (paper.abstract && paper.abstract.toLowerCase().includes(searchTerm))
-                    );
+                    
+                    // Check session papers if this event has a session_num
+                    let paperMatch = false;
+                    if (event.session_num && sessions[event.session_num]) {
+                        const session = sessions[event.session_num];
+                        if (session.papers) {
+                            paperMatch = session.papers.some(paper => 
+                                (paper.title && paper.title.toLowerCase().includes(searchTerm)) ||
+                                (paper.authors && paper.authors.some(a => 
+                                    (a.name && a.name.toLowerCase().includes(searchTerm)) ||
+                                    (a.institution && a.institution.toLowerCase().includes(searchTerm))
+                                )) ||
+                                (paper.abstract && paper.abstract.toLowerCase().includes(searchTerm))
+                            );
+                        }
+                    }
+                    
                     if (!contentMatch && !paperMatch) return false;
                 }
                 
@@ -777,6 +841,146 @@
 
         // Auto-load on page load
         document.addEventListener('DOMContentLoaded', tryAutoLoad);
+    </script>
+
+    <script>
+        // Robot Drawing Sketch
+        const robotSketch = (p) => {
+            class Robot {
+                constructor(x, y, heading, color, wheelBase = 40) {
+                    this.x = x;
+                    this.y = y;
+                    this.heading = heading;
+                    this.color = color;
+                    this.wheelBase = wheelBase;
+                    this.birthTime = p.millis();
+                    
+                    let leftSpeedRandom = p.random(1);
+                    this.leftBaseSpeed = 0.2 + leftSpeedRandom * leftSpeedRandom * 2.0;
+                    let leftAmpRandom = p.random(1);
+                    this.leftOscillationAmplitude = 0.1 + leftAmpRandom * leftAmpRandom * 2.5;
+                    let leftFreqRandom = p.random(1);
+                    this.leftOscillationFrequency = 0.01 + leftFreqRandom * leftFreqRandom * 0.15;
+                    
+                    let rightSpeedRandom = p.random(1);
+                    this.rightBaseSpeed = 0.2 + rightSpeedRandom * rightSpeedRandom * 2.0;
+                    let rightAmpRandom = p.random(1);
+                    this.rightOscillationAmplitude = 0.1 + rightAmpRandom * rightAmpRandom * 2.5;
+                    let rightFreqRandom = p.random(1);
+                    this.rightOscillationFrequency = 0.01 + rightFreqRandom * rightFreqRandom * 0.15;
+                    
+                    this.time = p.random(1000);
+                    this.path = [];
+                }
+                
+                getLeftWheelSpeed() {
+                    return this.leftBaseSpeed + 
+                           this.leftOscillationAmplitude * p.sin(this.time * this.leftOscillationFrequency);
+                }
+                
+                getRightWheelSpeed() {
+                    return this.rightBaseSpeed + 
+                           this.rightOscillationAmplitude * p.sin(this.time * this.rightOscillationFrequency);
+                }
+                
+                update() {
+                    let vL = this.getLeftWheelSpeed();
+                    let vR = this.getRightWheelSpeed();
+                    
+                    let v = (vL + vR) / 2;
+                    let omega = (vR - vL) / this.wheelBase;
+                    
+                    this.path.push({x: this.x, y: this.y});
+                    
+                    this.x += v * p.cos(this.heading);
+                    this.y += v * p.sin(this.heading);
+                    this.heading += omega;
+                    
+                    this.time++;
+                }
+                
+                drawPath() {
+                    if (this.path.length < 2) return;
+                    
+                    p.stroke(this.color);
+                    p.strokeWeight(0.8);
+                    
+                    let prev = this.path[this.path.length - 2];
+                    let curr = this.path[this.path.length - 1];
+                    p.line(prev.x, prev.y, curr.x, curr.y);
+                }
+            }
+            
+            let robots = [];
+            let colors;
+            let spawnInterval = 60000; // 1 minute
+            let robotLifetime = 300000;
+            let nextSpawnTime = 0;
+            let nextRobotIndex = 0;
+            
+            p.setup = function() {
+                let canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+                canvas.parent('generativeBackground');
+                canvas.style('display', 'block');
+                canvas.style('position', 'absolute');
+                canvas.style('top', '0');
+                canvas.style('left', '0');
+                p.background(255);
+                console.log('Robot canvas created:', p.width, 'x', p.height);
+                
+                colors = [
+                    p.color(200, 200, 40, 127),
+                    p.color(150, 40, 200, 127),
+                    p.color(200, 40, 40, 127),
+                    p.color(40, 160, 40, 127),
+                    p.color(40, 80, 200, 127)
+                ];
+                
+                createRobot(0);
+                console.log('First robot created');
+                nextSpawnTime = p.millis() + spawnInterval;
+                nextRobotIndex = 1;
+            };
+            
+            function createRobot(colorIndex) {
+                let robot = new Robot(
+                    p.random(200, p.width - 200),
+                    p.random(150, p.height - 150),
+                    p.random(p.TWO_PI),
+                    colors[colorIndex],
+                    30
+                );
+                
+                robot.colorIndex = colorIndex;
+                robots.push(robot);
+            }
+            
+            p.draw = function() {
+                if (nextRobotIndex < 5 && p.millis() >= nextSpawnTime) {
+                    createRobot(nextRobotIndex);
+                    nextRobotIndex++;
+                    nextSpawnTime = p.millis() + spawnInterval;
+                }
+                
+                for (let i = robots.length - 1; i >= 0; i--) {
+                    let robot = robots[i];
+                    robot.update();
+                    
+                    if (p.millis() - robot.birthTime > robotLifetime) {
+                        robots.splice(i, 1);
+                    } else {
+                        robot.drawPath();
+                    }
+                }
+            };
+            
+            p.windowResized = function() {
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
+            };
+        };
+        
+        // Initialize p5 sketch
+        new p5(robotSketch);
     </script>
 </body>
 </html>
