@@ -77,7 +77,7 @@
             <!-- Header -->
             <header class="mb-8">
                 <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-4">
-                    <img src="aspera-logo.png" alt="ASPERA" class="h-16 md:h-28 w-auto" />
+                    <img src="aspera-logo.png" alt="ASPERA" class="h-16 md:h-28 w-auto object-contain mx-auto md:mx-0" />
                     <div>
                         <h1 class="text-2xl md:text-4xl font-bold text-gray-900">ASPERA 2025: Experiments in Screen</h1>
                         <p class="text-base md:text-xl text-gray-600 mt-1">25-27 November 2025 | University of Wollongong</p>
@@ -373,8 +373,8 @@
                     const timeEvents = grouped[day][time];
                     html += `
                         <div class="p-6">
-                            <div class="flex items-start gap-4 md:gap-6">
-                                <div class="flex-shrink-0 w-16">
+                            <div class="flex flex-col md:flex-row md:items-start gap-2 md:gap-6">
+                                <div class="flex-shrink-0 md:w-16">
                                     <div class="text-xl md:text-2xl font-bold text-gray-900">${formatTime(time)}</div>
                                 </div>
                                 <div class="flex-1 grid grid-cols-1 md:grid-cols-${timeEvents.length > 1 ? '2' : '1'} gap-4">
