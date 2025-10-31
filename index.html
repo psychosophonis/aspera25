@@ -845,193 +845,244 @@
 
     <script>
     // --------------------------------------------------------------
-    //  Generative robots – distance‑driven sinusoidal speed
-    //  ONE flag lets you turn the optional Perlin‑noise on/off (only ~10 % of robots)
+    //  Generative background – draw‑once (no stored path)
+    //  • distance‑driven base speed + sinusoidal wiggle
+    //  • optional tiny noise on ~10 % of robots (USE_NOISE)
     // --------------------------------------------------------------
     const robotSketch = (p) => {
 
-        const USE_NOISE = true;   // keep true if you still like the occasional tiny jitter
+        const USE_NOISE = true;        // keep true if you like the occasional jitter
 
         // ==================== Robot class ==========================
         class Robot {
-            constructor(x, y, heading, colour) {
+            constructor(x, y, heading, colour, wheelBase = 30) {
                 this.x = x;
                 this.y = y;
                 this.heading = heading;
-                this.colour = colour;                       // pastel colour
-                this.wheelBase = p.random(20, 80);          // varied turning radius
+                this.colour = colour;                 // includes alpha
+                this.wheelBase = wheelBase;
 
-                // ----------- base speeds (forward / backward) -------------
-                this.leftBaseSpeed  = p.random(-2, -0.6);    // start backward
-                this.rightBaseSpeed = p.random( 0.6,  2);    // start forward
+                // ---- base speeds (forward / backward) ----
+                this.leftBaseSpeed  = p.random(-2, -0.6);
+                this.rightBaseSpeed = p.random( 0.6,  2);
 
-                // ----------- travel distance before a reversal -------------
+                // ---- travel distance before reversal ----
                 this.leftTravelDist  = p.random(120, 260);
                 this.rightTravelDist = p.random(120, 260);
                 this.leftTravelSoFar  = 0;
                 this.rightTravelSoFar = 0;
 
-                // ----------- sinusoidal parameters -----------------------
-                // How many full sine cycles occur *during one leg*.
-                // Small numbers → long gentle waves (spiro‑graph style)
-                // Large numbers → many quick wiggles (hand‑drawn style)
+                // ---- sinusoidal wiggle ----
                 this.leftOscCycles  = p.random(0.2, 4.0);
                 this.rightOscCycles = p.random(0.2, 4.0);
-
-                // Amplitude of the speed modulation (max extra px/frame)
                 this.leftOscAmp  = p.random(0, 0.7);
                 this.rightOscAmp = p.random(0, 0.7);
 
-                // ----------- optional noise (≈10 % of robots) -------------
+                // ---- optional noise ----
                 this.useNoise = USE_NOISE && (p.random() < 0.1);
-
-                // ----------- internal time (only for noise) -------------
                 this.time = p.random(1000);
-                this.path = [];      // pen trail points
+
+                this.birthTime = p.millis();   // for lifetime removal
             }
 
-            // ---- current left wheel speed ---------------------------------
+            // ---- wheel speed (base + sinusoid + optional noise) ----
             getLeftWheelSpeed() {
-                // Phase is based on how far we have travelled in the current leg
                 const phase = (this.leftTravelSoFar / this.leftTravelDist) *
                               this.leftOscCycles * p.TWO_PI;
                 let s = this.leftBaseSpeed + this.leftOscAmp * p.sin(phase);
-                if (this.useNoise) {
-                    s += (p.noise(this.time * 0.02) - 0.5) * 0.2;   // ±0.1 px/frame
-                }
+                if (this.useNoise) s += (p.noise(this.time * 0.02) - 0.5) * 0.2;
                 return s;
             }
-
-            // ---- current right wheel speed --------------------------------
             getRightWheelSpeed() {
                 const phase = (this.rightTravelSoFar / this.rightTravelDist) *
                               this.rightOscCycles * p.TWO_PI;
                 let s = this.rightBaseSpeed + this.rightOscAmp * p.sin(phase);
-                if (this.useNoise) {
-                    s += (p.noise(this.time * 0.022 + 1000) - 0.5) * 0.2;
-                }
+                if (this.useNoise) s += (p.noise(this.time * 0.022 + 1000) - 0.5) * 0.2;
                 return s;
             }
 
             // ---------------------------------------------------------
-            //  Update pose, flip base speed when the travelled distance
-            //  limit for a wheel is reached.
+            //  Update pose **and draw the instantaneous segment**
             // ---------------------------------------------------------
             update() {
+                // ----- current wheel speeds ---------------------------------
                 const vL = this.getLeftWheelSpeed();
                 const vR = this.getRightWheelSpeed();
 
-                // differential‑drive kinematics
                 const v = (vL + vR) / 2;                 // forward speed (centre)
                 const omega = (vR - vL) / this.wheelBase; // angular speed
 
-                // store the centre point (pen tip)
-                this.path.push({ x: this.x, y: this.y });
+                // remember the current position (start of the segment)
+                const prevX = this.x;
+                const prevY = this.y;
 
                 // move & rotate
                 this.x += v * p.cos(this.heading);
                 this.y += v * p.sin(this.heading);
                 this.heading += omega;
 
-                // ----------- distance bookkeeping & reversal -------------
+                // ----- distance bookkeeping ---------------------------------
                 this.leftTravelSoFar  += vL;
                 this.rightTravelSoFar += vR;
 
                 if (Math.abs(this.leftTravelSoFar) >= this.leftTravelDist) {
-                    this.leftBaseSpeed = -this.leftBaseSpeed;   // reverse direction
-                    this.leftTravelSoFar = 0;                  // reset counter
+                    this.leftBaseSpeed = -this.leftBaseSpeed;
+                    this.leftTravelSoFar = 0;
                 }
                 if (Math.abs(this.rightTravelSoFar) >= this.rightTravelDist) {
                     this.rightBaseSpeed = -this.rightBaseSpeed;
                     this.rightTravelSoFar = 0;
                 }
 
-                // advance internal timer (used only for noise)
-                this.time++;
-            }
-
-            // ---------------------------------------------------------
-            //  Draw the newest segment of the pen trail
-            // ---------------------------------------------------------
-            drawPath() {
-                if (this.path.length < 2) return;
+                // ----- **draw the freshly‑computed line segment** ----------
                 p.stroke(this.colour);
-                p.strokeWeight(0.8);
-                const a = this.path[this.path.length - 2];
-                const b = this.path[this.path.length - 1];
-                p.line(a.x, a.y, b.x, b.y);
+                p.strokeWeight(.8);      // keep whatever thickness you like
+                p.strokeCap(p.ROUND);
+                p.strokeJoin(p.ROUND);
+                p.line(prevX, prevY, this.x, this.y);
+
+                // ----- time for noise ---------------------------------------
+                this.time++;
             }
         }
         // ==================== end Robot class ======================
 
-        // ---------- Global sketch state ----------
+        // ---------- Global state ----------
         const robots = [];
-        const spawnInterval = 60000;   // one new robot each minute
-        const robotLifetime = 300000;  // each robot lives 5 minutes
-        let nextSpawnTime = 0;
+        const SPAWN_INTERVAL = 60000;    // one new robot each minute
+        const ROBOT_LIFETIME = 300000;   // 5 minutes
+        let nextSpawn = 0;
 
         // --------------------------------------------------------------
         p.setup = () => {
             const cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+            p.pixelDensity(2);
             cnv.parent('generativeBackground');
-            cnv.style('display', 'block');
-            cnv.style('position', 'absolute');
-            cnv.style('top', '0');
-            cnv.style('left', '0');
+            cnv.style('position','fixed');
+            cnv.style('top','0'); cnv.style('left','0');
+            cnv.style('display','block');
 
-            // first robot right away
-            createRobot();
-            nextSpawnTime = p.millis() + spawnInterval;
+            // **Do NOT call p.background()** – we want the canvas to stay
+            // transparent so the underlying page background shows through.
+            // (If you really need a colour, use a semi‑transparent one.)
+
+            // start with a few robots so the background isn’t empty
+            createRobot();   // inside
+            createRobot();   // edge
+            createRobot();   // corner
+
+            nextSpawn = p.millis() + SPAWN_INTERVAL;
         };
 
         // --------------------------------------------------------------
+        //  Mixed‑spawn creator (inside 40 % / edge 40 % / corner 20 %)
+        // --------------------------------------------------------------
         function createRobot() {
+            const margin = 120;
+            const r = p.random();   // 0 … 1
+            let x, y, heading;
+
+            // ----- 1️⃣ inside (first 40 %) -----
+            if (r < 0.4) {
+                x = p.random(p.width);
+                y = p.random(p.height);
+                heading = p.random(p.TWO_PI);
+            }
+            // ----- 2️⃣ edge (next 40 %) -----
+            else if (r < 0.8) {
+                const side = p.floor(p.random(4));   // 0=top,1=right,2=bottom,3=left
+                if (side === 0) {                     // TOP
+                    x = p.random(-margin, p.width + margin);
+                    y = -margin;
+                    heading = p.random(p.HALF_PI - p.radians(30),
+                                       p.HALF_PI + p.radians(30));
+                } else if (side === 1) {               // RIGHT
+                    x = p.width + margin;
+                    y = p.random(-margin, p.height + margin);
+                    heading = p.random(p.PI - p.radians(30),
+                                       p.PI + p.radians(30));
+                } else if (side === 2) {               // BOTTOM
+                    x = p.random(-margin, p.width + margin);
+                    y = p.height + margin;
+                    heading = p.random(-p.HALF_PI - p.radians(30),
+                                       -p.HALF_PI + p.radians(30));
+                } else {                               // LEFT
+                    x = -margin;
+                    y = p.random(-margin, p.height + margin);
+                    heading = p.random(-p.radians(30), p.radians(30));
+                }
+            }
+            // ----- 3️⃣ corner (final 20 %) -----
+            else {
+                const corner = p.floor(p.random(4));   // 0=TL,1=TR,2=BR,3=BL
+                if (corner === 0) {                    // top‑left
+                    x = -margin; y = -margin;
+                    heading = p.random(0, p.radians(90) + p.radians(30));
+                } else if (corner === 1) {              // top‑right
+                    x = p.width + margin; y = -margin;
+                    heading = p.random(p.HALF_PI - p.radians(30),
+                                       p.HALF_PI + p.radians(30));
+                } else if (corner === 2) {              // bottom‑right
+                    x = p.width + margin; y = p.height + margin;
+                    heading = p.random(p.PI - p.radians(30),
+                                       p.PI + p.radians(30));
+                } else {                                // bottom‑left
+                    x = -margin; y = p.height + margin;
+                    heading = p.random(p.PI + p.HALF_PI - p.radians(30),
+                                       p.PI + p.HALF_PI + p.radians(30));
+                }
+            }
+
+            // ---- colour – pastel + *any* alpha you want ----
             const col = p.color(
-                p.random(50, 255),   // R
-                p.random(50, 255),   // G
-                p.random(50, 255),   // B
-                80                    // α ≈ 0.3
+                p.random(255), p.random(255), p.random(255), 80   // try 10, 30, 80 …
             );
 
-            const robot = new Robot(
-                p.random(200, p.width - 200),
-                p.random(150, p.height - 150),
-                p.random(p.TWO_PI),
-                col
-            );
+            const robot = new Robot(x, y, heading, col);
             robots.push(robot);
         }
 
         // --------------------------------------------------------------
         p.draw = () => {
-            // spawn a new robot every minute (forever)
-            if (p.millis() >= nextSpawnTime) {
+            // ---- spawn a new robot every minute (forever) ----
+            if (p.millis() >= nextSpawn) {
                 createRobot();
-                nextSpawnTime = p.millis() + spawnInterval;
+                nextSpawn = p.millis() + SPAWN_INTERVAL;
             }
 
-            // update / draw / cull
+            // ---- update each robot (draws its segment) ----
             for (let i = robots.length - 1; i >= 0; i--) {
                 const r = robots[i];
                 r.update();
 
-                if (p.millis() - r.birthTime > robotLifetime) {
-                    robots.splice(i, 1);           // robot dies after 5 min
-                } else {
-                    r.drawPath();
+                // ---- kill after 5 minutes ----
+                if (p.millis() - r.birthTime > ROBOT_LIFETIME) {
+                    robots.splice(i, 1);
                 }
             }
         };
 
         // --------------------------------------------------------------
+        //  OPTIONAL – prevent a full resize when the mobile address bar slides.
+        //  (Keeps the same canvas size unless the orientation truly changes.)
+        // --------------------------------------------------------------
+        let _lastW = p.windowWidth;
+        let _lastH = p.windowHeight;
         p.windowResized = () => {
-            p.resizeCanvas(p.windowWidth, p.windowHeight);
+            const w = p.windowWidth;
+            const h = p.windowHeight;
+            if (Math.abs(w - _lastW) > 10 || Math.abs(h - _lastH) > 10) {
+                p.resizeCanvas(w, h);
+                _lastW = w; _lastH = h;
+            }
         };
     };
 
     // Initialise the p5 sketch
     new p5(robotSketch);
 </script>
+
+
 
 
 
