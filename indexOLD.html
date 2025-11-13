@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASPERA 2025 - Experiments in Screen | Conference Navigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .session-card { transition: all 0.2s; }
+        .session-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .venue-badge { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-weight: 600; }
+        .paper-item { 
+            padding: 1.5rem; 
+            background: white;
+            border-left: 3px solid #e5e7eb; 
+            margin-top: 1rem;
+            border-radius: 0.25rem;
+        }
+        .reading-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            overflow-y: auto;
+            padding: 3rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .reading-content-wrapper {
+            background: white;
+            border: 2px solid #111827;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            max-width: 56rem;
+            width: 100%;
+            padding: 3rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.25rem;
+        }
+        @media (max-width: 768px) {
+            .reading-mode {
+                padding: 1rem;
+            }
+            .reading-content-wrapper {
+                padding: 1.5rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- JSON Loader -->
+    <div id="loader" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-sm shadow-lg p-8 max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Load Conference Data</h2>
+            <p class="text-gray-600 mb-4">Select the conference-data.json file to begin:</p>
+            <input 
+                type="file" 
+                id="fileInput" 
+                accept=".json"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+            />
+            <div class="text-sm text-gray-500">
+                <p class="mb-2">Or if running from a web server, the JSON will load automatically.</p>
+                <p class="font-mono text-xs">Looking for: conference-data.json</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="hidden">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Header -->
+            <header class="mb-8">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-4">
+                    <img src="aspera-logo.png" alt="ASPERA" class="h-16 md:h-28 w-auto object-contain mx-auto md:mx-0" />
+                    <div>
+                        <h1 class="text-2xl md:text-4xl font-bold text-gray-900">ASPERA 2025: Experiments in Screen</h1>
+                        <p class="text-base md:text-xl text-gray-600 mt-1">25-27 November 2025 | University of Wollongong</p>
+                    </div>
+                </div>
+                
+                <!-- Legend -->
+                <div class="mt-6 flex flex-wrap gap-4 text-base">
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-blue-50 border border-blue-300"></div>
+                        <span>Panel Session</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-cyan-50 border border-cyan-300"></div>
+                        <span>Presentation</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-teal-50 border border-teal-300"></div>
+                        <span>Group Presentation</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-purple-50 border border-purple-300"></div>
+                        <span>ASPERA Panel</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-amber-50 border border-amber-300"></div>
+                        <span>Plenary</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded bg-gray-100 border border-gray-300"></div>
+                        <span>Break/Meal</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-sm shadow-sm p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Search</label>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search presentations, authors, topics..."
+                            class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-base font-medium text-gray-700 mb-2">Day</label>
+                        <select id="dayFilter" class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Days</option>
+                            <option value="TUESDAY">Tuesday 25th</option>
+                            <option value="WEDNESDAY">Wednesday 26th</option>
+                            <option value="THURSDAY">Thursday 27th</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-base font-medium text-gray-700 mb-2">Venue</label>
+                        <select id="venueFilter" class="w-full px-4 py-3 text-base border border-gray-300 rounded-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Venues</option>
+                            <option value="29.G10">29.G10</option>
+                            <option value="29.G08">29.G08</option>
+                            <option value="29.G09">29.G09</option>
+                            <option value="29.G07">29.G07</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="space-y-6"></div>
+
+            <!-- No Results -->
+            <div id="noResults" class="hidden text-center py-12">
+                <p class="text-gray-500 text-xl">No sessions found matching your criteria</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading Mode -->
+    <div id="readingMode" class="hidden reading-mode">
+        <div class="reading-content-wrapper">
+            <button onclick="closeReadingMode()" class="float-right bg-gray-900 text-white px-6 py-3 rounded-sm hover:bg-gray-700 text-base font-medium mb-8">
+                Close
+            </button>
+            <div id="readingContent" class="clear-both pt-4"></div>
+        </div>
+    </div>
+
+    <script>
+        let conferenceData = null;
+        let allEvents = [];
+        let sessions = {};
+        let panelDescriptions = {};
+
+        // Try auto-load
+        async function tryAutoLoad() {
+            try {
+                const response = await fetch('conference-data.json');
+                const data = await response.json();
+                initializeApp(data);
+            } catch (error) {
+                console.log('Auto-load failed, showing file picker');
+            }
+        }
+
+        // Handle file selection
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        initializeApp(data);
+                    } catch (error) {
+                        alert('Error parsing JSON: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Initialize app
+        function initializeApp(data) {
+            conferenceData = data;
+            allEvents = data.events;
+            sessions = data.sessions || {};
+            panelDescriptions = data.panel_descriptions || {};
+            
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            
+            // Setup filters
+            document.getElementById('searchInput').addEventListener('input', filterEvents);
+            document.getElementById('dayFilter').addEventListener('change', filterEvents);
+            document.getElementById('venueFilter').addEventListener('change', filterEvents);
+            
+            // Initial render
+            filterEvents();
+            handleURLParams();
+        }
+
+        // Extract day name
+        function extractDayName(dayString) {
+            if (dayString.includes('TUESDAY')) return 'TUESDAY';
+            if (dayString.includes('WEDNESDAY')) return 'WEDNESDAY';
+            if (dayString.includes('THURSDAY')) return 'THURSDAY';
+            return dayString;
+        }
+
+        // Format time
+        function formatTime(time) {
+            if (time.length === 3) time = '0' + time;
+            return time.slice(0, 2) + ':' + time.slice(2);
+        }
+
+        // Get venue color
+        function getVenueColor(venue) {
+            const colors = {
+                '29.G10': 'bg-blue-100 text-blue-800 border-blue-200',
+                '29.G08': 'bg-green-100 text-green-800 border-green-200',
+                '29.G09': 'bg-purple-100 text-purple-800 border-purple-200',
+                '29.G07': 'bg-pink-100 text-pink-800 border-pink-200'
+            };
+            return colors[venue] || 'bg-gray-100 text-gray-800 border-gray-200';
+        }
+
+        // Get event styling
+        function getEventStyling(type) {
+            const styles = {
+                'panel': {
+                    bg: 'bg-blue-50',
+                    border: 'border-blue-200',
+                    text: 'text-blue-900',
+                    badge: 'Panel'
+                },
+                'presentation': {
+                    bg: 'bg-cyan-50',
+                    border: 'border-cyan-200',
+                    text: 'text-cyan-900',
+                    badge: 'Presentation'
+                },
+                'group-presentation': {
+                    bg: 'bg-teal-50',
+                    border: 'border-teal-200',
+                    text: 'text-teal-900',
+                    badge: 'Group Presentation'
+                },
+                'aspera-panel': {
+                    bg: 'bg-purple-50',
+                    border: 'border-purple-200',
+                    text: 'text-purple-900',
+                    badge: 'ASPERA Panel'
+                },
+                'plenary': {
+                    bg: 'bg-amber-50',
+                    border: 'border-amber-200',
+                    text: 'text-amber-900',
+                    badge: 'Plenary'
+                },
+                'break': {
+                    bg: 'bg-gray-50',
+                    border: 'border-gray-200',
+                    text: 'text-gray-900',
+                    badge: 'Break'
+                },
+                'screening': {
+                    bg: 'bg-pink-50',
+                    border: 'border-pink-200',
+                    text: 'text-pink-900',
+                    badge: 'Screening'
+                },
+                'townhall': {
+                    bg: 'bg-indigo-50',
+                    border: 'border-indigo-200',
+                    text: 'text-indigo-900',
+                    badge: 'Town Hall'
+                }
+            };
+            return styles[type] || styles['break'];
+        }
+
+        // Extract panel title
+        function extractPanelTitle(content) {
+            return content.split('\n')[0];
+        }
+
+        // Filter events
+        function filterEvents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const dayFilter = document.getElementById('dayFilter').value;
+            const venueFilter = document.getElementById('venueFilter').value;
+
+            let filtered = allEvents.filter(event => {
+                // Day filter
+                if (dayFilter && !event.day.includes(dayFilter)) return false;
+                
+                // Venue filter
+                if (venueFilter && event.venue !== venueFilter) return false;
+                
+                // Search filter
+                if (searchTerm) {
+                    const contentMatch = event.content.toLowerCase().includes(searchTerm);
+                    const papers = event.session_num && papersBySession[event.session_num] ? papersBySession[event.session_num] : [];
+                    const paperMatch = papers.some(paper => 
+                        (paper.title && paper.title.toLowerCase().includes(searchTerm)) ||
+                        (paper.authors && paper.authors.some(a => 
+                            (a.name && a.name.toLowerCase().includes(searchTerm)) ||
+                            (a.institution && a.institution.toLowerCase().includes(searchTerm))
+                        )) ||
+                        (paper.abstract && paper.abstract.toLowerCase().includes(searchTerm))
+                    );
+                    if (!contentMatch && !paperMatch) return false;
+                }
+                
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                document.getElementById('results').innerHTML = '';
+                document.getElementById('noResults').classList.remove('hidden');
+            } else {
+                document.getElementById('noResults').classList.add('hidden');
+                renderEvents(filtered);
+            }
+        }
+
+        // Render events
+        function renderEvents(events) {
+            const resultsDiv = document.getElementById('results');
+            
+            // Group by day and time
+            const grouped = {};
+            events.forEach(event => {
+                const day = extractDayName(event.day);
+                if (!grouped[day]) grouped[day] = {};
+                if (!grouped[day][event.time]) grouped[day][event.time] = [];
+                grouped[day][event.time].push(event);
+            });
+
+            let html = '';
+            Object.keys(grouped).forEach(day => {
+                html += `
+                    <div class="bg-white rounded-sm shadow-md overflow-hidden">
+                        <div class="bg-gray-900 text-white px-6 py-4">
+                            <h2 class="text-2xl md:text-3xl font-bold">${day}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                `;
+
+                Object.keys(grouped[day]).sort((a, b) => parseInt(a) - parseInt(b)).forEach(time => {
+                    const timeEvents = grouped[day][time];
+                    html += `
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:items-start gap-2 md:gap-6">
+                                <div class="flex-shrink-0 md:w-16">
+                                    <div class="text-xl md:text-2xl font-bold text-gray-900">${formatTime(time)}</div>
+                                </div>
+                                <div class="flex-1 grid grid-cols-1 md:grid-cols-${timeEvents.length > 1 ? '2' : '1'} gap-4">
+                    `;
+
+                    timeEvents.forEach(event => {
+                        // Get session data if this event has a session_num
+                        const session = event.session_num && sessions[event.session_num] ? sessions[event.session_num] : null;
+                        const sessionType = session ? session.type : event.type;
+                        
+                        const uniqueId = `event-${day.replace(/\s/g,'-')}-${time}-${event.venue.replace(/\./g,'-')}`;
+                        const panelTitle = extractPanelTitle(event.content);
+                        const description = panelDescriptions[event.session_num] || "";
+                        
+                        // CASE 1: Group Presentation (multiple presenters)
+                        // Can have papers (like themed panels) or just presenters
+                        if (session && session.type === 'group-presentation') {
+                            const styling = getEventStyling('group-presentation');
+                            
+                            // CASE 1a: Group Presentation WITH papers (render like a panel with papers)
+                            if (session.papers && session.papers.length > 0) {
+                                html += `
+                                <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                        <div class="flex items-center gap-3 flex-wrap">
+                                            <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                            <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                        </div>
+                                        <button 
+                                            onclick="toggleDetails('${uniqueId}')"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200 whitespace-nowrap self-start"
+                                        >
+                                            View Papers (${session.papers.length})
+                                        </button>
+                                    </div>
+                                    <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                    ${description ? `
+                                        <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                    ` : ''}
+                                    ${session.presenters && session.presenters.length > 0 ? `
+                                        <div class="text-sm text-gray-600 mt-2 mb-1">
+                                            ${session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ')}
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                        ${session.papers.map((paper, idx) => `
+                                            <div class="paper-item bg-white border border-gray-200">
+                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
+                                                ${paper.authors && paper.authors.length > 0 ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}</div>` : ''}
+                                                ${paper.abstract ? `
+                                                    <button 
+                                                        onclick="openReadingModePaper('${event.session_num}', ${idx})"
+                                                        class="text-sm md:text-base font-medium text-teal-600 hover:text-teal-800 bg-teal-50 px-4 py-2 rounded-sm border border-teal-200"
+                                                    >
+                                                        Read Paper
+                                                    </button>
+                                                ` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            // CASE 1b: Group Presentation WITHOUT papers (just presenters and abstract)
+                            else {
+                                html += `
+                                <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                        <div class="flex items-center gap-3 flex-wrap">
+                                            <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                            <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                        </div>
+                                        <button 
+                                            onclick="openReadingModeSession('${event.session_num}')"
+                                            class="text-sm font-medium text-teal-600 hover:text-teal-800 bg-white px-3 py-1 rounded-full border border-teal-200 whitespace-nowrap self-start"
+                                        >
+                                            Read Presentation
+                                        </button>
+                                    </div>
+                                    <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                    ${description ? `
+                                        <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                    ` : ''}
+                                    ${session.presenters && session.presenters.length > 0 ? `
+                                        <div class="text-sm md:text-base text-gray-700 mt-2">
+                                            ${session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ')}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                `;
+                            }
+                        }
+                        // CASE 2: Single-paper session (treat as presentation)
+                        else if (session && session.papers && session.papers.length === 1) {
+                            const styling = getEventStyling('presentation');
+                            const paper = session.papers[0];
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    <button 
+                                        onclick="openReadingModePaper('${event.session_num}', 0)"
+                                        class="text-sm font-medium text-cyan-600 hover:text-cyan-800 bg-white px-3 py-1 rounded-full border border-cyan-200 whitespace-nowrap self-start"
+                                    >
+                                        Read Paper
+                                    </button>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                ${description ? `
+                                    <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                ` : ''}
+                                ${paper.authors && paper.authors.length > 0 ? `
+                                    <div class="text-sm md:text-base text-gray-700 mt-2">
+                                        ${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            `;
+                        }
+                        // CASE 3: Multi-paper panel (show expandable list of papers)
+                        else if (session && session.papers && session.papers.length > 1) {
+                            const styling = getEventStyling(sessionType);
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    <button 
+                                        onclick="toggleDetails('${uniqueId}')"
+                                        class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200 whitespace-nowrap self-start"
+                                    >
+                                        View Papers (${session.papers.length})
+                                    </button>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${panelTitle}</div>
+                                ${description ? `
+                                    <div class="text-sm md:text-base text-gray-700 italic mb-2">${description}</div>
+                                ` : ''}
+                                ${session.papers && session.papers.length > 0 ? `
+                                    <div class="text-sm text-gray-600 mt-2 mb-1">
+                                        ${session.papers.map(p => p.authors && p.authors.length > 0 ? p.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ') : '').filter(a => a).join('; ')}
+                                    </div>
+                                ` : ''}
+                                
+                                <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                    ${session.papers.map((paper, idx) => `
+                                        <div class="paper-item bg-white border border-gray-200">
+                                            <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">${paper.title}</div>
+                                            ${paper.authors && paper.authors.length > 0 ? `<div class="text-sm md:text-base text-gray-600 mb-3">${paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ')}</div>` : ''}
+                                            ${paper.abstract ? `
+                                                <button 
+                                                    onclick="openReadingModePaper('${event.session_num}', ${idx})"
+                                                    class="text-sm md:text-base font-medium text-blue-600 hover:text-blue-800 bg-blue-50 px-4 py-2 rounded-sm border border-blue-200"
+                                                >
+                                                    Read Paper
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            `;
+                        }
+                        // CASE 4A: Screenings with films
+                        else if (event.type === 'screening' && event.films && event.films.length > 0) {
+                            const styling = getEventStyling('screening');
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    <button 
+                                        onclick="toggleDetails('${uniqueId}')"
+                                        class="text-sm font-medium text-pink-600 hover:text-pink-800 bg-white px-3 py-1 rounded-full border border-pink-200 whitespace-nowrap self-start"
+                                    >
+                                        View Films (${event.films.length})
+                                    </button>
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${event.content}</div>
+                                
+                                <div id="${uniqueId}" class="hidden mt-4 space-y-2">
+                                    ${event.films.map((film, idx) => {
+                                        const creatives = film.creatives && film.creatives.length > 0 
+                                            ? film.creatives.map(c => `${c.name}${c.institution ? ' / ' + c.institution : ''}`).join(', ')
+                                            : '';
+                                        return `
+                                            <div class="paper-item bg-white border border-gray-200">
+                                                <div class="text-base md:text-lg font-semibold text-gray-900 mb-2">
+                                                    ${film.title}${film.year ? ` (${film.year})` : ''}
+                                                </div>
+                                                ${film.duration ? `<div class="text-sm text-gray-600 mb-2">${film.duration} minutes</div>` : ''}
+                                                ${creatives ? `<div class="text-sm md:text-base text-gray-600 mb-2">${creatives}</div>` : ''}
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                            `;
+                        }
+                        // CASE 4B: Events without sessions (breaks, plenaries, empty screenings, etc.)
+                        else {
+                            const styling = getEventStyling(event.type);
+                            const isPlenaryWithAbstract = event.type === 'plenary' && event.abstract;
+                            
+                            // Format presenters properly (handle both string and object array)
+                            let presentersText = '';
+                            if (event.presenters) {
+                                if (Array.isArray(event.presenters)) {
+                                    presentersText = event.presenters.map(p => 
+                                        `${p.name}${p.institution ? ' / ' + p.institution : ''}`
+                                    ).join(', ');
+                                } else {
+                                    presentersText = event.presenters;
+                                }
+                                // Add affiliation only if it's NOT an ASPERA committee
+                                if (event.affiliation && 
+                                    !event.affiliation.includes('ASPERA') && 
+                                    !event.affiliation.includes('Sub-Committee')) {
+                                    presentersText += ' / ' + event.affiliation;
+                                }
+                            }
+                            
+                            html += `
+                            <div class="session-card border ${styling.border} ${styling.bg} rounded-sm p-5">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 flex-wrap">
+                                        <span class="venue-badge ${getVenueColor(event.venue)} border">${event.venue}</span>
+                                        <span class="text-sm px-3 py-1 ${styling.border} bg-white rounded-full font-medium">${styling.badge}</span>
+                                    </div>
+                                    ${isPlenaryWithAbstract ? `
+                                        <button 
+                                            onclick="openReadingModePlenary(${JSON.stringify(event).replace(/"/g, '&quot;')})"
+                                            class="text-sm font-medium text-blue-600 hover:text-blue-800 bg-white px-3 py-1 rounded-full border border-blue-200 whitespace-nowrap self-start"
+                                        >
+                                            Read Abstract
+                                        </button>
+                                    ` : ''}
+                                </div>
+                                <div class="text-base md:text-lg font-bold text-gray-900 mb-2">${event.content}</div>
+                                ${presentersText ? `
+                                    <div class="text-sm md:text-base text-gray-700 mt-2">
+                                        ${presentersText}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            `;
+                        }
+                    });
+
+                    html += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Toggle details
+        function toggleDetails(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        // Open reading mode for individual paper
+        function openReadingModePaper(sessionNum, paperIndex) {
+            const session = sessions[sessionNum];
+            if (!session || !session.papers || !session.papers[paperIndex]) return;
+            
+            const paper = session.papers[paperIndex];
+            const readingContent = document.getElementById('readingContent');
+            
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${paper.title}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${paper.authors ? paper.authors.map(a => `${a.name}${a.institution ? ' / ' + a.institution : ''}`).join(', ') : ''}
+                    </p>
+                    ${paper.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${paper.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open reading mode for group presentation
+        function openReadingModeSession(sessionNum) {
+            const session = sessions[sessionNum];
+            if (!session) return;
+            
+            const readingContent = document.getElementById('readingContent');
+            
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${session.title}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${session.presenters ? session.presenters.map(p => `${p.name}${p.institution ? ' / ' + p.institution : ''}`).join(', ') : ''}
+                    </p>
+                    ${session.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${session.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open reading mode for plenary
+        function openReadingModePlenary(event) {
+            const readingContent = document.getElementById('readingContent');
+            
+            readingContent.innerHTML = `
+                <div class="prose prose-lg max-w-none">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">${event.content}</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                        ${event.presenters}${event.affiliation ? ' / ' + event.affiliation : ''}
+                    </p>
+                    ${event.abstract ? `
+                        <div class="text-base md:text-lg text-gray-900 leading-relaxed whitespace-pre-line">
+                            ${event.abstract}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('readingMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close reading mode
+        function closeReadingMode() {
+            document.getElementById('readingMode').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle URL params - venue, day, and time
+        function handleURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            const venue = params.get('venue');
+            const day = params.get('day');
+            const time = params.get('time');
+
+            if (venue) {
+                document.getElementById('venueFilter').value = venue;
+            }
+            if (day) {
+                const dayMap = {
+                    'TUESDAY': 'TUESDAY',
+                    'WEDNESDAY': 'WEDNESDAY',
+                    'THURSDAY': 'THURSDAY'
+                };
+                if (dayMap[day]) {
+                    document.getElementById('dayFilter').value = dayMap[day];
+                }
+            }
+            
+            filterEvents();
+            
+            if (time) {
+                setTimeout(() => {
+                    const timeElements = document.querySelectorAll('.text-xl.md\\:text-2xl.font-bold.text-gray-900');
+                    timeElements.forEach(el => {
+                        if (el.textContent === formatTime(time)) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            el.parentElement.parentElement.parentElement.classList.add('ring-4', 'ring-blue-500', 'ring-offset-2');
+                        }
+                    });
+                }, 500);
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeReadingMode();
+            }
+        });
+
+        // Auto-load on page load
+        document.addEventListener('DOMContentLoaded', tryAutoLoad);
+    </script>
+</body>
+</html>

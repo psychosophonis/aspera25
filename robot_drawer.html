@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Differential Drive Robot Drawer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        class Robot {
+            constructor(x, y, heading, color, wheelBase = 40) {
+                this.x = x;
+                this.y = y;
+                this.heading = heading; // Angle in radians
+                this.color = color;
+                this.wheelBase = wheelBase; // Distance between wheels
+                this.birthTime = millis(); // Track when robot was created
+                
+                // Oscillation parameters for left wheel
+                // Using squared random to bias toward smaller values
+                let leftSpeedRandom = random(1);
+                this.leftBaseSpeed = 0.2 + leftSpeedRandom * leftSpeedRandom * 2.0;
+                let leftAmpRandom = random(1);
+                this.leftOscillationAmplitude = 0.1 + leftAmpRandom * leftAmpRandom * 2.5;
+                let leftFreqRandom = random(1);
+                this.leftOscillationFrequency = 0.01 + leftFreqRandom * leftFreqRandom * 0.15;
+                
+                // Oscillation parameters for right wheel
+                let rightSpeedRandom = random(1);
+                this.rightBaseSpeed = 0.2 + rightSpeedRandom * rightSpeedRandom * 2.0;
+                let rightAmpRandom = random(1);
+                this.rightOscillationAmplitude = 0.1 + rightAmpRandom * rightAmpRandom * 2.5;
+                let rightFreqRandom = random(1);
+                this.rightOscillationFrequency = 0.01 + rightFreqRandom * rightFreqRandom * 0.15;
+                
+                this.time = random(1000); // Start at random phase
+                
+                // Store path for drawing
+                this.path = [];
+            }
+            
+            // Calculate current wheel speeds based on oscillation
+            getLeftWheelSpeed() {
+                return this.leftBaseSpeed + 
+                       this.leftOscillationAmplitude * sin(this.time * this.leftOscillationFrequency);
+            }
+            
+            getRightWheelSpeed() {
+                return this.rightBaseSpeed + 
+                       this.rightOscillationAmplitude * sin(this.time * this.rightOscillationFrequency);
+            }
+            
+            // Update robot position using differential drive kinematics
+            update() {
+                let vL = this.getLeftWheelSpeed();
+                let vR = this.getRightWheelSpeed();
+                
+                // Differential drive equations
+                // Linear velocity is average of wheel speeds
+                let v = (vL + vR) / 2;
+                
+                // Angular velocity depends on wheel speed difference
+                let omega = (vR - vL) / this.wheelBase;
+                
+                // Store current position in path
+                this.path.push({x: this.x, y: this.y});
+                
+                // Update position and heading
+                this.x += v * cos(this.heading);
+                this.y += v * sin(this.heading);
+                this.heading += omega;
+                
+                // No edge wrapping - limitless canvas
+                
+                this.time++;
+            }
+            
+            // Draw the path (only the latest segment)
+            drawPath() {
+                if (this.path.length < 2) return;
+                
+                stroke(this.color);
+                strokeWeight(0.8);
+                
+                let prev = this.path[this.path.length - 2];
+                let curr = this.path[this.path.length - 1];
+                line(prev.x, prev.y, curr.x, curr.y);
+            }
+            
+            // Draw the robot body (for visualization)
+            drawRobot() {
+                push();
+                translate(this.x, this.y);
+                rotate(this.heading);
+                
+                // Draw wheels
+                stroke(this.color);
+                strokeWeight(2);
+                line(-this.wheelBase/2, -5, -this.wheelBase/2, 5); // Left wheel
+                line(this.wheelBase/2, -5, this.wheelBase/2, 5);  // Right wheel
+                
+                // Draw body
+                noFill();
+                ellipse(0, 0, this.wheelBase * 0.8, this.wheelBase * 0.6);
+                
+                // Draw pen at center
+                fill(this.color);
+                noStroke();
+                ellipse(0, 0, 3, 3);
+                
+                pop();
+            }
+        }
+        
+        let robots = [];
+        let colors;
+        
+        function setup() {
+            createCanvas(800, 600);
+            background(255);
+            
+            colors = [
+                color(200, 200, 40, 80),    // Yellow (50% opacity)
+                color(150, 40, 200, 80),    // Purple
+                color(200, 40, 40, 80),     // Red
+                color(40, 160, 40, 80),     // Green
+                color(40, 80, 200, 80)      // Blue
+            ];
+            
+            for (let i = 0; i < 5; i++) {
+                createRobot(i);
+            }
+        }
+        
+        function createRobot(index) {
+            let robot = new Robot(
+                random(200, width - 200),
+                random(150, height - 150),
+                random(TWO_PI),
+                colors[index],
+                30
+            );
+            
+            if (robots[index]) {
+                robots[index] = robot;
+            } else {
+                robots.push(robot);
+            }
+            
+            let colorNames = ['Yellow', 'Purple', 'Red', 'Green', 'Blue'];
+            console.log(`Robot ${index + 1} (${colorNames[index]}):`);
+            console.log('  Left wheel - Base speed:', robot.leftBaseSpeed.toFixed(2), 
+                       'Amplitude:', robot.leftOscillationAmplitude.toFixed(2),
+                       'Frequency:', robot.leftOscillationFrequency.toFixed(3));
+            console.log('  Right wheel - Base speed:', robot.rightBaseSpeed.toFixed(2),
+                       'Amplitude:', robot.rightOscillationAmplitude.toFixed(2),
+                       'Frequency:', robot.rightOscillationFrequency.toFixed(3));
+        }
+        
+        function draw() {
+            let robotLifetime = 300000; // 5 minutes in milliseconds
+            
+            for (let i = 0; i < robots.length; i++) {
+                let robot = robots[i];
+                robot.update();
+                
+                // Check if robot has lived for 5 minutes
+                if (millis() - robot.birthTime > robotLifetime) {
+                    console.log(`Robot ${i + 1} lived for 5 minutes, respawning...`);
+                    createRobot(i);
+                }
+                
+                robot.drawPath();
+            }
+        }
+        
+        // Press 'c' to clear and restart with new robots
+        function keyPressed() {
+            if (key === 'c' || key === 'C') {
+                background(255);
+                robots = [];
+                for (let i = 0; i < 5; i++) {
+                    createRobot(i);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
