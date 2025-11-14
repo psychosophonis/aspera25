@@ -103,6 +103,16 @@
       "type": "panel"
     },
     {
+      "day": "",
+      "time": "",
+      "venue": "",
+      "content": "",
+      "session_num": null,
+      "headshot_url": null,
+      "logo_url": null,
+      "type": ""
+    },
+    {
       "day": "DAY 25/11/25\nTUESDAY",
       "time": "1100",
       "venue": "29.G07",
@@ -514,43 +524,35 @@
       "day": "DAY 26/11/25\nWEDNESDAY",
       "time": "1530",
       "venue": "29.G10",
-      "content": "Generative AI/Machine In the Screen Production Classroom and the Implications for Tertiary Educators",
+      "content": "Encouraging Risk, Creativity and Experimentation in Screen Production Classroom",
       "session_num": "20",
       "headshot_url": null,
       "logo_url": null,
       "type": "aspera-panel",
       "presenters": [
         {
+          "name": "Rachel Wilson",
+          "institution": null
+        },
+        {
           "name": "Nico Meissner",
           "institution": null
         },
         {
-          "name": "Andrew O’Keefe",
-          "institution": null
+          "name": "Jillian Holt",
+          "institution": "Independent"
         },
         {
           "name": "Tom Young",
           "institution": "Flinders University"
         },
         {
-          "name": "Teresa Rizzo",
-          "institution": null
-        },
-        {
           "name": "Kerreen Ely-Harper",
           "institution": "Curtin University"
         },
         {
-          "name": "Rachel Wilson",
-          "institution": null
-        },
-        {
-          "name": "Jill Holt",
-          "institution": null
-        },
-        {
-          "name": "David Balfour",
-          "institution": "AFTRS & VCA"
+          "name": "Nicole McCuaig",
+          "institution": "QUT"
         }
       ],
       "affiliation": null
@@ -797,7 +799,7 @@
     "1": {
       "type": "panel",
       "title": "Creative experimentation in a climate of standardisation: working towards positive outcomes for screen production research students in Australian and New Zealand universities",
-      "description": "",
+      "description": "Creative experimentation in screen production research within standardisation pressures across Australian higher education.",
       "presenters": [],
       "papers": [
         {
@@ -827,7 +829,7 @@
     "2": {
       "type": "panel",
       "title": "Lean In: Experimenting with Feminist & Neoliberal “Feminist” Screen Narratives",
-      "description": "",
+      "description": "Feminist screen narratives and below-the-line collaborative practices, from neoliberal critique to experimental production design methodologies.",
       "presenters": [],
       "papers": [
         {
@@ -865,7 +867,7 @@
     "3": {
       "type": "panel",
       "title": "AI & Filmmaking: Disruption or Evolution?",
-      "description": "",
+      "description": "Artificial intelligence in filmmaking, cultural authenticity assessment, agency and audience reception in computational creativity.",
       "presenters": [],
       "papers": [
         {
@@ -918,14 +920,6 @@
           "institution": "Deakin University"
         },
         {
-          "name": "Lucas Ihlein",
-          "institution": "UOW"
-        },
-        {
-          "name": "Louise Curham",
-          "institution": "UOW"
-        },
-        {
           "name": "Rowena Crowe",
           "institution": null
         }
@@ -933,7 +927,7 @@
       "papers": [
         {
           "title": "Material experimentation at the cusp of digital transition",
-          "abstract": "How do embodied investigations into the materiality of film generate scenes in the teaching studio that propels experiments with screen forms? This paper presents a brief history of the “handmade” film exercise in Australian universities (1992 - 2022) from the perspectives of artist-educators. The stories of technological, knowledge, and generational transfers at the cusp of digital transformation highlight the values of embodied materialist practice in the 21st century digital classroom. These iterative interactions fuel a scene in ways that are capable of sustaining continuous experimentation in screen arts.",
+          "abstract": "Scenes of Transmissions: Experimental Art Practices in Education\n\n1: Material experimentation at the cusp of digital transition\nAssociate Professor Jo Law and Dr Aaron Burton, UOW\nHow do embodied investigations into the materiality of film generate scenes in the teaching studio that propels experiments with screen forms? This paper presents a brief history of the “handmade” film exercise in Australian universities (1992 - 2022) from the perspectives of artist-educators. The stories of technological, knowledge, and generational transfers at the cusp of digital transformation highlight the values of embodied materialist practice in the 21st century digital classroom. These iterative interactions fuel a scene in ways that are capable of sustaining continuous experimentation in screen arts.",
           "authors": [
             {
               "name": "Jo Law",
@@ -947,7 +941,7 @@
         },
         {
           "title": "a long journey for a little film",
-          "abstract": "60 seconds max.; Fixed camera; No audio; No zoom; No edit; No effects – this simple formula for filmmaking (based on the technical limitations of early films) went on a journey of increasing momentum from its inception in a Japanese media art collective, to a project by a Danish/American couple via an Olympian middle-distance runner, to an Australian artist-archivist group, to the author of this paper, via the Autumn Almanac of Tokyo, to a south London architecture school, where it proliferated. This paper charts this journey of the modest format of the Remoscope or Lumiere film to its use for scenographic, contextual research within what may have become the largest global producer of the form.",
+          "abstract": "2: a long journey for a little film\n60 seconds max.; Fixed camera; No audio; No zoom; No edit; No effects – this simple formula for filmmaking (based on the technical limitations of early films) went on a journey of increasing momentum from its inception in a Japanese media art collective, to a project by a Danish/American couple via an Olympian middle-distance runner, to an Australian artist-archivist group, to the author of this paper, via the Autumn Almanac of Tokyo, to a south London architecture school, where it proliferated. This paper charts this journey of the modest format of the Remoscope or Lumiere film to its use for scenographic, contextual research within what may have become the largest global producer of the form.",
           "authors": [
             {
               "name": "Eleanor Suess",
@@ -956,22 +950,8 @@
           ]
         },
         {
-          "title": "Teaching and Learning Cinema",
-          "abstract": "This paper discusses a three-phase approach to media art preservation and knowledge transmission led by Teaching and Learning Cinema (TLC) in the field of Expanded Cinema. While offering richly embodied experiences in their moment of enactment, its ephemerality risks becoming unavailable for future experience. Over the past 20 years, TLC has developed a methodology for knowledge transmission. First, intergenerational transfer is enacted via younger generations learning about the work from its originators, and producing live re-enactments. A user's manual in the second phase encodes the artwork as a set of instructions for future performers and audiences. Thirdly, the archived material from phases one and two is stored on synthetic DNA, with a view to transmission into the deep future.",
-          "authors": [
-            {
-              "name": "Lucas Ihlein",
-              "institution": "UOW"
-            },
-            {
-              "name": "Louise Curham",
-              "institution": "UOW"
-            }
-          ]
-        },
-        {
           "title": "Embodied learning in a community of practice",
-          "abstract": "Artist-run labs are a global phenomenon. They are often democratic organisations self-governed by members. This scene is the in-between space occupied by the artisanal craft of 16mm and Super 8 film production in artist-run labs. This paper discusses my experience as a filmmaker at an annual film workshop and festival Nanofest, held at Nanolab, an independent film lab in Daylesford, Victoria, in 2022. The event is hosted by Artist Film Workshop, a vibrant, diverse community of film artists working in Naarm/ Melbourne.",
+          "abstract": "3: Embodied learning in a community of practice\nArtist-run labs are a global phenomenon. They are often democratic organisations self-governed by members. This scene is the in-between space occupied by the artisanal craft of 16mm and Super 8 film production in artist-run labs. This paper discusses my experience as a filmmaker at an annual film workshop and festival Nanofest, held at Nanolab, an independent film lab in Daylesford, Victoria, in 2022. The event is hosted by Artist Film Workshop, a vibrant, diverse community of film artists working in Naarm/ Melbourne.",
           "authors": [
             {
               "name": "Rowena Crowe, DCA candidate",
@@ -984,7 +964,7 @@
     "6": {
       "type": "panel",
       "title": "Sensory Storytellers: Experimental Pedagogies in Virtual Production Education",
-      "description": "",
+      "description": "Experimental pedagogies in virtual production education, sensory storytelling, ICVFX techniques, and disability-inclusive screen production.",
       "presenters": [],
       "papers": [
         {
@@ -1034,7 +1014,7 @@
     "7": {
       "type": "panel",
       "title": "Creating space(s) for Experimentation",
-      "description": "",
+      "description": "Experimental documentary methodologies, institutional critique, and the boundaries between fiction and non-fiction in screen practice.",
       "presenters": [],
       "papers": [
         {
@@ -1080,7 +1060,7 @@
     "8": {
       "type": "group-presentation",
       "title": "One-Size-Fits-None: Teaching Film & TV in the Neurodiverse Classroom",
-      "description": "",
+      "description": "1.  One-Size-Fits-None - Teaching Film & TV in the Neurodiverse Classroom.\n\nAll Within the international context, higher education providers are opening their doors to a more diverse student populatio...",
       "presenters": [
         {
           "name": "Mark Overett",
@@ -1127,7 +1107,7 @@
     "9": {
       "type": "panel",
       "title": "Dancing with Mutants: Towards a Vitalist Framework for Future Cinematic and Screen-Based Practices",
-      "description": "",
+      "description": "Place-based screen practices, site-specific filmmaking, and experimental approaches to landscape and environment.",
       "presenters": [],
       "papers": [
         {
@@ -1165,7 +1145,7 @@
     "10": {
       "type": "panel",
       "title": "“Can I make a meat statue?”: Reflections on facilitating non-screen creative experimentation for Bachelor of Screen Production Students",
-      "description": "",
+      "description": "Community filmmaking pedagogies, co-creative research, and socially engaged screen practice in Pasifika contexts.",
       "presenters": [],
       "papers": [
         {
@@ -1203,7 +1183,7 @@
     "11": {
       "type": "group-presentation",
       "title": "A Truly Responsive Screen and Media Pedagogy: Provocations for a Studio-Based Teaching Model",
-      "description": "",
+      "description": "Media technologies, practices and audiences are continually evolving, proving ongoing challenges in how we design pedagogy. At the core of this challenge is capturing the unwieldy scope of media pract...",
       "presenters": [
         {
           "name": "Hannah Brasier",
@@ -1266,7 +1246,7 @@
     "12": {
       "type": "panel",
       "title": "Experimental Andragogy for Digital and Social Media",
-      "description": "",
+      "description": "Audio production pedagogies, creative activism methodologies, and feminist documentary approaches to marginalized narratives.",
       "presenters": [],
       "papers": [
         {
@@ -1332,7 +1312,7 @@
     "13": {
       "type": "panel",
       "title": "The Other Edis: Audiovisual Concrète and the Environmental Uncanny in Non-narrative, Virtual Work",
-      "description": "",
+      "description": "Creative research methodologies, practice-led enquiry, and experimental approaches to screen scholarship.",
       "presenters": [],
       "papers": [
         {
@@ -1370,7 +1350,7 @@
     "14": {
       "type": "panel",
       "title": "Alternative Assessments for DEI: Why they work for graduate screen leaders",
-      "description": "",
+      "description": "Cultural representation in screen production, Indigenous methodologies, and collaborative storytelling across difference.",
       "presenters": [],
       "papers": [
         {
@@ -1412,7 +1392,7 @@
     "15": {
       "type": "panel",
       "title": "The Wonder Project - Creating Transformative Animated Science Stories For Children",
-      "description": "",
+      "description": "Cross-platform storytelling, transmedia pedagogies, and experimental approaches to narrative distribution.",
       "presenters": [],
       "papers": [
         {
@@ -1466,7 +1446,7 @@
     "16": {
       "type": "panel",
       "title": "Hypernostalgiavision: A transnational mode of fictional nostalgic television for our time?",
-      "description": "",
+      "description": "Sonic materiality, sound design experimentation, and acoustic approaches to place and landscape.",
       "presenters": [],
       "papers": [
         {
@@ -1512,7 +1492,7 @@
     "17": {
       "type": "group-presentation",
       "title": "Screen aesthetics, emotions and the body: experiments in VR and dome cinema",
-      "description": "",
+      "description": "This co-presented research paper (or short themed panel) concerns the production of a ~ 30 mins VR and dome-cinema documentary, \"Vaka Moana: Ancestors of the Future\". The subject of the work is the hi...",
       "presenters": [
         {
           "name": "Tom Murray",
@@ -1530,7 +1510,7 @@
       "papers": [
         {
           "title": "Screen aesthetics, emotions and the body: experiments in VR and dome cinema",
-          "abstract": "This co-presented research paper (or short themed panel) concerns the production of a ~ 30 mins VR and dome-cinema documentary, \"Vaka Moana: Ancestors of the Future\". The subject of the work is the historic voyages that facilitated the settling of the Polynesian Pacific (~1000BC – 1200AD).\n\nWe will discuss the ways in which understandings of aesthetics, emotions and the\nhuman body have been applied to this work as a documentary film - that is, as a work\nthat seeks to engage with and represent ‘actuality’ and ‘the real’. And from here we will\nbriefly explore the aesthetic possibilities of this technology more broadly.\n\nIn this, we note the ancient Greek heritage of aisthesis, a term concerned with the\nperception of feeling and attending to the sensory interpretation of reality. It was a\nconcept, Terry Eagleton has written, that was originally conceived as a ‘discourse of the body.’ Likewise, as Katie Barclay has written, the etymological root of the word\n‘emotion’ (the Latin emovere) is ‘to move’. Emotion was also conceived as a discourse\nregarding the ‘physical embodiment of the ideas and experiences that produced social, political, cultural and other types of change’.\n\nThis idea of emotional movement is also relevant to the aspirations of this screen-work, which carries a social-change agenda. Specifically, it expresses the sentiment that Polynesian Indigenous knowledge is significant to the urgent and necessary mitigation of climate change and global environmental degradation.\n\nEmploying poetic-aesthetic narrative tools to the immersive media environment, we\nhave attempted to create a particular kind of cinematic space that is both embodied\nand emotive. Some analogues apply here to the inter-cultural ‘meeting place’\ndescribed by artist-scholar Paul Carter.\n\nIt is an immersive and feeling-full aesthetic and we hope that bodies are moved and\nemotions are provoked.\n\nSelected References:\n\nBarclay, Katie (2017) ‘Introduction: Emotions and Change’, Emotions: History, Culture,\nSociety 1(2) : pp.1–9.\n\nCarter, Paul (2013) Meeting Place: The Human Encounter and the Challenge of\nCoexistence. Minneapolis: University of Minnesota Press.\n\nEagleton, Terry (1990) Ideology of the Aesthetic, Blackwell Publishing.\n\nMazis, Glen A. (1993) Emotion and Embodiment: A Fragile Ontology. New York: Peter\nLang Publishing Inc.\n\nMurray, Tom (2021) Emotions, Activism and Documentary Storytelling: A Biographical\nProduction-Based Case Study, Emotions: History, Culture, Society 5 (20 21) 103–123.\n\nRutherford, Anne (2003) Cinema and Embodied Affect, Senses of Cinema vol.25, March\n2003. See: https://www.sensesofcinema.com/2003/feature-articles/embodied_affect/\n\nSobchack, Vivien (1992) The Address of the Eye: A Phenomenology of Film Experience,\nPrinceton: Princeton University Press.\n\nWilliams, Linda (1991) Body Genres, Film Quarterly 44: 4, Summer, 1991.",
+          "abstract": "This co-presented research paper (or short themed panel) concerns the production of a ~ 30 mins VR and dome-cinema documentary, \"Vaka Moana: Ancestors of the Future\". The subject of the work is the historic voyages that facilitated the settling of the Polynesian Pacific (~1000BC – 1200AD).\n\nWe will discuss the ways in which understandings of aesthetics, emotions and the human body have been applied to this work as a documentary film - that is, as a work that seeks to engage with and represent ‘actuality’ and ‘the real’. And from here we will briefly explore the aesthetic possibilities of this technology more broadly.\n\nIn this, we note the ancient Greek heritage of aisthesis, a term concerned with the perception of feeling and attending to the sensory interpretation of reality. It was a concept, Terry Eagleton has written, that was originally conceived as a ‘discourse of the body.’ Likewise, as Katie Barclay has written, the etymological root of the word ‘emotion’ (the Latin emovere) is ‘to move’. Emotion was also conceived as a discourse regarding the ‘physical embodiment of the ideas and experiences that produced social, political, cultural and other types of change’.\n\nThis idea of emotional movement is also relevant to the aspirations of this screen-work, which carries a social-change agenda. Specifically, it expresses the sentiment that Polynesian Indigenous knowledge is significant to the urgent and necessary mitigation of climate change and global environmental degradation.\n\nEmploying poetic-aesthetic narrative tools to the immersive media environment, we have attempted to create a particular kind of cinematic space that is both embodied and emotive. Some analogues apply here to the inter-cultural ‘meeting place’ described by artist-scholar Paul Carter.\n\nIt is an immersive and feeling-full aesthetic and we hope that bodies are moved and emotions are provoked.\n\nSelected References:\n\nBarclay, Katie (2017) ‘Introduction: Emotions and Change’, Emotions: History, Culture, Society 1(2) : pp.1–9.\n\nCarter, Paul (2013) Meeting Place: The Human Encounter and the Challenge of Coexistence. Minneapolis: University of Minnesota Press.\n\nEagleton, Terry (1990) Ideology of the Aesthetic, Blackwell Publishing.\n\nMazis, Glen A. (1993) Emotion and Embodiment: A Fragile Ontology. New York: Peter Lang Publishing Inc.\n\nMurray, Tom (2021) Emotions, Activism and Documentary Storytelling: A Biographical Production-Based Case Study, Emotions: History, Culture, Society 5 (20 21) 103–123.\n\nRutherford, Anne (2003) Cinema and Embodied Affect, Senses of Cinema vol.25, March 2003. See: https://www.sensesofcinema.com/2003/feature-articles/embodied_affect/\n\nSobchack, Vivien (1992) The Address of the Eye: A Phenomenology of Film Experience, Princeton: Princeton University Press.\n\nWilliams, Linda (1991) Body Genres, Film Quarterly 44: 4, Summer, 1991.",
           "authors": [
             {
               "name": "Tom Murray",
@@ -1551,7 +1531,7 @@
     "18": {
       "type": "panel",
       "title": "Hyperphotography revisited: aesthetic journalism in a post-Flash world",
-      "description": "",
+      "description": "Archival methodologies, ephemeral media preservation, and experimental approaches to screen history.",
       "presenters": [],
       "papers": [
         {
@@ -1593,12 +1573,12 @@
     "19": {
       "type": "panel",
       "title": "Enabling Creative Risk-taking or: How I Learned to Stop Worrying and Love Screen Studies",
-      "description": "",
+      "description": "Experimental screen production techniques, material practice, and process-driven creative methodologies.",
       "presenters": [],
       "papers": [
         {
           "title": "Enabling Creative Risk-taking or: How I Learned to Stop Worrying and Love Screen Studies",
-          "abstract": "This paper proposes an experimental shift in undergraduate film studies pedagogy, using cinematic annotation as a means of cultivating students’ skills in close formal analysis. In the context of increasing reliance on generative AI—particularly in first-year student writing—this method offers a way to re-centre attention, observation, and audiovisual literacy. The approach involves a two-stage assessment structure: beginning with the use of digital video annotation tools to analyse a short film sequence, followed by a written essay that develops and extends those annotations into a formal argument.\n\nThough not yet implemented, this proposal responds to the challenges I have observed in teaching large first-year cohorts, where traditional essays are often stylistically fluent but critically superficial, and where students struggle to engage meaningfully with cinematic form. The paper situates this proposed method within the broader literature on multimodal learning, critical pedagogy, and AI-era assessment redesign. It argues that cinematic annotation offers a valuable experimental framework, one that invites students to think through images and sounds, and to reclaim interpretive agency at a time when automated fluency is easily accessible but pedagogically hollow.",
+          "abstract": "As Screen Studies has evolved and expanded within the academy, its role in film schools—especially in the education of emerging filmmakers—deserves renewed attention. Film schools have traditionally paired filmmaking instruction with the study of screen history and theory, yet the increasing complexity of Screen Studies as a discipline requires that we rethink how it can best serve creative practitioners. Screen Studies—when designed with practitioners in mind—can serve as a site for experimentation critical for the creative development of students. \n\nScreen Studies offers students a vocabulary for analysing form and meaning while modelling ways of thinking that embrace ambiguity, risk-taking, and the reframing of norms. It can become an experimental space where students test new conceptual frames, challenge dominant canons, and engage with diverse perspectives that unsettle conventional ways of seeing and making.\n\nThis presentation shares early findings from a large-scale survey currently underway across Australian and international film schools. Drawing on our survey results and curriculum design experience, we argue for a practitioner-focused approach to Screen Studies that supports experimentation, reflective practice, and inspiration, without sacrificing intellectual rigour. Our research aims to map how Screen Studies is being taught to filmmaking students: What texts, activities, and pedagogical approaches are being used? How do programs balance conceptual knowledge with creative discovery? And to what extent do current curricula align with the needs and learning styles of practical, industry-focused students?\n\nWe hope this collaborative conversation will help identify shared challenges, successful strategies, and emerging innovations moving toward a flexible and adaptive framework for Screen Studies pedagogy that supports the next generation of creative screen practitioners.",
           "authors": [
             {
               "name": "Duncan McLean",
@@ -1612,7 +1592,7 @@
         },
         {
           "title": "Cinematic Annotation and Teaching Film Aesthetics",
-          "abstract": "This paper investigates the film frame as a core component of cinematic narration and visual storytelling in experimental filmmaking. Through practice-based research, it examines the role and presence the film frame serves in the production of a horror film. The analysis draws from the production of a 71-minute horror film titled Under the Red, presented from my perspective as a film director.\n\nThe research finds that the frame, as part of an aesthetic system, acts as a temporal window into a story world. Through cinematic narration, it conveys storyline, characters and settings to an audience. It can show factual events, before and after they occur. It can also embody a character’s individual perspective, showing how they interpret the world through thoughts, feelings and memory.\n\nThe research identifies four distinct frame modes: objective, subjective, omniscient, and enigmatic. The objective frame focuses on representing facts at an individual level, adopting ‘neutral’ camera positions at eye level. The subjective frame can represent an emotional or personal sense of an individual’s reality. The omniscient frame is aware of all perspectives and facts, presenting narrative information as a reliable, God-like narrator.\n\nExpanding on this, the research introduces the concept of the enigmatic frame. It is a cinematic perspective that deliberately conceals information from on-screen characters, influencing their behaviour and actions in specific ways. It is not bound by individual perspectives, nor is it interested in factual narration. Instead, it embodies a vague and mysterious force that distorts the story to suit its own agenda, as it celebrates artifice from a higher, detached perspective. The presentation will include selected scenes from Under the Red, which serve to illustrate my analytical framework and key concepts discussed.",
+          "abstract": "This paper proposes an experimental shift in undergraduate film studies pedagogy, using cinematic annotation as a means of cultivating students’ skills in close formal analysis. In the context of increasing reliance on generative AI—particularly in first-year student writing—this method offers a way to re-centre attention, observation, and audiovisual literacy. The approach involves a two-stage assessment structure: beginning with the use of digital video annotation tools to analyse a short film sequence, followed by a written essay that develops and extends those annotations into a formal argument.\n\nThough not yet implemented, this proposal responds to the challenges I have observed in teaching large first-year cohorts, where traditional essays are often stylistically fluent but critically superficial, and where students struggle to engage meaningfully with cinematic form. The paper situates this proposed method within the broader literature on multimodal learning, critical pedagogy, and AI-era assessment redesign. It argues that cinematic annotation offers a valuable experimental framework, one that invites students to think through images and sounds, and to reclaim interpretive agency at a time when automated fluency is easily accessible but pedagogically hollow.",
           "authors": [
             {
               "name": "Ivan Cerecina",
@@ -1622,7 +1602,7 @@
         },
         {
           "title": "Experimental Framing: Four Modes of Cinematic Perspective in Horror Film Practice",
-          "abstract": "",
+          "abstract": "This paper investigates the film frame as a core component of cinematic narration and visual storytelling in experimental filmmaking. Through practice-based research, it examines the role and presence the film frame serves in the production of a horror film. The analysis draws from the production of a 71-minute horror film titled Under the Red, presented from my perspective as a film director.\n\nThe research finds that the frame, as part of an aesthetic system, acts as a temporal window into a story world. Through cinematic narration, it conveys storyline, characters and settings to an audience. It can show factual events, before and after they occur. It can also embody a character’s individual perspective, showing how they interpret the world through thoughts, feelings and memory.\n\nThe research identifies four distinct frame modes: objective, subjective, omniscient, and enigmatic. The objective frame focuses on representing facts at an individual level, adopting ‘neutral’ camera positions at eye level. The subjective frame can represent an emotional or personal sense of an individual’s reality. The omniscient frame is aware of all perspectives and facts, presenting narrative information as a reliable, God-like narrator.\n\nExpanding on this, the research introduces the concept of the enigmatic frame. It is a cinematic perspective that deliberately conceals information from on-screen characters, influencing their behaviour and actions in specific ways. It is not bound by individual perspectives, nor is it interested in factual narration. Instead, it embodies a vague and mysterious force that distorts the story to suit its own agenda, as it celebrates artifice from a higher, detached perspective. The presentation will include selected scenes from Under the Red, which serve to illustrate my analytical framework and key concepts discussed.",
           "authors": [
             {
               "name": "Tyler Beckley",
@@ -1635,7 +1615,7 @@
     "20": {
       "type": "group-presentation",
       "title": "Encouraging Risk, Creativity and Experimentation in Screen Production Classroom",
-      "description": "",
+      "description": "The rapid emergence and integration of generative AI/machine learning tools in screen production has sparked significant interest and debate within our institutions. This roundtable will explore the n...",
       "presenters": [
         {
           "name": "Rachel Wilson",
@@ -1665,7 +1645,7 @@
       "papers": [
         {
           "title": "Encouraging Risk, Creativity and Experimentation in Screen Production Classroom",
-          "abstract": "",
+          "abstract": "The ASPERA Learning and Teaching Committee has dedicated significant meeting time to discussion around how screen production courses can effectively balance technical proficiency and industry preparedness with cultures of experimentation and creative risktaking.\nAs this conference's focus on experimentation in screen production suggests, the challenge extends beyond classroom-level creative encouragement and positive reinforcement, to encompass curriculum design, campus culture, student identity formation, and pedagogical andragogical structure. These elements work collectively toward a crucial outcome: cultivating bold, unique voices who will contribute meaningfully to an evolving screen culture and economy. This roundtable examines whether contemporary students are inherently risk-averse whilst simultaneously interrogating pedagogical frameworks that either support, or inadvertently discourage, creative exploration. The roundtable will address the question: What constitutes meaningful experimentation and risk-taking in the classroom context, and how do these practices translate to professional readiness?\n\nThis roundtable brings together educators from across the country exploring diverse approaches to fostering experimental practice. They will share their experience and bring questions and observational data from their own schools, and audience members will be invited to engage with the panel and collective. Through lightning talks, the contributors will examine how co-curricular community engagement supports creative confidence, how assessment design can reward rather than penalize experimentation, and how cross-year collaboration creates safe spaces for risk-taking. The roundtable will explore how intentional limitations can paradoxically increase creative freedom, and consider post-production as a site for experimental practice. By examining techniques ranging from removing traditional writer/director hierarchies to treating editing as iterative drafting, this roundtable seeks to identify practical strategies for cultivating creative identity and courage, while maintaining rigor in screen production education and industry preparedness.\nObjectives:\n• To share current best practices in terms of the fostering of creative experimentation\nin educational frameworks\n• Examine student attitudes toward creative experimentation\n• Explore the relationship between creative risk taking and industry preparedness, and\nhow best to communicate this to current and future students.\nLighting Talks:\n• Dr. Jilian Holt: Techniques for encouraging experimentation in Post-Production\n• Dr. Tom Young: Cross-year creative collaboration and risk taking\n• Dr. Kerreen Ely-Harper: Assessment and rubrics to encourage experimentation\n• Dr Nicole Nicole McCuaig: 3 examples of experiments",
           "authors": [
             {
               "name": "Rachel Wilson",
@@ -1698,7 +1678,7 @@
     "21": {
       "type": "group-presentation",
       "title": "Condensations: filmic experimentations with place and the nonhuman",
-      "description": "",
+      "description": "Writer and theorist Mackenzie Wark suggests that “Disparate times call for disparate methods” (2015). In addressing the theme of ASPERA 2025, this panel proposes how experimental and disparate methods...",
       "presenters": [
         {
           "name": "Christine Rogers",
@@ -1716,7 +1696,7 @@
       "papers": [
         {
           "title": "Condensations: filmic experimentations with place and the nonhuman",
-          "abstract": "",
+          "abstract": "Writer and theorist Mackenzie Wark suggests that “Disparate times call for disparate methods” (2015). In addressing the theme of ASPERA 2025, this panel proposes how experimental and disparate methods can address questions around interspecies relationships and navigating unsettled lands. \n\nCreative practice scholars and filmmakers, Liz Burke, Catherine-Gough-Brady, Kim Munro and Christine Rogers work with experimental practices in responding to and making work about place and the nonhuman. These methodologies and methods are various, and responsive to calls to decolonise our practices, to decentre the human, to prioritize other kinds of thinking and knowing that are more responsive to life beyond-human. \n\nBurke asks viewers, on their couches, to watch her non-linear essay film about people and their dogs, and respond to the adventure of “leaning forward” and interacting while viewing. How do people, and their dogs, watch, and engage with a non-linear film? How do people participate in a film while still being outside the film?\n\nGough-Brady argues that film language is human-centric, for example, the mid shot refers to a relationship between the (mostly human) body and the frame. Once she is filming something without eyes, it becomes difficult to use this language to describe her shot choices, and she asks, ‘What is a mid-shot of a mountain?’ \n\nMunro contemplates her documentary methodology which involves drifting through the outer suburbs of Adelaide with a loose collection of non-academic researchers. These experiments build on her practice of listening which, as Brandon LaBelle writes, ‘teaches us how to belong, to find a place, as well as how not to belong… to be out of place, and still to search for new connection, for proximity’ (2019). Using field recordings, conversations, LiDAR scans, and archives, ‘Drift’ amplifies other forms of knowing that is situated, embodied and beyond-human. \n\nRogers, following Gough-Brady’s lead, turns her lens to the sky, exploring and experimenting through a collaboration with a poet, Jane Frank, how to frame the limitless space above us. She discovers that a full-frame sky speaks of absence, that it calls out to belong, to be anchored to the edges of the land. Further connection, but also disconnection, occurs when the words of the poems are written on the sky in post-production. Rogers asks ‘how can belonging with place be created and expressed through the frame?’",
           "authors": [
             {
               "name": "Christine Rogers",
@@ -1737,12 +1717,12 @@
     "22": {
       "type": "panel",
       "title": "Experiment in Screenwriting Research: Classifying the ‘Love Letter to Cinema’",
-      "description": "",
+      "description": "Experimental approaches to screen research, methodological innovation, and practice-based scholarship.",
       "presenters": [],
       "papers": [
         {
           "title": "Experiment in Screenwriting Research: Classifying the ‘Love Letter to Cinema’",
-          "abstract": "This paper is inspired by the philosophical component of Guy Debord’s (1958/2006) dérive (literally ‘drifting’); where “life [can] be reimagined differently from how it is currently constructed” (Lavery 2018, p. 2). It considers how the screenwriter, as researcher-practitioner, might drift through their own research journey, embracing the spontaneity of a conceptual dérive. My screenplay The Mourning Site serves as a case study for discussing craft-based methodologies that support a “discovery-driven” script development process advocated by Margot Nash (2014, p. 98): “I strongly suggest that the mysterious and often messy process where ideas need time to ferment be valued”.\nThis paper examines the use of the Enneagram personality system in character development and surrealist practices (such as automatism and collage) in crafting what Cynthia Freeland (2000, p. 256, cited in Kimber 2014, p. 59) terms “horror numbers”: sequences of spectacle, exaggerated violence, and/or monstrous behaviour. Furthermore, the screenplay applies the visual metaphor of haunting as a fluid cycle to the narrative – reimagining the three-act structure as a ‘haunting house’ (in cycles), rather than a linear template. \nNouri Gana (2013, p.83, cited in Laine 2023, p. 6) argues that “this question of whether or not trauma can be represented is a complex one, insofar as trauma simultaneously resists and demands representation”. In response, Cathy Caruth (1996, p. 50, cited in Laine 2023, p. 6) suggests that “an experience that exceeds the possibility of narrative knowledge [...] will best be represented by a failure of narrative”. By challenging conventional story structure, The Mourning Site simultaneously seeks to challenge dominant ideologies instilled within these traditions. \nThis paper discusses the challenges of experimental screencraft and how the horror screenwriter can sculpt their theoretical knowledge through the malleable expedition that is practice-based research. It is this “blending” of creative practice and theory that Tara Brabazon (2020, p. 15) describes as transformative, altering “both initiating compounds to create something different, meaningful and worthwhile”.",
+          "abstract": "This paper argues that screenwriting as a creative act can function as an experimental and reflexive research methodology, particularly in the context of defining and legitimising emerging film genres. The emerging genre under investigation, ‘love letter to cinema’, is exemplified by films that pay homage to cinema, such as The Purple Rose of Cairo (1985), Hugo (2011), La La Land (2016), and The Fabelmans (2022). Since critic Roger Ebert coined the term in 1990 to describe Cinema Paradiso (1988) – now a benchmark of the form – the phrase ‘love letter to cinema’ has circulated widely in industry and audience discourse, and yet it has evaded formal academic analysis.\n\nThis paper addresses that gap through my PhD thesis, Writing a ‘Love Letter to Cinema’: A Screenwriter’s Creative Practice Approach to Investigating an Emerging Film Genre. In the spirit of methodological and creative experimentation, the research tests the possibility of codifying an emergent genre through the writing of a feature-length screenplay – one that operates simultaneously as a creative artefact and a site of theoretical engagement, in line with Batty and Kerrigan’s (2018) framing of screenwriting as scholarly enquiry.\n\nThe research is also informed by Csikszentmihalyi’s (1997) Systems Model of Creativity, which situates innovation at the intersection of individual practice, domain knowledge (genre theory), and the field (critics, scholars, educators). This is enriched by McIntyre’s (2012) work on cultural production, which challenges individualist myths of creativity by emphasising the collaborative, institutional, and structural forces shaping creative practice.\n\nWhile screenwriting aligns with Csikszentmihalyi’s concept of ‘flow’, presenting the research to an academic audience – such as ASPERA attendees – constitutes a second, equally experimental stage: the pursuit of field recognition. This dual process of creation and classification is key to how new genres gain legitimacy in cultural and scholarly contexts.",
           "authors": [
             {
               "name": "George Merryman",
@@ -1752,7 +1732,7 @@
         },
         {
           "title": "The “Messy” Process in Screenplay Development",
-          "abstract": "Downloaded files of Dan Gilroy's 2014 screenplay Nightcrawler, with its font and format variations has circulated through communities of screenwriters, screenwriting educators and practitioners as an example of how a writer-director can use the page to evoke the themes and world of its eventual form in cinema. Likewise, Bruce Robinson’s Withnail and I (1987) with its playwrighting conventions and any number of Quentin Tarantino’s self-described novelistic expressions of the films he was developing have inspired aspiring screenwriters, and screenwriting students, to test the form. Much has been written (including by me) critiquing dominant storytelling structures, but here I aim to get playful with the page itself. In this presentation, I will track the experiments I have been doing in my screenwriting practice research over my eight years in the academy, and test out some new ones to inspire conversation about the different ways in which we can push the boundaries of an historically inflexible form. In my screenplay-as-film (Not a Euphemism, presented at Sightlines 2023), I used the affordances of screenwriting software, such as voice assignation and read along options, and screen recorded the results to make a video demonstrating a queering of screenplay formatting, structure and function, paying particular attention to dialogue and transition. For my 2018 experimental screenplay Sluglines as Ghostly Presence (presented at the Scriptwriting-As-Research Symposium at USQ, and published in TEXT), the focus was on scene headings and the parenthetical elements. In this presentation, I home in on character and dialogue, borrowing strategies from phone texting, online posting and meme-making to disrupt the limited tools in conventional screenplay formatting for denoting pace and rhythm.",
+          "abstract": "This paper is inspired by the philosophical component of Guy Debord’s (1958/2006) dérive (literally ‘drifting’); where “life [can] be reimagined differently from how it is currently constructed” (Lavery 2018, p. 2). It considers how the screenwriter, as researcher-practitioner, might drift through their own research journey, embracing the spontaneity of a conceptual dérive. My screenplay The Mourning Site serves as a case study for discussing craft-based methodologies that support a “discovery-driven” script development process advocated by Margot Nash (2014, p. 98): “I strongly suggest that the mysterious and often messy process where ideas need time to ferment be valued”.\nThis paper examines the use of the Enneagram personality system in character development and surrealist practices (such as automatism and collage) in crafting what Cynthia Freeland (2000, p. 256, cited in Kimber 2014, p. 59) terms “horror numbers”: sequences of spectacle, exaggerated violence, and/or monstrous behaviour. Furthermore, the screenplay applies the visual metaphor of haunting as a fluid cycle to the narrative – reimagining the three-act structure as a ‘haunting house’ (in cycles), rather than a linear template. \nNouri Gana (2013, p.83, cited in Laine 2023, p. 6) argues that “this question of whether or not trauma can be represented is a complex one, insofar as trauma simultaneously resists and demands representation”. In response, Cathy Caruth (1996, p. 50, cited in Laine 2023, p. 6) suggests that “an experience that exceeds the possibility of narrative knowledge [...] will best be represented by a failure of narrative”. By challenging conventional story structure, The Mourning Site simultaneously seeks to challenge dominant ideologies instilled within these traditions. \nThis paper discusses the challenges of experimental screencraft and how the horror screenwriter can sculpt their theoretical knowledge through the malleable expedition that is practice-based research. It is this “blending” of creative practice and theory that Tara Brabazon (2020, p. 15) describes as transformative, altering “both initiating compounds to create something different, meaningful and worthwhile”.",
           "authors": [
             {
               "name": "Kate Murray",
@@ -1762,7 +1742,7 @@
         },
         {
           "title": "A rhythm method: screenplay experiments in dialogue and pace",
-          "abstract": "",
+          "abstract": "Downloaded files of Dan Gilroy's 2014 screenplay Nightcrawler, with its font and format variations has circulated through communities of screenwriters, screenwriting educators and practitioners as an example of how a writer-director can use the page to evoke the themes and world of its eventual form in cinema. Likewise, Bruce Robinson’s Withnail and I (1987) with its playwrighting conventions and any number of Quentin Tarantino’s self-described novelistic expressions of the films he was developing have inspired aspiring screenwriters, and screenwriting students, to test the form. Much has been written (including by me) critiquing dominant storytelling structures, but here I aim to get playful with the page itself. In this presentation, I will track the experiments I have been doing in my screenwriting practice research over my eight years in the academy, and test out some new ones to inspire conversation about the different ways in which we can push the boundaries of an historically inflexible form. In my screenplay-as-film (Not a Euphemism, presented at Sightlines 2023), I used the affordances of screenwriting software, such as voice assignation and read along options, and screen recorded the results to make a video demonstrating a queering of screenplay formatting, structure and function, paying particular attention to dialogue and transition. For my 2018 experimental screenplay Sluglines as Ghostly Presence (presented at the Scriptwriting-As-Research Symposium at USQ, and published in TEXT), the focus was on scene headings and the parenthetical elements. In this presentation, I home in on character and dialogue, borrowing strategies from phone texting, online posting and meme-making to disrupt the limited tools in conventional screenplay formatting for denoting pace and rhythm.",
           "authors": [
             {
               "name": "Stayci Taylor",
@@ -1775,12 +1755,12 @@
     "23": {
       "type": "panel",
       "title": "Risking Reproducing the Radical? Reimagining Experimental Film Pedagogy",
-      "description": "",
+      "description": "Cinematography pedagogies, visual experimentation, and teaching camera practice as creative methodology.",
       "presenters": [],
       "papers": [
         {
           "title": "Risking Reproducing the Radical? Reimagining Experimental Film Pedagogy",
-          "abstract": "Research into the influence of constraints on the filmmaking process within The Shoot Out 24 Hour Filmmaking Festival uncovered insights and findings that have application within the academy’s pedagogical context. \n\nThe filmmaking challenge of the festival, with its inherent constraints, not only enabled but fuelled creativity, motivating entrants to self-impose additional parameters. The entrants were motivated to introduce novelty and disrupt the traditions of the domain while maintaining the traditions that ensured their novel variation would be accepted by the field [and judges], (street, 2023) \n\nEntrants were synergistically motivated to engage and re-engage with the festival’s creative system. They were consciously aware that they were building skills to meet the challenge, and once achieved, extend the challenge to further engage in what Nakamura and Csikszentmihalyi refer to as creative flow resulted in ‘a force for expansion in relation to … growth of skills’ (2002, p. 92). The festivals ability to adapt, respond and ensure a level of creative disruption within its strict filmmaking scaffold enabled skills growth, maintained motivation, encouraged creative risk taking and avoided creative complacency and stagnation.\n\nWithin the academy where skills development is key, scoffolded learning is an accepted and proven strategy. Philipsen examines the effects of von Trier’s strict scaffolding to the filmmaking process finding ‘constraints can facilitate creativity in the film making process’ (2009, p. 1) and encourages ‘filmmakers interested in thinking outside the box to recognise that they can benefit from being placed inside the box’ (Philipsen, 2009, p. 1) or operating inside rules, structures or film manifesto movements. \n\nIn the context of the academy this research implies that rather than designing learning opportunities where the scaffolding parameters become less prescribed as skills develop, that in fact the reverse can also be beneficial, especially when learners are encouraged to impose restrictions of their own.",
+          "abstract": "This paper offers a provocation: what if the way we teach experimental film in Australian universities is unintentionally stifling the very innovation it seeks to inspire? As pracademics with over 40 years of combined film production and 15 years of academic experience, we contend that the standard approach to teaching experimental film encourages replication and randomness rather than true innovation.\nFirst, experimental film courses that begin with a historical survey of avant-garde movements often lead students to replicate established techniques rather than develop original responses to contemporary creative challenges. This emphasis on the past can unintentionally transform once- radical practices into formulaic academic exercises.\nSecond, students are frequently encouraged to “experiment” without clear objectives, based on the belief that open-ended exploration naturally fosters creativity. However, this approach risks confusing randomness with innovation. While accidental discoveries like penicillin or Viagra are often cited to defend unstructured experimentation, such outcomes are statistically rare— estimated at less than 0.1%. In the context of time-limited creative education, this is an inefficient and unreliable model for fostering meaningful innovation.\nWe propose a shift toward purpose-driven experimentation - a model where students identify specific aesthetic, narrative, or technical problems and use experimental strategies to address them. This approach retains the spirit of innovation while grounding it in critical inquiry and practical outcomes. It also challenges the assumption that experimental practice is incompatible with producing “job-ready” graduates.\nRather than valorising ambiguity for its own sake, we champion structured risk-taking, iterative design, and reflective creative practice. By reframing experimental film pedagogy around focused innovation rather than historical reimagination or chaotic play, we can better prepare students to contribute original, relevant work to contemporary screen culture.\nThis paper advocates for a pracademic model that balances creative freedom with critical accountability—where experimentation is not an end in itself, but a method for solving problems, provoking thought, and making meaning.\"",
           "authors": [
             {
               "name": "Sherree Halliwell",
@@ -1794,7 +1774,7 @@
         },
         {
           "title": "Creative constraint on the filmmaking process: A pedagogical discussion",
-          "abstract": "With increased competition exerting pressure on traditional opportunities for documentary production and distribution, filmmakers and producers are seeking alternative, experimental, and innovative pathways to funding, audience, and activism. In this context, the emergent role of the impact producer is influencing creative and business aspects of the production process. By understanding the complexity of the impact producer role, tensions associated with risk and uncertain outcomes are illuminated. An example is the traditional producer’s goal of financial return on investment (ROI) expressed in tangible figures such as box office ticket sales and licensing fees versus the ROI goal for the impact producer which is measurable change a documentary can generate around an injustice issue. An inherent risk presented by impact production is the challenge of predicting ROI generated by a strategic impact campaign and measurement of actual ROI as change in community affecting a specific issue. \n\nTaking a creative approach to fundraising for the production of a documentary as well as fundraising for the impact campaign involves experimenting with donor partnerships and platforms to reach audience. Such partnerships may include stakeholders who are aware of one another professionally but have not worked together on the issue they want to influence and improve. It involves devising a novel or unusual alignment of goals to affect a climate; environmental or social justice issue explored within a documentary.\n\nI argue that the need for experimentation and innovation is greater now as distribution platforms to reach audiences shift and evolve, as well as funding is a calculated risk in the risk-averse era of late-stage capitalism.",
+          "abstract": "Research into the influence of constraints on the filmmaking process within The Shoot Out 24 Hour Filmmaking Festival uncovered insights and findings that have application within the academy’s pedagogical context. \n\nThe filmmaking challenge of the festival, with its inherent constraints, not only enabled but fuelled creativity, motivating entrants to self-impose additional parameters. The entrants were motivated to introduce novelty and disrupt the traditions of the domain while maintaining the traditions that ensured their novel variation would be accepted by the field [and judges], (street, 2023) \n\nEntrants were synergistically motivated to engage and re-engage with the festival’s creative system. They were consciously aware that they were building skills to meet the challenge, and once achieved, extend the challenge to further engage in what Nakamura and Csikszentmihalyi refer to as creative flow resulted in ‘a force for expansion in relation to … growth of skills’ (2002, p. 92). The festivals ability to adapt, respond and ensure a level of creative disruption within its strict filmmaking scaffold enabled skills growth, maintained motivation, encouraged creative risk taking and avoided creative complacency and stagnation.\n\nWithin the academy where skills development is key, scoffolded learning is an accepted and proven strategy. Philipsen examines the effects of von Trier’s strict scaffolding to the filmmaking process finding ‘constraints can facilitate creativity in the film making process’ (2009, p. 1) and encourages ‘filmmakers interested in thinking outside the box to recognise that they can benefit from being placed inside the box’ (Philipsen, 2009, p. 1) or operating inside rules, structures or film manifesto movements. \n\nIn the context of the academy this research implies that rather than designing learning opportunities where the scaffolding parameters become less prescribed as skills develop, that in fact the reverse can also be beneficial, especially when learners are encouraged to impose restrictions of their own.",
           "authors": [
             {
               "name": "Kristi Street",
@@ -1804,7 +1784,7 @@
         },
         {
           "title": "The impact producer charting experimental pathways to funding and audience in a risk-averse era of screen industry practice",
-          "abstract": "",
+          "abstract": "With increased competition exerting pressure on traditional opportunities for documentary production and distribution, filmmakers and producers are seeking alternative, experimental, and innovative pathways to funding, audience, and activism. In this context, the emergent role of the impact producer is influencing creative and business aspects of the production process. By understanding the complexity of the impact producer role, tensions associated with risk and uncertain outcomes are illuminated. An example is the traditional producer’s goal of financial return on investment (ROI) expressed in tangible figures such as box office ticket sales and licensing fees versus the ROI goal for the impact producer which is measurable change a documentary can generate around an injustice issue. An inherent risk presented by impact production is the challenge of predicting ROI generated by a strategic impact campaign and measurement of actual ROI as change in community affecting a specific issue. \n\nTaking a creative approach to fundraising for the production of a documentary as well as fundraising for the impact campaign involves experimenting with donor partnerships and platforms to reach audience. Such partnerships may include stakeholders who are aware of one another professionally but have not worked together on the issue they want to influence and improve. It involves devising a novel or unusual alignment of goals to affect a climate; environmental or social justice issue explored within a documentary.\n\nI argue that the need for experimentation and innovation is greater now as distribution platforms to reach audiences shift and evolve, as well as funding is a calculated risk in the risk-averse era of late-stage capitalism.",
           "authors": [
             {
               "name": "Renée Brack / SAE University College / UTS",
@@ -1817,12 +1797,12 @@
     "24": {
       "type": "panel",
       "title": "Experimental film production and the Hanlon Larsen Screen Fellowship at Flinders University",
-      "description": "",
+      "description": "Screen production skills development, technical innovation, and experimental approaches to craft and technique.",
       "presenters": [],
       "papers": [
         {
           "title": "Experimental film production and the Hanlon Larsen Screen Fellowship at Flinders University",
-          "abstract": "This paper reflects on the motivation and development of the Experimental Games \nLab, a creative research initiative that began as a small collective in 2021 and was \nformally established within Griffith Film School in 2022. Conceived in response to a \nlack of institutional infrastructure for experimental, practice-led work in game design \nand screen media, the Lab emerged from a desire to legitimise forms of creative \nresearch that embrace failure, value iteration, and foster innovation, particularly within the context of screen production education and emerging interactive forms.\nThe paper traces the Lab’s journey from a small collective into a recognised research \ncluster. Drawing on reflective practice, it explores how the Lab was shaped by the \nneed to bridge gaps between academic inquiry and industry application, between \ndisciplines, and between emerging researchers and the structures that support them. \nThe Lab provides space for speculative design, prototype-driven projects, and socially \nresponsive screen practices that often sit outside traditional research or commercial \nmodels.\nA key milestone in this trajectory was the launch of the Experimental Game Design \nConference in 2021. Founded as an extension of the Lab’s mission, the conference \nhas become a platform for experimental, practice-led games research. While other \nevents explore games through theoretical or technical perspectives, this conference \nfocuses on practice-led experimentation as a creative methodology, supporting a \ncommunity of early researchers, students, and practitioners working at disciplinary and institutional edges.\nRather than offering a universal model, the paper presents a situated case study in \ndesigning a collaborative environment for screen-based research and education within a creative school. It reflects on the challenges and possibilities of building platforms \nthat make space for uncertainty, creative risk, and long-term collaboration. In doing so, the Experimental Games Lab is positioned as a response to a structural gap, an \necosystem that attempts to foster innovation by embracing failure and expanding the \nrole of experimental practice in screen media research.\nDr Justin Carter is a researcher, game designer and award-winning educator. His \nexperience includes designing and leading programs with a focus on game design and \ndevelopment, screen media, and interaction design.",
+          "abstract": "What is the value of experimental filmmaking in a creative arts degree? \n\nExperimental filmmaking has been a component of Flinders University’s creative arts offerings since the university’s formation in Adelaide, South Australia in the 1960s. In recent years, Flinders’ has strengthened its presence in the experimental film scene, both as a component of the Bachelor of \nCreative Arts (Screen) degree, and via the Hanlon Larsen Experimental Screen Fellowship, an arts grant administered by Flinders. By unpacking both of these activities, this presentation will give an overview of how experimental filmmaking can be embedded within undergraduate university curriculum, and developed in such a manner that will equip graduates to sustainably continue their experimental filmmaking practice. \n\nStudents enrolled in the Bachelor of Creative Arts (Screen) and Bachelor of Creative Industries (Film and Television) first encounter experimental filmmaking as a module within the first year core unit SCME1000 Film Form and Analysis, which covers major historical movements in experimental film, their stylistic dimensions, exhibition contexts, and their link to broader movements in modernist art.\n\nAt third year level, students in the Bachelor of Creative Arts (Screen) take the core unit SCME3071 Screen Production 9: Experimental Film and Music Video, in which they produce an experimental film and a music video, which is informed by experimental film practice.\n\nSince 2021, Flinders University has administered the Hanlon Larsen Screen Fellowship, named after the late Flinders Screen Production lecturer Cole Larsen, who taught experimental film. Delivered in partnership with the Adelaide Film Festival, the Mercury, and ILA, this fellowship has supported the production of new screen works including On Film (Emma Hough-Hobbs, 2022), Paco (Tim Carlier, 2023), Red Earth (Bryce Kraehenbuehl, 2023) and Strega (Tiah Trimboli, 2024). This presentation will outline the history of the screen fellowship, the works produced by successful recipients so far, and will share information on the next phase of the fellowship, positioning Flinders graduates at the forefront of a growing experimental film culture in South Australia.",
           "authors": [
             {
               "name": "Tom Young",
@@ -1844,7 +1824,7 @@
         },
         {
           "title": "The Experimental Games Lab: Founding a Culture of Practice-Led Research  for Experimental Game Design",
-          "abstract": "Creative arts and media students have limited opportunities to explore interdisciplinary applications of their practice. The ability to work across disciplines can contribute to learners developing understandings of how creative practice can be applied to a range of environments and purposes and better equip them for future employment in client-based projects. Peer-to-peer interdisciplinary collaborations can improve skills like communication, decision-making, and teamwork. Peer assisted learning can contribute to building self-confidence and creative capacity.\n\nFollowing a literature review on peer-to-peer collaborations between nursing and creative students, and feasibility-exploring focus groups with staff and students from both disciplines, a pilot peer-to-peer creative learning collaboration was conducted at Curtin University.  Nursing and creative arts students formed dyads to co-design artworks based on the nursing students' clinical experiences. The arts students developed creative pieces, while the nursing students engaged in a progressive critical reflection. The project culminated in a student artwork showcase and written exegesis.\n\nPreliminary results suggest this collaboration fosters engagement, reflection, and problem-solving. The approach has the potential to enhance interprofessional understanding and promote the use of creative arts for nurse well-being, with potential for integration into curricula across both disciplines and the wider university. This pilot collaboration aimed to increase students’ engagement and curiosity in their own learning preferences; and improve students’ ability to problem solve, reflect and articulate their experiences. We hoped it would enhance interprofessional understanding of the roles of other disciplines and expose creative arts students to working in health care settings and nursing students to the creative arts as a means of enhancing wellbeing.\n\nThis presentation will focus on screen works produced by student filmmakers in the pilot with attention to learner engagement, levels of innovation and experimentation. I will discuss the potential for creative media interdisciplinary collaborations to foster cultural awareness, creative competencies and encourage exploration.",
+          "abstract": "This paper reflects on the motivation and development of the Experimental Games Lab, a creative research initiative that began as a small collective in 2021 and was formally established within Griffith Film School in 2022. Conceived in response to a lack of institutional infrastructure for experimental, practice-led work in game design \nand screen media, the Lab emerged from a desire to legitimise forms of creative research that embrace failure, value iteration, and foster innovation, particularly within the context of screen production education and emerging interactive forms.\nThe paper traces the Lab’s journey from a small collective into a recognised research cluster. Drawing on reflective practice, it explores how the Lab was shaped by the need to bridge gaps between academic inquiry and industry application, between disciplines, and between emerging researchers and the structures that support them. \nThe Lab provides space for speculative design, prototype-driven projects, and socially responsive screen practices that often sit outside traditional research or commercial models.\nA key milestone in this trajectory was the launch of the Experimental Game Design Conference in 2021. Founded as an extension of the Lab’s mission, the conference has become a platform for experimental, practice-led games research. While other \nevents explore games through theoretical or technical perspectives, this conference focuses on practice-led experimentation as a creative methodology, supporting a community of early researchers, students, and practitioners working at disciplinary and institutional edges.\nRather than offering a universal model, the paper presents a situated case study in designing a collaborative environment for screen-based research and education within a creative school. It reflects on the challenges and possibilities of building platforms that make space for uncertainty, creative risk, and long-term collaboration. In doing so, the Experimental Games Lab is positioned as a response to a structural gap, an ecosystem that attempts to foster innovation by embracing failure and expanding the role of experimental practice in screen media research.\nDr Justin Carter is a researcher, game designer and award-winning educator. His experience includes designing and leading programs with a focus on game design and development, screen media, and interaction design.",
           "authors": [
             {
               "name": "Justin Carter",
@@ -1854,7 +1834,7 @@
         },
         {
           "title": "Creative practice as a reflective tool: an interdisciplinary collaborative pilot study",
-          "abstract": "",
+          "abstract": "Creative arts and media students have limited opportunities to explore interdisciplinary applications of their practice. The ability to work across disciplines can contribute to learners developing understandings of how creative practice can be applied to a range of environments and purposes and better equip them for future employment in client-based projects. Peer-to-peer interdisciplinary collaborations can improve skills like communication, decision-making, and teamwork. Peer assisted learning can contribute to building self-confidence and creative capacity.\n\nFollowing a literature review on peer-to-peer collaborations between nursing and creative students, and feasibility-exploring focus groups with staff and students from both disciplines, a pilot peer-to-peer creative learning collaboration was conducted at Curtin University.  Nursing and creative arts students formed dyads to co-design artworks based on the nursing students' clinical experiences. The arts students developed creative pieces, while the nursing students engaged in a progressive critical reflection. The project culminated in a student artwork showcase and written exegesis.\n\nPreliminary results suggest this collaboration fosters engagement, reflection, and problem-solving. The approach has the potential to enhance interprofessional understanding and promote the use of creative arts for nurse well-being, with potential for integration into curricula across both disciplines and the wider university. This pilot collaboration aimed to increase students’ engagement and curiosity in their own learning preferences; and improve students’ ability to problem solve, reflect and articulate their experiences. We hoped it would enhance interprofessional understanding of the roles of other disciplines and expose creative arts students to working in health care settings and nursing students to the creative arts as a means of enhancing wellbeing.\n\nThis presentation will focus on screen works produced by student filmmakers in the pilot with attention to learner engagement, levels of innovation and experimentation. I will discuss the potential for creative media interdisciplinary collaborations to foster cultural awareness, creative competencies and encourage exploration.",
           "authors": [
             {
               "name": "Kerreen Ely-Harper",
@@ -1867,12 +1847,12 @@
     "25": {
       "type": "panel",
       "title": "Experimental screen research through the lens of creative practice",
-      "description": "",
+      "description": "Industry engagement methodologies, professional practice research, and screen sector sustainability.",
       "presenters": [],
       "papers": [
         {
           "title": "Experimental screen research through the lens of creative practice",
-          "abstract": "This paper presents an experimental autoethnographic methodology for investigating documentary practice through a personANDcamera assemblage – the temporary configuration of filmmaker and camera that generates specific forms of embodied knowledge unavailable to either component alone.\nDrawing inspiration from Agnès Varda’s late-career exploration of deepening embodied knowledge, I document my own return to filmmaking practice after an extended break, using procedural filming techniques to capture the expanded forms of knowing that emerge through accumulated experience and evolving practice.\nThe methodology involves systematic documentation of filming procedures – setup rituals, equipment negotiations, and the integration of changed embodied knowledge into creative practice. Rather than treating these shifts as obstacles, I position them as productive sites of knowledge generation, revealing aspects of documentary practice typically rendered invisible by conventional professional discourse focused on seamless execution.\nProcedural filming becomes both research method and creative practice: systematic capture strategies extending beyond conventional coverage into varied perspectives, heights, and spatial relationships. This procedural approach is designed to generate editorially coherent material while remaining open to non-narrative structural possibilities, demonstrating how a systematic methodology can support affect-driven practice rather than constrain it. Each filming session is documented through reflective voice recordings and written observations that capture the micro-negotiations between body, technology, and environment.\nThe presentation will include video excerpts from procedural filming sessions, showing how different personANDcamera configurations generate distinct forms of spatial and temporal knowledge. These clips reveal the productive insights that emerge when established filming habits evolve through deepened embodied knowledge, demonstrating how mature practice generates new creative possibilities.\nThis experimental approach contributes to discussions about vulnerable scholarship in screen studies while offering practical methodologies for practitioners investigating their own embodied relationships with technology. By positioning evolving practice as a site of knowledge rather than decline, the research challenges assumptions about expertise and mastery in documentary practice.",
+          "abstract": "This paper discusses experimental screen research through the lens of our most recent creative practice-based research, and what these reveal about the function and impact of experimentation as a methodology in this research. \n\nIn 2020, Siobhan Jackson and I collaborated with Dr Angie Black exploring a feminist filmmaker’s response to escalating levels of male violence against women and children in Australia. Each filmmaker interrogated the issue through the lens of their filmmaking practice and developed responses with the group. After this initial ideation, and over the following four years we developed different research processes and films. \n\nSiobhan and I come together in this paper/presentation to interrogate our subsequent experience of project development through experimentation, and the unorthodox unscripted films that resulted. I interrogate turning to experimentation as a response to the fraught intersection of documentary filmmaking within the ethics approval environment of the academy, substituting actors for participants and women for men, filming them in a devised workshop for the resulting documentary ‘Calm The F**K Down’. Siobhan interrogates the pivot from her original intention to re-create and film a conversation with her eldest in a shopping mall car park, to the feature documentary, A Love Poem, charting a mother’s relationship with her adult children, in particular her eldest, which she describes as a bricolage of personal archive and casual communication, gleaned from phones, hard drives, and SD cards. \n\nTogether we explore the effect of our embrace of experimentation on the creative practice-based research process. When there are no fixed ideas about realisation, or whether there will even be a completed or watchable film as a result of research, we pose the questions – is this the point of creative practice-based research in the academy, and if so, how do we bring this into our teaching practice with its industry ready focus?",
           "authors": [
             {
               "name": "Helen Gaynor",
@@ -1886,7 +1866,7 @@
         },
         {
           "title": "Procedural Filming as Experimental Methodology: Authoethnographic Investigation of the personANDcamera assemblage",
-          "abstract": "This paper investigates an experimental approach to narrative cinema by developing and producing The Most Dangerous, a 100-minute feature film shot over an intensive ten-day schedule. The film is a case study in embracing constraints to foster creative innovation and embodies a practice-based experiment in minimalist screen storytelling and production strategy.\n\nThe Most Dangerous explores the distressing journey of Gene, a retired police inspector in his 70s, and his emotional unravelling under the weight of grief and guilt following the gruesome death of his wife and daughter. Drawing inspiration from Eastern European art-house cinema, the film adopts a minimalist aesthetic, utilizing black-and-white visuals, prolonged takes, and sparse dialogue to mirror Gene's internal turmoil. Designed as an experiment in form and method: a conscious decision to limit cinematic tools—dialogue, coverage, colour, and camera movement—while amplifying emotional and thematic resonance through performance, sound, and uninterrupted observation.\n\nThis paper interrogates how embracing constraint as a form of experimentalism fostered creative decision-making across writing, directing, and visual design. Rather than viewing production limitations as obstacles, this methodology repositions them as frameworks for experimentation that inform aesthetic and narrative choices. The film's ten-day shoot was a logistical necessity and a conceptual challenge—a provocation to explore what kind of feature-length storytelling could emerge by embracing all these constraints.\n\nConsidering the conference themes, this work invites discussion around how experimental practices can be embedded within Australian screen production education. It advocates for a model of creative risk-taking, where filmmakers and students alike are encouraged to engage in experimental processes—not only in avant-garde terms but within the practical realities of independent filmmaking. The paper positions The Most Dangerous as a case study in screen-based experimental research: a filmmaking mode where production practice becomes a site of inquiry.",
+          "abstract": "This paper presents an experimental autoethnographic methodology for investigating documentary practice through a personANDcamera assemblage – the temporary configuration of filmmaker and camera that generates specific forms of embodied knowledge unavailable to either component alone.\nDrawing inspiration from Agnès Varda’s late-career exploration of deepening embodied knowledge, I document my own return to filmmaking practice after an extended break, using procedural filming techniques to capture the expanded forms of knowing that emerge through accumulated experience and evolving practice.\nThe methodology involves systematic documentation of filming procedures – setup rituals, equipment negotiations, and the integration of changed embodied knowledge into creative practice. Rather than treating these shifts as obstacles, I position them as productive sites of knowledge generation, revealing aspects of documentary practice typically rendered invisible by conventional professional discourse focused on seamless execution.\nProcedural filming becomes both research method and creative practice: systematic capture strategies extending beyond conventional coverage into varied perspectives, heights, and spatial relationships. This procedural approach is designed to generate editorially coherent material while remaining open to non-narrative structural possibilities, demonstrating how a systematic methodology can support affect-driven practice rather than constrain it. Each filming session is documented through reflective voice recordings and written observations that capture the micro-negotiations between body, technology, and environment.\nThe presentation will include video excerpts from procedural filming sessions, showing how different personANDcamera configurations generate distinct forms of spatial and temporal knowledge. These clips reveal the productive insights that emerge when established filming habits evolve through deepened embodied knowledge, demonstrating how mature practice generates new creative possibilities.\nThis experimental approach contributes to discussions about vulnerable scholarship in screen studies while offering practical methodologies for practitioners investigating their own embodied relationships with technology. By positioning evolving practice as a site of knowledge rather than decline, the research challenges assumptions about expertise and mastery in documentary practice.",
           "authors": [
             {
               "name": "Bettina Frankham",
@@ -1896,7 +1876,7 @@
         },
         {
           "title": "Strategic Minimalism: An Experimental Approach to Shooting a 100-Minute Feature Film in Ten Days",
-          "abstract": "",
+          "abstract": "This paper investigates an experimental approach to narrative cinema by developing and producing The Most Dangerous, a 100-minute feature film shot over an intensive ten-day schedule. The film is a case study in embracing constraints to foster creative innovation and embodies a practice-based experiment in minimalist screen storytelling and production strategy.\n\nThe Most Dangerous explores the distressing journey of Gene, a retired police inspector in his 70s, and his emotional unravelling under the weight of grief and guilt following the gruesome death of his wife and daughter. Drawing inspiration from Eastern European art-house cinema, the film adopts a minimalist aesthetic, utilizing black-and-white visuals, prolonged takes, and sparse dialogue to mirror Gene's internal turmoil. Designed as an experiment in form and method: a conscious decision to limit cinematic tools—dialogue, coverage, colour, and camera movement—while amplifying emotional and thematic resonance through performance, sound, and uninterrupted observation.\n\nThis paper interrogates how embracing constraint as a form of experimentalism fostered creative decision-making across writing, directing, and visual design. Rather than viewing production limitations as obstacles, this methodology repositions them as frameworks for experimentation that inform aesthetic and narrative choices. The film's ten-day shoot was a logistical necessity and a conceptual challenge—a provocation to explore what kind of feature-length storytelling could emerge by embracing all these constraints.\n\nConsidering the conference themes, this work invites discussion around how experimental practices can be embedded within Australian screen production education. It advocates for a model of creative risk-taking, where filmmakers and students alike are encouraged to engage in experimental processes—not only in avant-garde terms but within the practical realities of independent filmmaking. The paper positions The Most Dangerous as a case study in screen-based experimental research: a filmmaking mode where production practice becomes a site of inquiry.",
           "authors": [
             {
               "name": "Michael Sergi",
@@ -1909,7 +1889,7 @@
     "26": {
       "type": "group-presentation",
       "title": "The Earth Above: A Deep Time View of Australia's Epic History",
-      "description": "",
+      "description": "The session begins with the introduction of a collective of filmmakers, artists, researchers and boat builders from across several Australian Universities who worked with the ARC Centre of Excellence ...",
       "presenters": [
         {
           "name": "Martin Potter",
@@ -1931,7 +1911,7 @@
       "papers": [
         {
           "title": "The Earth Above: A Deep Time View of Australia's Epic History",
-          "abstract": "",
+          "abstract": "The session begins with the introduction of a collective of filmmakers, artists, researchers and boat builders from across several Australian Universities who worked with the ARC Centre of Excellence for Australian Biodiversity and Heritage (CABAH) which ran from 2018-2025. CABAH adopted a transdisciplinary approach to support the development of cultural and scientific narratives to tell a culturally inclusive, globally significant human and environmental history of Australia. \nThis session will explore some of the significant screen-based works that emerged from the Centre and the creative, educational and social impacts of this work. It will draw on a range of methods, approaches, and contexts, however focus will be anchored by the fulldome planetarium film The Earth Above: A Deep Time View of Australia’s Epic History and experiences that emerged around this. These experiences include a significant exhibition at Queensland Museum, a national schools design challenge and international distribution of The Earth Above through planetariums and festivals. \nWe propose that co-creative screen-based practice-led research, trans-disciplinary approaches and innovative impact and engagement design strategies can open up space for agency and action across a range of settings. This occurs through:\n•\ttime and space (making this available); \n•\tpedagogical process (of learning through doing, engaging, and participating that generates conscious thought); and \n•\tcollective experimentation (social process, error/discomfort and iteration)\nThe panel format spans four (4) short presentations, discussants, as well as time for broader audience response and discussion. The purpose of the panel is to collectively extend our thinking and continue the conversation about trans-disciplinary approaches to screen-based practice-led research and pedagogical processes for interrogating ways of knowing, being and becoming. Through this we explore the tensions and synergies in this body of work, and the processes of potential transformation.",
           "authors": [
             {
               "name": "Martin Potter",
@@ -1956,12 +1936,12 @@
     "27": {
       "type": "panel",
       "title": "Graduate Employment in Screen Careers",
-      "description": "",
+      "description": "Screen industry uncertainties, career sustainability, financing experimentation, and resilience in creative practice.",
       "presenters": [],
       "papers": [
         {
           "title": "Graduate Employment in Screen Careers",
-          "abstract": "Film financing is inherently ‘risky business’ for a producer, and to build a sustainable financing path for a project, producer needs to be able to look into several avenues to finance. Especially in the first steps of financing, when producer is trying to get official film financing bodies to support the project. \n\nCrowdfunding represents a form of experimentation that challenges traditional risk assessment in film financing. \n\nThis presentation investigates the case study of the Finnish-Australian-German co-production feature film Iron Sky, which premiered in Berlin International Film Festival in 2012. The actual film production was preceded by a years-long crowdfunding campaign, and the scale of it had never been seen in Finnish, or Australian, film industry before that. The Iron Sky campaign used both crowd investment and crowdfunding, and in the end more than 1 million euros for the total of 7.5 million budget came from this campaign.\n\nThis funding community didn’t appear from nowhere, as the Iron Sky crew had started to build the community already from 1999 when they did their first self-, and crowdfunded film Star Wreck.\n\nThis presentation will use Pierre Bourdieu’s concepts of Capital Conversion (Bourdieu 1993), and it analyses how Iron Sky disrupted the traditional capital accumulation, and presented a new structure : Social Capital (which is fan communities) translates to Economic Capital (Crowdfunding) which then translates to Symbolic Capital (festival recognition in Berlin). It will also present Iron Sky producers’ Digital ‘Habitus’ (Bourdieu 1993) where their comfort with online communities (since their first crowdfunded project Star Wreck), gave them different risk perceptions.\n\nCrowdfunding is challenge for a producer, and it requires a lot of market research, building up assets for crowdfunding campaign, and creating events for the community. In the case of the first Iron Sky film, the risk paid off.",
+          "abstract": "Screen Careers have gathered employment data from Screen Industry workers to provide a snapshot of professional skills for sustainable employment across the Screen sector. Screen Careers are now working with ASPERA to collect similar data on where Higher Education and Vocational Education graduates find employment and how sustainable and rewarding that employment is. The purpose of this presentation is to discuss the preliminary findings from the first survey of ASPERA graduates from Screen, Film, Media and Games programs across Australia and New Zealand. The key points of interest are around how long it takes to secure employment in the Screen Sector, is any further training required for employment to be sustainable, and what are the pathways for career progression. The Graduate Employment data will be compared to the results from Screen Careers data set so that ASPERA members, can be informed about how well our Degrees and Courses meet the needs of the sector.",
           "authors": [
             {
               "name": "Susan Kerrigan",
@@ -1983,17 +1963,17 @@
         },
         {
           "title": "Risky Business of Film Financing - Case Study of feature film Iron Sky and crowdfunding",
-          "abstract": "As Australia’s screen industry faces mounting instability, from stalled funding and shrinking theatrical markets to increasing globalisation, resilience has become a defining challenge for the next generation of screen practitioners. But resilience cannot be taught as a soft skill or grafted on as an afterthought. It must be built into the very structure of how we educate and empower emerging makers.\n\nIn this presentation, we argue that experimentation in how students develop work for and with audiences is central to building resilient creative careers. We propose that screen education must move beyond preparing students for legacy industry pathways and instead cultivate adaptive makers capable of navigating shifting platforms, volatile markets, and evolving audience behaviours.\n\nWe advocate for a shift in curriculum that embeds experimentation as a foundational mode of practice normalising risk-taking, prototyping, and iteration with audiences as key to developing entrepreneurial thinking within student learning. This reframing positions students not just as future employees of a precarious sector, but as cultural entrepreneurs actively shaping the conditions of their own sustainability.\n\nWe ask: How can screen schools support experimentation as a mechanism for resilience without reducing it to trend-chasing or commercialism? What structural and pedagogical shifts are required to genuinely prepare students for creative futures that will be defined not by certainty, but by change? \n\nThis session offers a practical and conceptual model for building resilience into screen education through audience-led experimental practice.",
+          "abstract": "Film financing is inherently ‘risky business’ for a producer, and to build a sustainable financing path for a project, producer needs to be able to look into several avenues to finance. Especially in the first steps of financing, when producer is trying to get official film financing bodies to support the project. \n\nCrowdfunding represents a form of experimentation that challenges traditional risk assessment in film financing. \n\nThis presentation investigates the case study of the Finnish-Australian-German co-production feature film Iron Sky, which premiered in Berlin International Film Festival in 2012. The actual film production was preceded by a years-long crowdfunding campaign, and the scale of it had never been seen in Finnish, or Australian, film industry before that. The Iron Sky campaign used both crowd investment and crowdfunding, and in the end more than 1 million euros for the total of 7.5 million budget came from this campaign.\n\nThis funding community didn’t appear from nowhere, as the Iron Sky crew had started to build the community already from 1999 when they did their first self-, and crowdfunded film Star Wreck.\n\nThis presentation will use Pierre Bourdieu’s concepts of Capital Conversion (Bourdieu 1993), and it analyses how Iron Sky disrupted the traditional capital accumulation, and presented a new structure : Social Capital (which is fan communities) translates to Economic Capital (Crowdfunding) which then translates to Symbolic Capital (festival recognition in Berlin). It will also present Iron Sky producers’ Digital ‘Habitus’ (Bourdieu 1993) where their comfort with online communities (since their first crowdfunded project Star Wreck), gave them different risk perceptions.\n\nCrowdfunding is challenge for a producer, and it requires a lot of market research, building up assets for crowdfunding campaign, and creating events for the community. In the case of the first Iron Sky film, the risk paid off.",
           "authors": [
             {
-              "name": "Essi Haukkamaa-Judge / UOW / AFTRS",
+              "name": "Essi Haukkamaa-Judge",
               "institution": null
             }
           ]
         },
         {
           "title": "Resistance and Resilience: Reframing the Screen Education through Audiences and Open Markets",
-          "abstract": "",
+          "abstract": "As Australia’s screen industry faces mounting instability, from stalled funding and shrinking theatrical markets to increasing globalisation, resilience has become a defining challenge for the next generation of screen practitioners. But resilience cannot be taught as a soft skill or grafted on as an afterthought. It must be built into the very structure of how we educate and empower emerging makers.\n\nIn this presentation, we argue that experimentation in how students develop work for and with audiences is central to building resilient creative careers. We propose that screen education must move beyond preparing students for legacy industry pathways and instead cultivate adaptive makers capable of navigating shifting platforms, volatile markets, and evolving audience behaviours.\n\nWe advocate for a shift in curriculum that embeds experimentation as a foundational mode of practice normalising risk-taking, prototyping, and iteration with audiences as key to developing entrepreneurial thinking within student learning. This reframing positions students not just as future employees of a precarious sector, but as cultural entrepreneurs actively shaping the conditions of their own sustainability.\n\nWe ask: How can screen schools support experimentation as a mechanism for resilience without reducing it to trend-chasing or commercialism? What structural and pedagogical shifts are required to genuinely prepare students for creative futures that will be defined not by certainty, but by change? \n\nThis session offers a practical and conceptual model for building resilience into screen education through audience-led experimental practice.",
           "authors": [
             {
               "name": "Peter Herbert",
@@ -2009,31 +1989,31 @@
     }
   },
   "panel_descriptions": {
-    "5": "Scenes of Transmissions: Experimental Art Practices in Education",
-    "8": "1.  One-Size-Fits-None - Teaching Film & TV in the Neurodiverse Classroom.\n\nAll Within the international context, higher education providers are opening their doors to a more diverse student populatio...",
-    "11": "Media technologies, practices and audiences are continually evolving, proving ongoing challenges in how we design pedagogy. At the core of this challenge is capturing the unwieldy scope of media pract...",
-    "17": "This co-presented research paper (or short themed panel) concerns the production of a ~ 30 mins VR and dome-cinema documentary, \"Vaka Moana: Ancestors of the Future\". The subject of the work is the hi...",
-    "20": "The rapid emergence and integration of generative AI/machine learning tools in screen production has sparked significant interest and debate within our institutions. This roundtable will explore the n...",
-    "21": "Writer and theorist Mackenzie Wark suggests that “Disparate times call for disparate methods” (2015). In addressing the theme of ASPERA 2025, this panel proposes how experimental and disparate methods...",
-    "26": "The session begins with the introduction of a collective of filmmakers, artists, researchers and boat builders from across several Australian Universities who worked with the ARC Centre of Excellence ...",
     "1": "Creative experimentation in screen production research within standardisation pressures across Australian higher education.",
     "2": "Feminist screen narratives and below-the-line collaborative practices, from neoliberal critique to experimental production design methodologies.",
     "3": "Artificial intelligence in filmmaking, cultural authenticity assessment, agency and audience reception in computational creativity.",
+    "5": "Scenes of Transmissions: Experimental Art Practices in Education",
     "6": "Experimental pedagogies in virtual production education, sensory storytelling, ICVFX techniques, and disability-inclusive screen production.",
     "7": "Experimental documentary methodologies, institutional critique, and the boundaries between fiction and non-fiction in screen practice.",
+    "8": "1.  One-Size-Fits-None - Teaching Film & TV in the Neurodiverse Classroom.\n\nAll Within the international context, higher education providers are opening their doors to a more diverse student populatio...",
     "9": "Place-based screen practices, site-specific filmmaking, and experimental approaches to landscape and environment.",
     "10": "Community filmmaking pedagogies, co-creative research, and socially engaged screen practice in Pasifika contexts.",
+    "11": "Media technologies, practices and audiences are continually evolving, proving ongoing challenges in how we design pedagogy. At the core of this challenge is capturing the unwieldy scope of media pract...",
     "12": "Audio production pedagogies, creative activism methodologies, and feminist documentary approaches to marginalized narratives.",
     "13": "Creative research methodologies, practice-led enquiry, and experimental approaches to screen scholarship.",
     "14": "Cultural representation in screen production, Indigenous methodologies, and collaborative storytelling across difference.",
     "15": "Cross-platform storytelling, transmedia pedagogies, and experimental approaches to narrative distribution.",
     "16": "Sonic materiality, sound design experimentation, and acoustic approaches to place and landscape.",
+    "17": "This co-presented research paper (or short themed panel) concerns the production of a ~ 30 mins VR and dome-cinema documentary, \"Vaka Moana: Ancestors of the Future\". The subject of the work is the hi...",
     "18": "Archival methodologies, ephemeral media preservation, and experimental approaches to screen history.",
     "19": "Experimental screen production techniques, material practice, and process-driven creative methodologies.",
+    "20": "The rapid emergence and integration of generative AI/machine learning tools in screen production has sparked significant interest and debate within our institutions. This roundtable will explore the n...",
+    "21": "Writer and theorist Mackenzie Wark suggests that “Disparate times call for disparate methods” (2015). In addressing the theme of ASPERA 2025, this panel proposes how experimental and disparate methods...",
     "22": "Experimental approaches to screen research, methodological innovation, and practice-based scholarship.",
     "23": "Cinematography pedagogies, visual experimentation, and teaching camera practice as creative methodology.",
     "24": "Screen production skills development, technical innovation, and experimental approaches to craft and technique.",
     "25": "Industry engagement methodologies, professional practice research, and screen sector sustainability.",
+    "26": "The session begins with the introduction of a collective of filmmakers, artists, researchers and boat builders from across several Australian Universities who worked with the ARC Centre of Excellence ...",
     "27": "Screen industry uncertainties, career sustainability, financing experimentation, and resilience in creative practice."
   }
 }
