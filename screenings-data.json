@@ -1,0 +1,253 @@
+{
+  "screenings": [
+    {
+      "day": "DAY 25/11/25\nTUESDAY",
+      "time": "1045",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "AI Filmmaking Showcase 2025",
+          "year": null,
+          "duration": null,
+          "creatives": [
+            "Griffith Film School"
+          ]
+        },
+        {
+          "title": "Face to Face",
+          "year": 2024,
+          "duration": 5,
+          "creatives": [
+            "a short documentary about the Hanlon Larsen Experimental Film Grant",
+            "Flinders University"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 25/11/25\nTUESDAY",
+      "time": "1230",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Elsie",
+          "year": 2024,
+          "duration": 5,
+          "creatives": [
+            "Ella Drinkwater",
+            "Rikkili Clark",
+            "Genevieve Douthwaite",
+            "et al."
+          ]
+        },
+        {
+          "title": "Where the Heart Is",
+          "year": 2025,
+          "duration": 9,
+          "creatives": [
+            "Hudson McKee",
+            "Evan Sharma",
+            "Olivia McCafferty"
+          ]
+        },
+        {
+          "title": "LEAN IN",
+          "year": 2024,
+          "duration": 15,
+          "creatives": [
+            "Lucy Coleman"
+          ]
+        },
+        {
+          "title": "Suture",
+          "year": 2025,
+          "duration": 4,
+          "creatives": [
+            "Genevieve Patrick"
+          ]
+        },
+        {
+          "title": "7th Month Return",
+          "year": 2025,
+          "duration": 15,
+          "creatives": [
+            "Stephen Connolly"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 25/11/25\nTUESDAY",
+      "time": "1430",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "The Other Edis",
+          "year": 2025,
+          "duration": 45,
+          "creatives": [
+            "Seána Dubh"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 26/11/25\nWEDNESDAY",
+      "time": "1030",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Calm The F**K Down",
+          "year": 2025,
+          "duration": 40,
+          "creatives": [
+            "Helen Gaynor"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 26/11/25\nWEDNESDAY",
+      "time": "1130",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Love Poem",
+          "year": 2025,
+          "duration": 75,
+          "creatives": [
+            "Siobhan Jackson"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 26/11/25\nWEDNESDAY",
+      "time": "1330",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "THE MOST DANGEROUS",
+          "year": 2025,
+          "duration": 120,
+          "creatives": [
+            "Michael Sergi"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 26/11/25\nWEDNESDAY",
+      "time": "1545",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "The Book,",
+          "year": null,
+          "duration": 19,
+          "creatives": [
+            "Pradeep Maduri"
+          ]
+        },
+        {
+          "title": "The Journey",
+          "year": null,
+          "duration": 23,
+          "creatives": [
+            "Pradeep Maduri"
+          ]
+        },
+        {
+          "title": "Sakhi",
+          "year": null,
+          "duration": 21,
+          "creatives": [
+            "Pradeep Maduri"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 27/11/25\nTHURSDAY",
+      "time": "1100",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Teaching & Learning Cinema @UOW (2025) Lucas Ihlein",
+          "year": null,
+          "duration": null,
+          "creatives": [
+            "Louise Curham"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 27/11/25\nTHURSDAY",
+      "time": "1215",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Under the Red",
+          "year": 2025,
+          "duration": 71,
+          "creatives": [
+            "Tyler Beckley"
+          ]
+        }
+      ]
+    },
+    {
+      "day": "DAY 27/11/25\nTHURSDAY",
+      "time": "1430",
+      "venue": "29.G07",
+      "films": [
+        {
+          "title": "Elsie",
+          "year": 2024,
+          "duration": 5,
+          "creatives": [
+            "Ella Drinkwater",
+            "Rikkili Clark",
+            "Genevieve Douthwaite",
+            "et al."
+          ]
+        },
+        {
+          "title": "Where the Heart Is",
+          "year": 2025,
+          "duration": 9,
+          "creatives": [
+            "Hudson McKee",
+            "Evan Sharma",
+            "Olivia McCafferty"
+          ]
+        },
+        {
+          "title": "LEAN IN",
+          "year": 2024,
+          "duration": 15,
+          "creatives": [
+            "Lucy Coleman"
+          ]
+        },
+        {
+          "title": "Suture",
+          "year": 2025,
+          "duration": 4,
+          "creatives": [
+            "Genevieve Patrick"
+          ]
+        },
+        {
+          "title": "7th Month Return",
+          "year": 2025,
+          "duration": 15,
+          "creatives": [
+            "Stephen Connolly"
+          ]
+        }
+      ]
+    }
+  ]
+}

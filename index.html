@@ -121,9 +121,20 @@
                 accept=".json"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
             />
-            <div class="text-sm text-gray-500">
+            <div class="border-t border-gray-200 pt-4 mt-4">
+                <p class="text-gray-600 mb-2 text-sm font-medium">Optional: Load Screenings Data</p>
+                <input 
+                    type="file" 
+                    id="screeningsFileInput" 
+                    accept=".json"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md mb-2"
+                />
+                <p class="text-xs text-gray-500">Select screenings-data.json to enable screenings view</p>
+            </div>
+            <div class="text-sm text-gray-500 mt-4">
                 <p class="mb-2">Or if running from a web server, the JSON will load automatically.</p>
                 <p class="font-mono text-xs">Looking for: conference-data.json</p>
+                <p class="font-mono text-xs mt-1">Optional: screenings-data.json (for screenings view)</p>
             </div>
         </div>
     </div>
@@ -141,7 +152,7 @@
                 </div>
                 
                 <!-- Legend -->
-                <div class="mt-6 flex flex-wrap gap-4 text-base">
+                <div class="mt-6 flex flex-wrap gap-4 text-base items-center">
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-blue-50 border border-blue-300"></div>
                         <span>Panel Session</span>
@@ -165,6 +176,14 @@
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-gray-100 border border-gray-300"></div>
                         <span>Break/Meal</span>
+                    </div>
+                    <div class="ml-auto">
+                        <button 
+                            onclick="showScreenings()"
+                            class="bg-pink-600 text-white px-6 py-2 rounded-sm hover:bg-pink-700 text-base font-medium"
+                        >
+                            View Screenings
+                        </button>
                     </div>
                 </div>
             </header>
@@ -223,6 +242,20 @@
         </div>
     </div>
 
+    <!-- Screenings View -->
+    <div id="screeningsMode" class="hidden reading-mode">
+        <div class="reading-content-wrapper">
+            <button onclick="hideScreenings()" class="float-right bg-gray-900 text-white px-6 py-3 rounded-sm hover:bg-gray-700 text-base font-medium mb-8">
+                Close
+            </button>
+            <div class="clear-both pt-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Film Screenings</h1>
+                <p class="text-lg text-gray-700 mb-8">Screenings take place in the Screening Lounge (29.G07) throughout the conference.</p>
+                <div id="screeningsContent"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let conferenceData = null;
         let allEvents = [];
@@ -235,6 +268,14 @@
                 const response = await fetch('conference-data.json');
                 const data = await response.json();
                 initializeApp(data);
+                
+                // Also try to load screenings data (non-blocking)
+                try {
+                    const screeningsResponse = await fetch('screenings-data.json');
+                    screeningsData = await screeningsResponse.json();
+                } catch (screeningsError) {
+                    console.log('Screenings data not available (optional)');
+                }
             } catch (error) {
                 console.log('Auto-load failed, showing file picker');
             }
@@ -251,6 +292,23 @@
                         initializeApp(data);
                     } catch (error) {
                         alert('Error parsing JSON: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Handle screenings file selection
+        document.getElementById('screeningsFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        screeningsData = JSON.parse(e.target.result);
+                        console.log('Screenings data loaded successfully');
+                    } catch (error) {
+                        alert('Error parsing screenings JSON: ' + error.message);
                     }
                 };
                 reader.readAsText(file);
@@ -796,6 +854,107 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Screenings functions
+        let screeningsData = null;
+
+        async function showScreenings() {
+            if (!screeningsData) {
+                try {
+                    const response = await fetch('screenings-data.json');
+                    screeningsData = await response.json();
+                } catch (error) {
+                    console.error('Failed to load screenings:', error);
+                    alert('Could not load screenings data. Please ensure screenings-data.json is available.');
+                    return;
+                }
+            }
+            renderScreenings();
+            document.getElementById('screeningsMode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideScreenings() {
+            document.getElementById('screeningsMode').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderScreenings() {
+            const content = document.getElementById('screeningsContent');
+            if (!screeningsData || !screeningsData.screenings) {
+                content.innerHTML = '<p class="text-gray-500">No screenings data available.</p>';
+                return;
+            }
+
+            // Group by day
+            const grouped = {};
+            screeningsData.screenings.forEach(screening => {
+                const day = extractDayName(screening.day);
+                if (!grouped[day]) grouped[day] = [];
+                grouped[day].push(screening);
+            });
+
+            // Sort days chronologically: TUESDAY, WEDNESDAY, THURSDAY
+            const dayOrder = { 'TUESDAY': 1, 'WEDNESDAY': 2, 'THURSDAY': 3 };
+            const sortedDays = Object.keys(grouped).sort((a, b) => {
+                return (dayOrder[a] || 99) - (dayOrder[b] || 99);
+            });
+
+            let html = '';
+            sortedDays.forEach(day => {
+                html += `
+                    <div class="bg-white rounded-sm shadow-md overflow-hidden mb-6">
+                        <div class="bg-gray-900 text-white px-6 py-4">
+                            <h2 class="text-2xl md:text-3xl font-bold">${day}</h2>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                `;
+
+                grouped[day].sort((a, b) => parseInt(a.time || '0') - parseInt(b.time || '0')).forEach(screening => {
+                    html += `
+                        <div class="p-6">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="flex-shrink-0 w-20">
+                                    <div class="text-xl font-bold text-gray-900">${formatTime(screening.time || '0000')}</div>
+                                    <div class="text-sm text-gray-600">${screening.venue}</div>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Screening Lounge</h3>
+                                    <div class="space-y-3">
+                    `;
+
+                    screening.films.forEach(film => {
+                        html += `
+                            <div class="bg-gray-50 rounded-sm p-4 border border-gray-200">
+                                <div class="text-base font-semibold text-gray-900 mb-1">
+                                    ${film.title}${film.year ? ` (${film.year})` : ''}
+                                </div>
+                                ${film.duration ? `<div class="text-sm text-gray-600 mb-2">${film.duration} minutes</div>` : ''}
+                                ${film.creatives && film.creatives.length > 0 ? `
+                                    <div class="text-sm text-gray-700">
+                                        ${film.creatives.join(', ')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            content.innerHTML = html;
+        }
+
         // Handle URL params - venue, day, and time
         function handleURLParams() {
             const params = new URLSearchParams(window.location.search);
@@ -835,7 +994,11 @@
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closeReadingMode();
+                if (!document.getElementById('readingMode').classList.contains('hidden')) {
+                    closeReadingMode();
+                } else if (!document.getElementById('screeningsMode').classList.contains('hidden')) {
+                    hideScreenings();
+                }
             }
         });
 
