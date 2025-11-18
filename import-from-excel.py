@@ -146,6 +146,7 @@ def main():
     print("\n🔄 Processing sessions and papers...")
     sessions = {}
     current_session = None
+    original_panel_descriptions = (original.get('panel_descriptions') or {})
     
     for _, row in sessions_df.iterrows():
         session_num = row.get('Session #', '')
@@ -156,10 +157,14 @@ def main():
             
             presenter_names = parse_names(row.get('Presenters/Authors', ''))
             
+            description = clean_text(row.get('Description', ''))
+            if not description and original_panel_descriptions:
+                description = clean_text(original_panel_descriptions.get(sid, ''))
+
             sessions[sid] = {
                 "type": clean_text(row.get('Type', '')),
                 "title": clean_text(row.get('Title', '')),
-                "description": clean_text(row.get('Description', '')),
+                "description": description,
                 "presenters": smart_lookup_people(presenter_names),
                 "papers": []
             }
@@ -181,15 +186,25 @@ def main():
     events = []
     
     for _, row in events_df.iterrows():
+        day_val = clean_text(row.get('Day', ''))
+        time_val = format_time_value(row.get('Time', ''))
+        venue_val = clean_text(row.get('Venue', ''))
+        content_val = clean_text(row.get('Content', ''))
+        type_val = clean_text(row.get('Type', ''))
+
+        # Skip completely blank rows (prevents phantom days)
+        if not any([day_val, time_val, venue_val, content_val, type_val]):
+            continue
+
         event = {
-            "day": clean_text(row.get('Day', '')),
-            "time": format_time_value(row.get('Time', '')),
-            "venue": clean_text(row.get('Venue', '')),
-            "content": clean_text(row.get('Content', '')),
+            "day": day_val,
+            "time": time_val,
+            "venue": venue_val,
+            "content": content_val,
             "session_num": None,
             "headshot_url": None,
             "logo_url": None,
-            "type": clean_text(row.get('Type', ''))
+            "type": type_val
         }
         
         presenter_names = parse_names(row.get('Presenters', ''))
@@ -270,9 +285,9 @@ def main():
         "events": events,
         "sessions": sessions,
         "panel_descriptions": {
-            sid: desc
-            for sid, desc in (original.get('panel_descriptions', {}) or {}).items()
-            if sid in sessions
+            sid: session.get('description')
+            for sid, session in sessions.items()
+            if session.get('description')
         }
     }
     
