@@ -6,9 +6,9 @@
       "venue": "29.G07",
       "films": [
         {
-          "title": "MEL 23.55",
-          "year": 2013,
-          "duration": null,
+          "title": "MEL 23:55",
+          "year": 2023,
+          "duration": 24,
           "creatives": [
             "Max Schleser"
           ]
@@ -30,7 +30,8 @@
             "Flinders University"
           ]
         }
-      ]
+      ],
+      "program": "MINA: Experimental Screen Production @ Swinburne University"
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
