@@ -918,31 +918,28 @@
                                     <div class="text-sm text-gray-600">${screening.venue}</div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Screening Lounge</h3>
-                                    ${screening.program ? `
-                                        <div class="text-sm font-medium text-pink-700 mb-3 italic">${screening.program}</div>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-3">Screening Lounge</h3>
+                                    ${screening.content ? `
+                                        <div class="bg-gray-50 rounded-sm p-4 border border-gray-200">
+                                            <div class="text-base text-gray-900 whitespace-pre-line">${screening.content}</div>
+                                        </div>
+                                    ` : screening.films ? `
+                                        <div class="space-y-3">
+                                            ${screening.films.map(film => `
+                                                <div class="bg-gray-50 rounded-sm p-4 border border-gray-200">
+                                                    <div class="text-base font-semibold text-gray-900 mb-1">
+                                                        ${film.title}${film.year ? ` (${film.year})` : ''}
+                                                    </div>
+                                                    ${film.duration ? `<div class="text-sm text-gray-600 mb-2">${film.duration} minutes</div>` : ''}
+                                                    ${film.creatives && film.creatives.length > 0 ? `
+                                                        <div class="text-sm text-gray-700">
+                                                            ${film.creatives.join(', ')}
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
                                     ` : ''}
-                                    <div class="space-y-3">
-                    `;
-
-                    screening.films.forEach(film => {
-                        html += `
-                            <div class="bg-gray-50 rounded-sm p-4 border border-gray-200">
-                                <div class="text-base font-semibold text-gray-900 mb-1">
-                                    ${film.title}${film.year ? ` (${film.year})` : ''}
-                                </div>
-                                ${film.duration ? `<div class="text-sm text-gray-600 mb-2">${film.duration} minutes</div>` : ''}
-                                ${film.creatives && film.creatives.length > 0 ? `
-                                    <div class="text-sm text-gray-700">
-                                        ${film.creatives.join(', ')}
-                                    </div>
-                                ` : ''}
-                            </div>
-                        `;
-                    });
-
-                    html += `
-                                    </div>
                                 </div>
                             </div>
                         </div>

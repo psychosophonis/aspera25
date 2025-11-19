@@ -4,260 +4,61 @@
       "day": "DAY 25/11/25\nTUESDAY",
       "time": "1045",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "MEL 23:55",
-          "year": 2023,
-          "duration": 24,
-          "creatives": [
-            "Max Schleser"
-          ]
-        },
-        {
-          "title": "AI Filmmaking Showcase 2025",
-          "year": null,
-          "duration": null,
-          "creatives": [
-            "Griffith Film School"
-          ]
-        },
-        {
-          "title": "Face to Face",
-          "year": 2024,
-          "duration": 5,
-          "creatives": [
-            "a short documentary about the Hanlon Larsen Experimental Film Grant",
-            "Flinders University"
-          ]
-        }
-      ],
-      "program": "MINA: Experimental Screen Production @ Swinburne University"
+      "content": "MINA\nExperimental Screen Production @ Swinburne University\nMEL 23.55 (2013) Max Schleser\nAI Filmmaking Showcase 2025, Griffith Film School\nFace to Face (2024) 5min, a short documentary about the Hanlon Larsen Experimental Film Grant, Flinders University"
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
       "time": "1230",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Elsie",
-          "year": 2024,
-          "duration": 5,
-          "creatives": [
-            "Ella Drinkwater",
-            "Rikkili Clark",
-            "Genevieve Douthwaite",
-            "et al."
-          ]
-        },
-        {
-          "title": "Where the Heart Is",
-          "year": 2025,
-          "duration": 9,
-          "creatives": [
-            "Hudson McKee",
-            "Evan Sharma",
-            "Olivia McCafferty"
-          ]
-        },
-        {
-          "title": "LEAN IN",
-          "year": 2024,
-          "duration": 15,
-          "creatives": [
-            "Lucy Coleman"
-          ]
-        },
-        {
-          "title": "Suture",
-          "year": 2025,
-          "duration": 4,
-          "creatives": [
-            "Genevieve Patrick"
-          ]
-        },
-        {
-          "title": "7th Month Return",
-          "year": 2025,
-          "duration": 15,
-          "creatives": [
-            "Stephen Connolly"
-          ]
-        }
-      ]
+      "content": "Elsie (2024) 5min, Ella Drinkwater, Rikkili Clark, Genevieve Douthwaite, et al.\nWhere the Heart Is (2025) 9min, Hudson McKee, Evan Sharma, Olivia McCafferty\nLEAN IN (2024) 15min, Lucy Coleman\nSuture (2025) 4min, Genevieve Patrick\n7th Month Return (2025) 15min, Stephen Connolly"
     },
     {
       "day": "DAY 25/11/25\nTUESDAY",
       "time": "1430",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "The Other Edis",
-          "year": 2025,
-          "duration": 45,
-          "creatives": [
-            "Seána Dubh"
-          ]
-        }
-      ]
+      "content": "The Other Edis (2025) 45min, Seána Dubh"
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
       "time": "1030",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Calm The F**K Down",
-          "year": 2025,
-          "duration": 40,
-          "creatives": [
-            "Helen Gaynor"
-          ]
-        }
-      ]
+      "content": "Calm The F**K Down (2025) 40min, Helen Gaynor"
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
       "time": "1130",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Love Poem",
-          "year": 2025,
-          "duration": 75,
-          "creatives": [
-            "Siobhan Jackson"
-          ]
-        }
-      ]
+      "content": "Love Poem (2025) 75min, Siobhan Jackson"
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
       "time": "1330",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "THE MOST DANGEROUS",
-          "year": 2025,
-          "duration": 120,
-          "creatives": [
-            "Michael Sergi"
-          ]
-        }
-      ]
+      "content": "THE MOST DANGEROUS (2025) 120 min, Michael Sergi"
     },
     {
       "day": "DAY 26/11/25\nWEDNESDAY",
       "time": "1545",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "The Book,",
-          "year": null,
-          "duration": 19,
-          "creatives": [
-            "Pradeep Maduri"
-          ]
-        },
-        {
-          "title": "The Journey",
-          "year": null,
-          "duration": 23,
-          "creatives": [
-            "Pradeep Maduri"
-          ]
-        },
-        {
-          "title": "Sakhi",
-          "year": null,
-          "duration": 21,
-          "creatives": [
-            "Pradeep Maduri"
-          ]
-        }
-      ]
+      "content": "The Book, 19min, Pradeep Maduri\nThe Journey 23min, Pradeep Maduri\nSakhi  21min, Pradeep Maduri"
     },
     {
       "day": "DAY 27/11/25\nTHURSDAY",
       "time": "1100",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Teaching & Learning Cinema @UOW",
-          "year": 2025,
-          "duration": null,
-          "creatives": [
-            "Lucas Ihlein",
-            "Louise Curham"
-          ]
-        }
-      ]
+      "content": "Teaching & Learning Cinema @UOW (2025) Lucas Ihlein, Louise Curham"
     },
     {
       "day": "DAY 27/11/25\nTHURSDAY",
       "time": "1215",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Under the Red",
-          "year": 2025,
-          "duration": 71,
-          "creatives": [
-            "Tyler Beckley"
-          ]
-        }
-      ]
+      "content": "Under the Red (2025) 71min, Tyler Beckley"
     },
     {
       "day": "DAY 27/11/25\nTHURSDAY",
       "time": "1430",
       "venue": "29.G07",
-      "films": [
-        {
-          "title": "Elsie",
-          "year": 2024,
-          "duration": 5,
-          "creatives": [
-            "Ella Drinkwater",
-            "Rikkili Clark",
-            "Genevieve Douthwaite",
-            "et al."
-          ]
-        },
-        {
-          "title": "Where the Heart Is",
-          "year": 2025,
-          "duration": 9,
-          "creatives": [
-            "Hudson McKee",
-            "Evan Sharma",
-            "Olivia McCafferty"
-          ]
-        },
-        {
-          "title": "LEAN IN",
-          "year": 2024,
-          "duration": 15,
-          "creatives": [
-            "Lucy Coleman"
-          ]
-        },
-        {
-          "title": "Suture",
-          "year": 2025,
-          "duration": 4,
-          "creatives": [
-            "Genevieve Patrick"
-          ]
-        },
-        {
-          "title": "7th Month Return",
-          "year": 2025,
-          "duration": 15,
-          "creatives": [
-            "Stephen Connolly"
-          ]
-        }
-      ]
+      "content": "Elsie (2024) 5min, Ella Drinkwater, Rikkili Clark, Genevieve Douthwaite, et al.\nWhere the Heart Is (2025) 9min, Hudson McKee, Evan Sharma, Olivia McCafferty\nLEAN IN (2024) 15min, Lucy Coleman\nSuture (2025) 4min, Genevieve Patrick\n7th Month Return (2025) 15min, Stephen Connolly"
     }
   ]
 }
