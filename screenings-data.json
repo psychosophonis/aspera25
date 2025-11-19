@@ -6,6 +6,14 @@
       "venue": "29.G07",
       "films": [
         {
+          "title": "MEL 23.55",
+          "year": 2013,
+          "duration": null,
+          "creatives": [
+            "Max Schleser"
+          ]
+        },
+        {
           "title": "AI Filmmaking Showcase 2025",
           "year": null,
           "duration": null,
@@ -173,10 +181,11 @@
       "venue": "29.G07",
       "films": [
         {
-          "title": "Teaching & Learning Cinema @UOW (2025) Lucas Ihlein",
-          "year": null,
+          "title": "Teaching & Learning Cinema @UOW",
+          "year": 2025,
           "duration": null,
           "creatives": [
+            "Lucas Ihlein",
             "Louise Curham"
           ]
         }
